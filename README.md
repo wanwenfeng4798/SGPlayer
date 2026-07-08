@@ -36,12 +36,11 @@
 
 #### Build FFmpeg and OpenSSL 
 
-- Build scripts are used by default for FFmpeg 4.4.4 and OpenSSL 1.1.1w
+- Build scripts are used by default for FFmpeg 7.0.1 and OpenSSL 1.1.1w
 
 ```obj-c
-git clone https://github.com/libobjc/SGPlayer.git
+git clone https://github.com/wanwenfeng4798/SGPlayer.git
 cd SGPlayer
-git checkout 2.1.0 -B latest
 
 // iOS
 ./build.sh iOS build
