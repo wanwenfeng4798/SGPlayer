@@ -7,13 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreMedia/CoreMedia.h>
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdocumentation"
-#import "avformat.h"
-#import "imgutils.h"
-#import "swresample.h"
-#import "swscale.h"
-#import "avcodec.h"
+#import <libavformat/avformat.h>
+#import <libavutil/imgutils.h>
+#import <libavutil/common.h>
+#import <libavutil/pixdesc.h>
+#import <libavutil/hwcontext.h>
+#import <libswresample/swresample.h>
+#import <libswscale/swscale.h>
+#import <libavcodec/avcodec.h>
 #pragma clang diagnostic pop
 
 void SGFFmpegSetupIfNeeded(void);
+
+CMTime SGFFmpegTime(int64_t value, AVRational timebase);

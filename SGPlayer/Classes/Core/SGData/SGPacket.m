@@ -35,6 +35,7 @@
     if (self = [super init]) {
         self->_lock = [[NSLock alloc] init];
         self->_core = av_packet_alloc();
+        if (!self->_core) return nil;
         self->_coreptr = self->_core;
         [self clear];
     }
@@ -111,9 +112,9 @@
     self->_size = pkt->size;
     self->_track = cd.track;
     self->_metadata = cd.metadata;
-    CMTime duration = CMTimeMake(pkt->duration * timebase.num, timebase.den);
-    CMTime timeStamp = CMTimeMake(pkt->pts * timebase.num, timebase.den);
-    CMTime decodeTimeStamp = CMTimeMake(pkt->dts * timebase.num, timebase.den);
+    CMTime duration = SGFFmpegTime(pkt->duration, timebase);
+    CMTime timeStamp = SGFFmpegTime(pkt->pts, timebase);
+    CMTime decodeTimeStamp = SGFFmpegTime(pkt->dts, timebase);
     self->_duration = [cd convertDuration:duration];
     self->_timeStamp = [cd convertTimeStamp:timeStamp];
     self->_decodeTimeStamp = [cd convertTimeStamp:decodeTimeStamp];

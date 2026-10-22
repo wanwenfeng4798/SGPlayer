@@ -21,8 +21,8 @@
 {
     if (self = [super init]) {
         self->_options = @{@"reconnect" : @(1),
-                           @"user-agent" : @"SGPlayer",
-                           @"timeout" : @(20 * 1000 * 1000)};
+                           @"user_agent" : @"SGPlayer",
+                           @"rw_timeout" : @(20 * 1000 * 1000)};
     }
     return self;
 }

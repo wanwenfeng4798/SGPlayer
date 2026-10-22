@@ -332,6 +332,10 @@
             continue;
         }
         SGVideoFrame *newObj = [SGVideoFrame frameWithDescriptor:self->_scaler.outputDescriptor];
+        if (!newObj) {
+            [obj unlock];
+            continue;
+        }
         int result = [self->_scaler convert:(void *)obj.data
                               inputLinesize:obj.linesize
                                  outputData:newObj.core->data

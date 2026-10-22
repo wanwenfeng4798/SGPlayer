@@ -30,19 +30,31 @@
 
 + (instancetype)frameWithDescriptor:(SGAudioDescriptor *)descriptor numberOfSamples:(int)numberOfSamples
 {
+    if (!descriptor || descriptor.numberOfChannels <= 0 ||
+        descriptor.numberOfChannels > SGFramePlaneCount ||
+        descriptor.sampleRate <= 0 || numberOfSamples <= 0) {
+        return nil;
+    }
     SGAudioFrame *frame = [SGAudioFrame frame];
+    if (!frame) return nil;
     frame.core->format = descriptor.format;
     frame.core->nb_samples = numberOfSamples;
     frame.core->sample_rate = descriptor.sampleRate;
-    frame.core->ch_layout = descriptor.channelLayout;
+    AVChannelLayout layout = descriptor.channelLayout;
+    if (av_channel_layout_copy(&frame.core->ch_layout, &layout) < 0 ||
+        av_frame_get_buffer(frame.core, 0) < 0) {
+        [frame unlock];
+        return nil;
+    }
+    if (av_samples_set_silence(frame.core->extended_data, 0, numberOfSamples,
+                               descriptor.numberOfChannels, descriptor.format) < 0) {
+        [frame unlock];
+        return nil;
+    }
+    // Audio processing uses exact sample bytes, excluding allocation padding.
     int linesize = [descriptor linesize:numberOfSamples];
     for (int i = 0; i < descriptor.numberOfPlanes; i++) {
-        uint8_t *data = av_mallocz(linesize);
-        memset(data, 0, linesize);
-        AVBufferRef *buffer = av_buffer_create(data, linesize, NULL, NULL, 0);
-        frame.core->buf[i] = buffer;
-        frame.core->data[i] = buffer->data;
-        frame.core->linesize[i] = (int)buffer->size;
+        frame.core->linesize[i] = linesize;
     }
     return frame;
 }
@@ -85,8 +97,8 @@
     AVRational timebase = self.codecDescriptor.timebase;
     SGCodecDescriptor *cd = self.codecDescriptor;
     CMTime duration = CMTimeMake(frame->nb_samples, frame->sample_rate);
-    CMTime timeStamp = CMTimeMake(frame->best_effort_timestamp * timebase.num, timebase.den);
-    CMTime decodeTimeStamp = CMTimeMake(frame->pkt_dts * timebase.num, timebase.den);
+    CMTime timeStamp = SGFFmpegTime(frame->best_effort_timestamp, timebase);
+    CMTime decodeTimeStamp = SGFFmpegTime(frame->pkt_dts, timebase);
     duration = [cd convertDuration:duration];
     timeStamp = [cd convertTimeStamp:timeStamp];
     decodeTimeStamp = [cd convertTimeStamp:decodeTimeStamp];
@@ -113,7 +125,7 @@
     self->_descriptor = [[SGAudioDescriptor alloc] initWithFrame:frame];
     for (int i = 0; i < SGFramePlaneCount; i++) {
         self->_data[i] = frame->data[i];
-        self->_linesize[i] = frame->linesize[i];
+        self->_linesize[i] = i < self->_descriptor.numberOfPlanes ? [self->_descriptor linesize:frame->nb_samples] : 0;
     }
 }
 

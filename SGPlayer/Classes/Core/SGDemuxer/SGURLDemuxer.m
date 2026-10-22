@@ -194,9 +194,10 @@ static NSError * SGCreateFormatContext(AVFormatContext **formatContext, NSURL *U
     ctx->interrupt_callback.opaque = opaque;
     NSString *URLString = URL.isFileURL ? URL.path : URL.absoluteString;
     AVDictionary *opts = SGDictionaryNS2FF(options);
-    if ([URLString.lowercaseString hasPrefix:@"rtmp"] ||
-        [URLString.lowercaseString hasPrefix:@"rtsp"]) {
-        av_dict_set(&opts, "timeout", NULL, 0);
+    // RTSP has its own socket timeout; RTMP's "timeout" instead enables listening.
+    if ([URL.scheme.lowercaseString hasPrefix:@"rtsp"] && !av_dict_get(opts, "timeout", NULL, 0)) {
+        const AVDictionaryEntry *timeout = av_dict_get(opts, "rw_timeout", NULL, 0);
+        if (timeout) av_dict_set(&opts, "timeout", timeout->value, 0);
     }
     int success = avformat_open_input(&ctx, URLString.UTF8String, NULL, &opts);
     if (opts) {
@@ -214,7 +215,6 @@ static NSError * SGCreateFormatContext(AVFormatContext **formatContext, NSURL *U
     if (error) {
         if (ctx) {
             avformat_close_input(&ctx);
-            avformat_free_context(ctx);
         }
         return error;
     }

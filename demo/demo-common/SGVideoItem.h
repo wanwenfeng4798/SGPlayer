@@ -18,3 +18,10 @@
 
 @end
 
+
+#if DEBUG
+// Shared runtime checks for the actual iPhone, macOS and tvOS demo assets.
+@interface SGDemoPlaybackTest : NSObject
++ (instancetype)startInView:(SGPLFView *)view completion:(void (^)(NSDictionary *result))completion;
+@end
+#endif

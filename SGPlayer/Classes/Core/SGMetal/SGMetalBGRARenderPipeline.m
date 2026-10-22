@@ -17,7 +17,12 @@
         self.descriptor.vertexFunction = [self.library newFunctionWithName:@"vertexShader"];
         self.descriptor.fragmentFunction = [self.library newFunctionWithName:@"fragmentShaderBGRA"];
         self.descriptor.colorAttachments[0].pixelFormat = MTLPixelFormatBGRA8Unorm;
-        self.state = [self.device newRenderPipelineStateWithDescriptor:self.descriptor error:nil];
+        NSError *error = nil;
+        self.state = [self.device newRenderPipelineStateWithDescriptor:self.descriptor error:&error];
+        if (!self.state) {
+            NSLog(@"SGPlayer Metal pipeline failed: %@", error);
+            return nil;
+        }
     }
     return self;
 }

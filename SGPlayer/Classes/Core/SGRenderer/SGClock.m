@@ -44,6 +44,9 @@
 {
     SGLockEXE00(self->_lock, ^{
         self->_rate = rate;
+        if (self->_playbackTimebase && CMTimebaseGetRate(self->_playbackTimebase) != 0.0) {
+            CMTimebaseSetRate(self->_playbackTimebase, rate);
+        }
     });
 }
 

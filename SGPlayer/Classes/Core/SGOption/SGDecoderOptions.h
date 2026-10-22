@@ -29,14 +29,6 @@
 @property (nonatomic) BOOL threadsAuto;
 
 /*!
- @property refcountedFrames
- @abstract
-    The option for avformat_open_input.
-    Default is YES.
- */
-@property (nonatomic) BOOL refcountedFrames;
-
-/*!
  @property hardwareDecodeH264
  @abstract
     Indicates whether hardware decoding is enabled for H264.

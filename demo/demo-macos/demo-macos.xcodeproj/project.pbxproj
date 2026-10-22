@@ -5,6 +5,11 @@
 	};
 	objectVersion = 46;
 	objects = {
+        A90200000000000200000001 /* SGPlayer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ../../SGPlayer.xcodeproj; sourceTree = "<group>"; };
+        A90200000000000200000002 /* SGPlayer target proxy */ = {isa = PBXContainerItemProxy; containerPortal = A90200000000000200000001; proxyType = 1; remoteGlobalIDString = 9C8637F521904A0900D730EC; remoteInfo = "SGPlayer macOS"; };
+        A90200000000000200000003 /* SGPlayer target dependency */ = {isa = PBXTargetDependency; name = "SGPlayer macOS"; targetProxy = A90200000000000200000002; };
+        A90200000000000200000004 /* SGPlayer products */ = {isa = PBXGroup; children = (); name = "SGPlayer products"; sourceTree = "<group>"; };
+
 
 /* Begin PBXBuildFile section */
 		9C36DD421E79537500959FDA /* google-help-vr.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9C36DD401E79537500959FDA /* google-help-vr.mp4 */; };
@@ -177,6 +182,7 @@
 			buildRules = (
 			);
 			dependencies = (
+                A90200000000000200000003 /* SGPlayer target dependency */,
 			);
 			name = "demo-macos";
 			productName = "demo-macos";
@@ -189,7 +195,7 @@
 		9CB9250C1E7942AC00DE6721 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 2710;
 				ORGANIZATIONNAME = single;
 				TargetAttributes = {
 					9CB925131E7942AC00DE6721 = {
@@ -210,6 +216,7 @@
 			);
 			mainGroup = 9CB9250B1E7942AC00DE6721;
 			productRefGroup = 9CB925151E7942AC00DE6721 /* Products */;
+			projectReferences = ({ProductGroup = A90200000000000200000004; ProjectRef = A90200000000000200000001; });
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -308,7 +315,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -358,7 +365,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -368,12 +375,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				OTHER_LDFLAGS = ("$(inherited)", "-framework", Security, "-framework", CoreFoundation);
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = KAGR32AB25;
+				DEVELOPMENT_TEAM = Z5TKWGS67N;
 				INFOPLIST_FILE = "demo-macos/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.libobjc.SGPlayer.demo-macos";
 				PRODUCT_NAME = SGPlayer;
 			};
@@ -383,12 +391,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				OTHER_LDFLAGS = ("$(inherited)", "-framework", Security, "-framework", CoreFoundation);
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = KAGR32AB25;
+				DEVELOPMENT_TEAM = Z5TKWGS67N;
 				INFOPLIST_FILE = "demo-macos/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.libobjc.SGPlayer.demo-macos";
 				PRODUCT_NAME = SGPlayer;
 			};

@@ -30,7 +30,7 @@
 /*!
  @property numberOfChannels
  @abstract
-    Indicates the channel count.
+    Indicates the channel count (1 through 8).
  */
 @property (nonatomic) int numberOfChannels;
 

@@ -124,7 +124,7 @@
             cd.metadata = packet.metadata;
             [obj setCodecDescriptor:cd];
             [obj fillWithTimeStamp:start decodeTimeStamp:start duration:duration];
-            [frames addObject:obj];
+            if (obj) [frames addObject:obj];
         }
     } else {
         NSArray<SGFrame *> *objs = [self processPacket:packet];
@@ -144,7 +144,14 @@
     if (self->_flags.sessionFinished) {
         return nil;
     }
-    NSArray<SGFrame *> *frames = [self processPacket:nil];
+    NSMutableArray<SGFrame *> *drainedFrames = [[self processPacket:nil] mutableCopy];
+    if (!drainedFrames) drainedFrames = [NSMutableArray array];
+    SGAudioFrame *tail = nil;
+    while ((tail = [self->_formatter finish])) {
+        NSArray *clipped = [self clipFrames:@[tail] timeRange:self->_codecDescriptor.timeRange];
+        [drainedFrames addObjectsFromArray:clipped ?: @[]];
+    }
+    NSArray<SGFrame *> *frames = drainedFrames;
     if (frames.count > 0) {
         self->_flags.lastEndTimeStamp = CMTimeAdd(frames.lastObject.timeStamp, frames.lastObject.duration);
     }
@@ -166,7 +173,7 @@
             [obj setCodecDescriptor:cd];
             [obj fillWithTimeStamp:lastEnd decodeTimeStamp:lastEnd duration:duration];
             NSMutableArray<SGFrame *> *newFrames = [NSMutableArray arrayWithArray:frames];
-            [newFrames addObject:obj];
+            if (obj) [newFrames addObject:obj];
             frames = [newFrames copy];
         }
     }
@@ -196,7 +203,13 @@
         if (self->_audioDescriptor == nil) {
             self->_audioDescriptor = [[SGAudioDescriptor alloc] initWithFrame:frame];
         }
-        self->_flags.nextTimeStamp = frame->best_effort_timestamp + frame->duration;
+        if (frame->best_effort_timestamp == AV_NOPTS_VALUE) {
+            frame->best_effort_timestamp = self->_flags.nextTimeStamp;
+        }
+        if (frame->duration <= 0 && frame->sample_rate > 0) {
+            frame->duration = av_rescale_q(frame->nb_samples, (AVRational){1, frame->sample_rate}, self->_codecDescriptor.timebase);
+        }
+        self->_flags.nextTimeStamp = av_sat_add64(frame->best_effort_timestamp, frame->duration);
         SGAudioDescriptor *ad = self->_audioDescriptor;
         SGCodecDescriptor *cd = self->_codecDescriptor;
         if (CMTimeCompare(cd.scale, CMTimeMake(1, 1)) != 0) {
@@ -209,7 +222,8 @@
             int64_t input = av_rescale_q(self->_sonic.samplesInput, av_make_q(1, ad.sampleRate), cd.timebase);
             int64_t pts = frame->best_effort_timestamp - input;
             if ([self->_sonic write:frame->data nb_samples:frame->nb_samples]) {
-                [ret addObject:[self readSonicFrame:pts]];
+                SGAudioFrame *converted = [self readSonicFrame:pts];
+                if (converted) [ret addObject:converted];
             }
             [obj unlock];
         } else {
@@ -224,7 +238,8 @@
         int64_t input = av_rescale_q(self->_sonic.samplesInput, av_make_q(1, ad.sampleRate), cd.timebase);
         int64_t pts = self->_flags.nextTimeStamp - input;
         if ([self->_sonic flush]) {
-            [ret addObject:[self readSonicFrame:pts]];
+            SGAudioFrame *converted = [self readSonicFrame:pts];
+            if (converted) [ret addObject:converted];
         }
     }
     return ret;
@@ -263,7 +278,7 @@
                 cd.metadata = obj.metadata;
                 [obj1 setCodecDescriptor:cd];
                 [obj1 fillWithTimeStamp:start decodeTimeStamp:start duration:duration];
-                [ret addObject:obj1];
+                if (obj1) [ret addObject:obj1];
             }
         }
         if (SGCMTimeIsValid(timeRange.duration, NO)) {
@@ -274,6 +289,10 @@
                 self->_flags.sessionFinished = YES;
                 duration = CMTimeMake(nb_samples, ad.sampleRate);
                 SGAudioFrame *obj1 = [SGAudioFrame frameWithDescriptor:ad numberOfSamples:nb_samples];
+                if (!obj1) {
+                    [obj unlock];
+                    continue;
+                }
                 for (int i = 0; i < ad.numberOfPlanes; i++) {
                     memcpy(obj1.core->data[i], obj.core->data[i], obj1.core->linesize[i]);
                 }
@@ -282,7 +301,7 @@
                 cd.metadata = obj.metadata;
                 [obj1 setCodecDescriptor:cd];
                 [obj1 fillWithTimeStamp:start decodeTimeStamp:start duration:duration];
-                [ret addObject:obj1];
+                if (obj1) [ret addObject:obj1];
                 [obj unlock];
                 continue;
             } else if (nb_samples == obj.numberOfSamples) {
@@ -330,10 +349,11 @@
     int nb_samples = [self->_sonic samplesAvailable];
     SGAudioDescriptor *ad = self->_audioDescriptor;
     SGCodecDescriptor *cd = self->_codecDescriptor;
-    CMTime start = CMTimeMake(pts * cd.timebase.num, cd.timebase.den);
+    CMTime start = SGFFmpegTime(pts, cd.timebase);
     CMTime duration = CMTimeMake(nb_samples, ad.sampleRate);
     start = [cd convertTimeStamp:start];
     SGAudioFrame *obj = [SGAudioFrame frameWithDescriptor:ad numberOfSamples:nb_samples];
+    if (!obj) return nil;
     [self->_sonic read:obj.core->data nb_samples:nb_samples];
     SGCodecDescriptor *cd1 = [[SGCodecDescriptor alloc] init];
     cd1.track = cd.track;

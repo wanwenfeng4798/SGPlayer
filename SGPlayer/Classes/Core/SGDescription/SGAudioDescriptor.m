@@ -9,6 +9,7 @@
 #import "SGAudioDescriptor.h"
 #import "SGDescriptor+Internal.h"
 #import "SGFFmpeg.h"
+#import "SGFrame.h"
 
 @implementation SGAudioDescriptor
 
@@ -18,7 +19,9 @@
     obj->_format = self->_format;
     obj->_sampleRate = self->_sampleRate;
     obj->_numberOfChannels = self->_numberOfChannels;
-    obj->_channelLayout = self->_channelLayout;
+    if (av_channel_layout_copy(&obj->_channelLayout, &self->_channelLayout) < 0) {
+        return nil;
+    }
     return obj;
 }
 
@@ -35,13 +38,45 @@
 
 - (instancetype)initWithFrame:(AVFrame *)frame
 {
+    if (!frame || frame->ch_layout.nb_channels <= 0 || frame->ch_layout.nb_channels > SGFramePlaneCount) return nil;
     if (self = [super init]) {
         self->_format = frame->format;
         self->_sampleRate = frame->sample_rate;
         self->_numberOfChannels = frame->ch_layout.nb_channels;
-        self->_channelLayout = frame->ch_layout;
+        if (av_channel_layout_copy(&self->_channelLayout, &frame->ch_layout) < 0) {
+            return nil;
+        }
     }
     return self;
+}
+
+- (void)dealloc
+{
+    av_channel_layout_uninit(&self->_channelLayout);
+}
+
+- (void)setChannelLayout:(AVChannelLayout)channelLayout
+{
+    AVChannelLayout copy = {0};
+    if (channelLayout.nb_channels > SGFramePlaneCount || !av_channel_layout_check(&channelLayout) ||
+        av_channel_layout_copy(&copy, &channelLayout) < 0) {
+        [NSException raise:NSInvalidArgumentException format:@"Invalid audio channel layout"];
+    }
+    av_channel_layout_uninit(&self->_channelLayout);
+    self->_channelLayout = copy;
+    self->_numberOfChannels = copy.nb_channels;
+}
+
+- (void)setNumberOfChannels:(int)numberOfChannels
+{
+    if (numberOfChannels <= 0 || numberOfChannels > SGFramePlaneCount) {
+        [NSException raise:NSInvalidArgumentException format:@"Audio supports 1 to %d channels", SGFramePlaneCount];
+    }
+    if (self->_channelLayout.nb_channels != numberOfChannels) {
+        av_channel_layout_uninit(&self->_channelLayout);
+        av_channel_layout_default(&self->_channelLayout, numberOfChannels);
+    }
+    self->_numberOfChannels = numberOfChannels;
 }
 
 - (BOOL)isPlanar
@@ -61,9 +96,15 @@
 
 - (int)linesize:(int)numberOfSamples
 {
-    int linesize = av_get_bytes_per_sample(self->_format) * numberOfSamples;
-    linesize *= av_sample_fmt_is_planar(self->_format) ? 1 : self->_numberOfChannels;
-    return linesize;
+    if (numberOfSamples < 0 || self->_numberOfChannels <= 0) {
+        return AVERROR(EINVAL);
+    }
+    int bytes = av_get_bytes_per_sample(self->_format);
+    int channels = self.isPlanar ? 1 : self->_numberOfChannels;
+    if (bytes <= 0 || (int64_t)bytes * channels * numberOfSamples > INT_MAX) {
+        return AVERROR(EINVAL);
+    }
+    return bytes * channels * numberOfSamples;
 }
 
 - (BOOL)isEqualToDescriptor:(SGAudioDescriptor *)descriptor

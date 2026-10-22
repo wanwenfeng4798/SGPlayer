@@ -5,6 +5,11 @@
 	};
 	objectVersion = 46;
 	objects = {
+        A90200000000000000000001 /* SGPlayer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ../../SGPlayer.xcodeproj; sourceTree = "<group>"; };
+        A90200000000000000000002 /* SGPlayer target proxy */ = {isa = PBXContainerItemProxy; containerPortal = A90200000000000000000001; proxyType = 1; remoteGlobalIDString = 9CEFA6D51E7122BF00835CAB; remoteInfo = "SGPlayer iOS"; };
+        A90200000000000000000003 /* SGPlayer target dependency */ = {isa = PBXTargetDependency; name = "SGPlayer iOS"; targetProxy = A90200000000000000000002; };
+        A90200000000000000000004 /* SGPlayer products */ = {isa = PBXGroup; children = (); name = "SGPlayer products"; sourceTree = "<group>"; };
+
 
 /* Begin PBXBuildFile section */
 		9C02F6521E79293A00932489 /* SGPlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C02F6501E79293A00932489 /* SGPlayViewController.xib */; };
@@ -179,6 +184,7 @@
 			buildRules = (
 			);
 			dependencies = (
+                A90200000000000000000003 /* SGPlayer target dependency */,
 			);
 			name = "demo-ios";
 			productName = "demo-ios";
@@ -191,7 +197,7 @@
 		9C886B8B1E78EC9F00F2CFD1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 2710;
 				ORGANIZATIONNAME = single;
 				TargetAttributes = {
 					9C886B921E78EC9F00F2CFD1 = {
@@ -216,6 +222,7 @@
 			);
 			mainGroup = 9C886B8A1E78EC9F00F2CFD1;
 			productRefGroup = 9C886B941E78EC9F00F2CFD1 /* Products */;
+			projectReferences = ({ProductGroup = A90200000000000000000004; ProjectRef = A90200000000000000000001; });
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -305,7 +312,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -324,7 +331,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -361,7 +368,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -374,7 +381,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -385,17 +392,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 79WDBYQ4TC;
+				DEVELOPMENT_TEAM = Z5TKWGS67N;
 				INFOPLIST_FILE = "demo-ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
-					"-all_load",
-					"-Objc",
+					"-framework",
+					Security,
+					"-framework",
+					CoreFoundation,
+					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.libobjc.SGPlayer.demo-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omnilink.fufucard";
 				PRODUCT_NAME = SGPlayer;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -405,17 +415,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 79WDBYQ4TC;
+				DEVELOPMENT_TEAM = Z5TKWGS67N;
 				INFOPLIST_FILE = "demo-ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
-					"-all_load",
-					"-Objc",
+					"-framework",
+					Security,
+					"-framework",
+					CoreFoundation,
+					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.libobjc.SGPlayer.demo-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omnilink.fufucard";
 				PRODUCT_NAME = SGPlayer;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};

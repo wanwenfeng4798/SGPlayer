@@ -34,17 +34,7 @@
 + (instancetype)frameWithDescriptor:(SGVideoDescriptor *)descriptor
 {
     SGVideoFrame *frame = [SGVideoFrame frame];
-    uint8_t *data[SGFramePlaneCount] = {nil};
-    int linesize[SGFramePlaneCount] = {0};
-    int result = av_image_alloc(data,
-                                linesize,
-                                descriptor.width,
-                                descriptor.height,
-                                descriptor.format,
-                                1);
-    if (result < 0) {
-        return frame;
-    }
+    if (!frame) return nil;
     frame.core->width = descriptor.width;
     frame.core->height = descriptor.height;
     frame.core->format = descriptor.format;
@@ -52,11 +42,9 @@
         descriptor.sampleAspectRatio.num,
         descriptor.sampleAspectRatio.den
     };
-    for (int i = 0; i < descriptor.numberOfPlanes; i++) {
-        AVBufferRef *buffer = av_buffer_create(data[i], linesize[i], NULL, NULL, 0);
-        frame.core->buf[i] = buffer;
-        frame.core->data[i] = buffer->data;
-        frame.core->linesize[i] = buffer->size;
+    if (av_frame_get_buffer(frame.core, 32) < 0) {
+        [frame unlock];
+        return nil;
     }
     return frame;
 }
@@ -113,7 +101,6 @@
             src_data[0] = CVPixelBufferGetBaseAddress(self->_pixelBuffer);
             src_linesize[0] = (int)CVPixelBufferGetBytesPerRow(self->_pixelBuffer);
         }
-        CVPixelBufferUnlockBaseAddress(self->_pixelBuffer, kCVPixelBufferLock_ReadOnly);
     } else {
         for (int i = 0; i < SGFramePlaneCount; i++) {
             AVFrame *frame = self.core;
@@ -123,12 +110,18 @@
     }
     if (!src_data[0] ||
         !src_linesize[0]) {
+        if (self->_pixelBuffer) {
+            CVPixelBufferUnlockBaseAddress(self->_pixelBuffer, kCVPixelBufferLock_ReadOnly);
+        }
         return nil;
     }
     SGSWScale *context = [[SGSWScale alloc] init];
     context.inputDescriptor = self->_descriptor;
     context.outputDescriptor = descriptor;
     if (![context open]) {
+        if (self->_pixelBuffer) {
+            CVPixelBufferUnlockBaseAddress(self->_pixelBuffer, kCVPixelBufferLock_ReadOnly);
+        }
         return nil;
     }
     int result = av_image_alloc(dst_data,
@@ -138,12 +131,18 @@
                                 descriptor.format,
                                 1);
     if (result < 0) {
+        if (self->_pixelBuffer) {
+            CVPixelBufferUnlockBaseAddress(self->_pixelBuffer, kCVPixelBufferLock_ReadOnly);
+        }
         return nil;
     }
     result = [context convert:src_data
                 inputLinesize:src_linesize
                    outputData:dst_data
                outputLinesize:dst_linesize];
+    if (self->_pixelBuffer) {
+        CVPixelBufferUnlockBaseAddress(self->_pixelBuffer, kCVPixelBufferLock_ReadOnly);
+    }
     if (result < 0) {
         av_freep(dst_data);
         return nil;

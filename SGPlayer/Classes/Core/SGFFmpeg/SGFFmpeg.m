@@ -22,3 +22,11 @@ void SGFFmpegSetupIfNeeded(void)
         avformat_network_init();
     });
 }
+
+CMTime SGFFmpegTime(int64_t value, AVRational timebase)
+{
+    if (value == AV_NOPTS_VALUE || timebase.num <= 0 || timebase.den <= 0) {
+        return kCMTimeInvalid;
+    }
+    return CMTimeMultiplyByRatio(CMTimeMake(value, timebase.den), timebase.num, 1);
+}

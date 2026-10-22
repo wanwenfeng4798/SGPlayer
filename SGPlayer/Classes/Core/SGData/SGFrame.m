@@ -9,6 +9,31 @@
 #import "SGFrame.h"
 #import "SGFrame+Internal.h"
 #import "SGObjectPool.h"
+#import <CoreVideo/CoreVideo.h>
+
+// Decoded frames account for owned memory, rather than compressed packet bytes.
+static int SGFrameBufferSize(const AVFrame *frame)
+{
+    if (frame->format == AV_PIX_FMT_VIDEOTOOLBOX && frame->data[3]) {
+        return (int)MIN(CVPixelBufferGetDataSize((CVPixelBufferRef)frame->data[3]), (size_t)INT_MAX);
+    }
+    int64_t size = 0;
+    int count = AV_NUM_DATA_POINTERS + frame->nb_extended_buf;
+    for (int i = 0; i < count; i++) {
+        const AVBufferRef *buffer = i < AV_NUM_DATA_POINTERS ? frame->buf[i] : frame->extended_buf[i - AV_NUM_DATA_POINTERS];
+        if (!buffer) continue;
+        BOOL duplicate = NO;
+        for (int j = 0; j < i; j++) {
+            const AVBufferRef *previous = j < AV_NUM_DATA_POINTERS ? frame->buf[j] : frame->extended_buf[j - AV_NUM_DATA_POINTERS];
+            if (previous && previous->buffer == buffer->buffer) { duplicate = YES; break; }
+        }
+        if (!duplicate) {
+            size += MIN(buffer->size, (size_t)INT_MAX);
+            if (size >= INT_MAX) return INT_MAX;
+        }
+    }
+    return (int)size;
+}
 
 @interface SGFrame ()
 
@@ -35,6 +60,7 @@
     if (self = [super init]) {
         self->_lock = [[NSLock alloc] init];
         self->_core = av_frame_alloc();
+        if (!self->_core) return nil;
         self->_coreptr = self->_core;
         [self clear];
     }
@@ -110,12 +136,12 @@
     AVFrame *frame = self->_core;
     AVRational timebase = self->_codecDescriptor.timebase;
     SGCodecDescriptor *cd = self->_codecDescriptor;
-    self->_size = frame->pkt_size;
+    self->_size = SGFrameBufferSize(frame);
     self->_track = cd.track;
     self->_metadata = cd.metadata;
-    CMTime duration = CMTimeMake(frame->duration * timebase.num, timebase.den);
-    CMTime timeStamp = CMTimeMake(frame->best_effort_timestamp * timebase.num, timebase.den);
-    CMTime decodeTimeStamp = CMTimeMake(frame->pkt_dts * timebase.num, timebase.den);
+    CMTime duration = SGFFmpegTime(frame->duration, timebase);
+    CMTime timeStamp = SGFFmpegTime(frame->best_effort_timestamp, timebase);
+    CMTime decodeTimeStamp = SGFFmpegTime(frame->pkt_dts, timebase);
     self->_duration = [cd convertDuration:duration];
     self->_timeStamp = [cd convertTimeStamp:timeStamp];
     self->_decodeTimeStamp = [cd convertTimeStamp:decodeTimeStamp];
@@ -137,7 +163,7 @@
 {
     AVFrame *frame = self->_core;
     SGCodecDescriptor *cd = self->_codecDescriptor;
-    self->_size = frame->pkt_size;
+    self->_size = SGFrameBufferSize(frame);
     self->_track = cd.track;
     self->_metadata = cd.metadata;
     self->_duration = duration;

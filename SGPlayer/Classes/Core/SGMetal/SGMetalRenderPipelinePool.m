@@ -11,14 +11,7 @@
 #import "SGMetalNV12RenderPipeline.h"
 #import "SGMetalBGRARenderPipeline.h"
 
-#import "SGPLFTargets.h"
-#if SGPLATFORM_TARGET_OS_IPHONE
-#import "SGMetalShader_iOS.h"
-#elif SGPLATFORM_TARGET_OS_TV
-#import "SGMetalShader_tvOS.h"
-#elif SGPLATFORM_TARGET_OS_MAC
-#import "SGMetalShader_macOS.h"
-#endif
+#import "SGMetalShader.h"
 
 @interface SGMetalRenderPipelinePool ()
 
@@ -36,7 +29,12 @@
 {
     if (self = [super init]) {
         self.device = device;
-        self.library = [device newLibraryWithData:dispatch_data_create(metallib, sizeof(metallib), dispatch_get_global_queue(0, 0), ^{}) error:NULL];
+        NSError *error = nil;
+        self.library = [device newLibraryWithData:dispatch_data_create(metallib, sizeof(metallib), dispatch_get_global_queue(0, 0), ^{}) error:&error];
+        if (!self.library) {
+            NSLog(@"SGPlayer Metal library failed: %@", error);
+            return nil;
+        }
     }
     return self;
 }

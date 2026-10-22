@@ -51,7 +51,7 @@
     self->_track = frame.track;
     int nb_samples = [self->_context write:frame.data nb_samples:frame.numberOfSamples];
     SGAudioFrame *ret = [self frameWithStart:frame.timeStamp nb_samples:nb_samples];
-    self->_nextTimeStamp = CMTimeAdd(ret.timeStamp, ret.duration);
+    if (ret) self->_nextTimeStamp = CMTimeAdd(ret.timeStamp, ret.duration);
     [frame unlock];
     return ret;
 }
@@ -66,18 +66,24 @@
         return nil;
     }
     SGAudioFrame *frame = [self frameWithStart:self->_nextTimeStamp nb_samples:nb_samples];
+    if (frame) self->_nextTimeStamp = CMTimeAdd(frame.timeStamp, frame.duration);
     return frame;
 }
 
 - (SGAudioFrame *)frameWithStart:(CMTime)start nb_samples:(int)nb_samples
 {
+    if (nb_samples <= 0) return nil;
     SGAudioFrame *frame = [SGAudioFrame frameWithDescriptor:self->_descriptor numberOfSamples:nb_samples];
+    if (!frame) return nil;
     uint8_t nb_planes = self->_descriptor.numberOfPlanes;
     uint8_t *data[SGFramePlaneCount] = {NULL};
     for (int i = 0; i < nb_planes; i++) {
         data[i] = frame.core->data[i];
     }
-    [self->_context read:data nb_samples:nb_samples];
+    if ([self->_context read:data nb_samples:nb_samples] < 0) {
+        [frame unlock];
+        return nil;
+    }
     SGCodecDescriptor *cd = [[SGCodecDescriptor alloc] init];
     cd.track = self->_track;
     [frame setCodecDescriptor:cd];

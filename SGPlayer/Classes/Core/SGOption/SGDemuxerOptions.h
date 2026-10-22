@@ -16,8 +16,8 @@
     The options for avformat_open_input.
     Default:
         @{@"reconnect" : @(1),
-          @"user-agent" : @"SGPlayer",
-          @"timeout" : @(20 * 1000 * 1000)}
+          @"user_agent" : @"SGPlayer",
+          @"rw_timeout" : @(20 * 1000 * 1000)}
  */
 @property (nonatomic, copy) NSDictionary *options;
 

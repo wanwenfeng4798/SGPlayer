@@ -18,15 +18,6 @@
 
 @implementation ViewController
 
-- (instancetype)init
-{
-    if (self = [super init]) {
-        self.player = [[SGPlayer alloc] init];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(infoChanged:) name:SGPlayerDidChangeInfosNotification object:self.player];
-    }
-    return self;
-}
-
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -35,6 +26,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.player = [[SGPlayer alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(infoChanged:) name:SGPlayerDidChangeInfosNotification object:self.player];
     
     NSURL *URL = [[NSBundle mainBundle] URLForResource:@"i-see-fire" withExtension:@"mp4"];
     SGAsset *asset = [[SGURLAsset alloc] initWithURL:URL];

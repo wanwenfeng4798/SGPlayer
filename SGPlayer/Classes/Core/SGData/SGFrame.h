@@ -10,7 +10,7 @@
 #import "SGTrack.h"
 #import "SGData.h"
 
-static int const SGFramePlaneCount = 8;
+enum { SGFramePlaneCount = 8 };
 
 @interface SGFrame : NSObject <SGData>
 

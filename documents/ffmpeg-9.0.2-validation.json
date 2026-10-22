@@ -1,0 +1,1850 @@
+{
+  "date": "2026-10-22",
+  "ffmpeg": "9.0.2",
+  "xcode": "27.1 (27A9275)",
+  "ffmpeg_source_sha256": "8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e",
+  "ffmpeg_builds": [
+    {
+      "path": "build/ffmpeg/9.0.2/appletvos/arm64/build-inputs.json",
+      "archive_sha256": "8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e",
+      "configure": [
+        "/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/source/configure",
+        "--prefix=/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/appletvos/arm64/output",
+        "--arch=arm64",
+        "--target-os=darwin",
+        "--enable-cross-compile",
+        "--cc=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "--extra-cflags=-target arm64-apple-tvos15.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS27.0.sdk",
+        "--extra-ldflags=-target arm64-apple-tvos15.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS27.0.sdk",
+        "--enable-static",
+        "--disable-shared",
+        "--enable-pic",
+        "--disable-autodetect",
+        "--disable-gpl",
+        "--disable-nonfree",
+        "--disable-programs",
+        "--disable-doc",
+        "--disable-avdevice",
+        "--disable-devices",
+        "--disable-filters",
+        "--disable-audiotoolbox",
+        "--enable-videotoolbox",
+        "--enable-securetransport",
+        "--enable-network",
+        "--enable-zlib",
+        "--disable-bzlib",
+        "--disable-iconv"
+      ],
+      "xcode": "Xcode 27.1\nBuild version 27A9275",
+      "sdk": "27.0",
+      "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    },
+    {
+      "path": "build/ffmpeg/9.0.2/appletvsimulator/arm64/build-inputs.json",
+      "archive_sha256": "8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e",
+      "configure": [
+        "/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/source/configure",
+        "--prefix=/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/appletvsimulator/arm64/output",
+        "--arch=arm64",
+        "--target-os=darwin",
+        "--enable-cross-compile",
+        "--cc=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "--extra-cflags=-target arm64-apple-tvos15.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/SDKs/AppleTVSimulator27.0.sdk",
+        "--extra-ldflags=-target arm64-apple-tvos15.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/SDKs/AppleTVSimulator27.0.sdk",
+        "--enable-static",
+        "--disable-shared",
+        "--enable-pic",
+        "--disable-autodetect",
+        "--disable-gpl",
+        "--disable-nonfree",
+        "--disable-programs",
+        "--disable-doc",
+        "--disable-avdevice",
+        "--disable-devices",
+        "--disable-filters",
+        "--disable-audiotoolbox",
+        "--enable-videotoolbox",
+        "--enable-securetransport",
+        "--enable-network",
+        "--enable-zlib",
+        "--disable-bzlib",
+        "--disable-iconv"
+      ],
+      "xcode": "Xcode 27.1\nBuild version 27A9275",
+      "sdk": "27.0",
+      "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    },
+    {
+      "path": "build/ffmpeg/9.0.2/appletvsimulator/x86_64/build-inputs.json",
+      "archive_sha256": "8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e",
+      "configure": [
+        "/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/source/configure",
+        "--prefix=/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/appletvsimulator/x86_64/output",
+        "--arch=x86_64",
+        "--target-os=darwin",
+        "--enable-cross-compile",
+        "--cc=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "--extra-cflags=-target x86_64-apple-tvos15.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/SDKs/AppleTVSimulator27.0.sdk",
+        "--extra-ldflags=-target x86_64-apple-tvos15.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/SDKs/AppleTVSimulator27.0.sdk",
+        "--enable-static",
+        "--disable-shared",
+        "--enable-pic",
+        "--disable-autodetect",
+        "--disable-gpl",
+        "--disable-nonfree",
+        "--disable-programs",
+        "--disable-doc",
+        "--disable-avdevice",
+        "--disable-devices",
+        "--disable-filters",
+        "--disable-audiotoolbox",
+        "--enable-videotoolbox",
+        "--enable-securetransport",
+        "--enable-network",
+        "--enable-zlib",
+        "--disable-bzlib",
+        "--disable-iconv",
+        "--disable-x86asm"
+      ],
+      "xcode": "Xcode 27.1\nBuild version 27A9275",
+      "sdk": "27.0",
+      "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    },
+    {
+      "path": "build/ffmpeg/9.0.2/iphoneos/arm64/build-inputs.json",
+      "archive_sha256": "8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e",
+      "configure": [
+        "/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/source/configure",
+        "--prefix=/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/iphoneos/arm64/output",
+        "--arch=arm64",
+        "--target-os=darwin",
+        "--enable-cross-compile",
+        "--cc=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "--extra-cflags=-target arm64-apple-ios15.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk",
+        "--extra-ldflags=-target arm64-apple-ios15.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk",
+        "--enable-static",
+        "--disable-shared",
+        "--enable-pic",
+        "--disable-autodetect",
+        "--disable-gpl",
+        "--disable-nonfree",
+        "--disable-programs",
+        "--disable-doc",
+        "--disable-avdevice",
+        "--disable-devices",
+        "--disable-filters",
+        "--disable-audiotoolbox",
+        "--enable-videotoolbox",
+        "--enable-securetransport",
+        "--enable-network",
+        "--enable-zlib",
+        "--disable-bzlib",
+        "--disable-iconv"
+      ],
+      "xcode": "Xcode 27.1\nBuild version 27A9275",
+      "sdk": "27.1",
+      "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    },
+    {
+      "path": "build/ffmpeg/9.0.2/iphonesimulator/arm64/build-inputs.json",
+      "archive_sha256": "8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e",
+      "configure": [
+        "/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/source/configure",
+        "--prefix=/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/iphonesimulator/arm64/output",
+        "--arch=arm64",
+        "--target-os=darwin",
+        "--enable-cross-compile",
+        "--cc=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "--extra-cflags=-target arm64-apple-ios15.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk",
+        "--extra-ldflags=-target arm64-apple-ios15.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk",
+        "--enable-static",
+        "--disable-shared",
+        "--enable-pic",
+        "--disable-autodetect",
+        "--disable-gpl",
+        "--disable-nonfree",
+        "--disable-programs",
+        "--disable-doc",
+        "--disable-avdevice",
+        "--disable-devices",
+        "--disable-filters",
+        "--disable-audiotoolbox",
+        "--enable-videotoolbox",
+        "--enable-securetransport",
+        "--enable-network",
+        "--enable-zlib",
+        "--disable-bzlib",
+        "--disable-iconv"
+      ],
+      "xcode": "Xcode 27.1\nBuild version 27A9275",
+      "sdk": "27.1",
+      "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    },
+    {
+      "path": "build/ffmpeg/9.0.2/iphonesimulator/x86_64/build-inputs.json",
+      "archive_sha256": "8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e",
+      "configure": [
+        "/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/source/configure",
+        "--prefix=/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/iphonesimulator/x86_64/output",
+        "--arch=x86_64",
+        "--target-os=darwin",
+        "--enable-cross-compile",
+        "--cc=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "--extra-cflags=-target x86_64-apple-ios15.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk",
+        "--extra-ldflags=-target x86_64-apple-ios15.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk",
+        "--enable-static",
+        "--disable-shared",
+        "--enable-pic",
+        "--disable-autodetect",
+        "--disable-gpl",
+        "--disable-nonfree",
+        "--disable-programs",
+        "--disable-doc",
+        "--disable-avdevice",
+        "--disable-devices",
+        "--disable-filters",
+        "--disable-audiotoolbox",
+        "--enable-videotoolbox",
+        "--enable-securetransport",
+        "--enable-network",
+        "--enable-zlib",
+        "--disable-bzlib",
+        "--disable-iconv",
+        "--disable-x86asm"
+      ],
+      "xcode": "Xcode 27.1\nBuild version 27A9275",
+      "sdk": "27.1",
+      "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    },
+    {
+      "path": "build/ffmpeg/9.0.2/macosx/arm64/build-inputs.json",
+      "archive_sha256": "8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e",
+      "configure": [
+        "/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/source/configure",
+        "--prefix=/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/macosx/arm64/output",
+        "--arch=arm64",
+        "--target-os=darwin",
+        "--enable-cross-compile",
+        "--cc=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "--extra-cflags=-target arm64-apple-macos12.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+        "--extra-ldflags=-target arm64-apple-macos12.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+        "--enable-static",
+        "--disable-shared",
+        "--enable-pic",
+        "--disable-autodetect",
+        "--disable-gpl",
+        "--disable-nonfree",
+        "--disable-programs",
+        "--disable-doc",
+        "--disable-avdevice",
+        "--disable-devices",
+        "--disable-filters",
+        "--disable-audiotoolbox",
+        "--enable-videotoolbox",
+        "--enable-securetransport",
+        "--enable-network",
+        "--enable-zlib",
+        "--disable-bzlib",
+        "--disable-iconv"
+      ],
+      "xcode": "Xcode 27.1\nBuild version 27A9275",
+      "sdk": "27.0",
+      "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    },
+    {
+      "path": "build/ffmpeg/9.0.2/macosx/x86_64/build-inputs.json",
+      "archive_sha256": "8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e",
+      "configure": [
+        "/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/source/configure",
+        "--prefix=/Users/mdw/Desktop/SGPlayer/build/ffmpeg/9.0.2/macosx/x86_64/output",
+        "--arch=x86_64",
+        "--target-os=darwin",
+        "--enable-cross-compile",
+        "--cc=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "--extra-cflags=-target x86_64-apple-macos12.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+        "--extra-ldflags=-target x86_64-apple-macos12.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+        "--enable-static",
+        "--disable-shared",
+        "--enable-pic",
+        "--disable-autodetect",
+        "--disable-gpl",
+        "--disable-nonfree",
+        "--disable-programs",
+        "--disable-doc",
+        "--disable-avdevice",
+        "--disable-devices",
+        "--disable-filters",
+        "--disable-audiotoolbox",
+        "--enable-videotoolbox",
+        "--enable-securetransport",
+        "--enable-network",
+        "--enable-zlib",
+        "--disable-bzlib",
+        "--disable-iconv",
+        "--disable-x86asm"
+      ],
+      "xcode": "Xcode 27.1\nBuild version 27A9275",
+      "sdk": "27.0",
+      "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    }
+  ],
+  "xcframeworks": [
+    {
+      "path": "build/xcframeworks/iOS/libavcodec.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libavcodec.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+          "LibraryPath": "libavcodec.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "ios",
+          "SupportedPlatformVariant": "simulator"
+        },
+        {
+          "BinaryPath": "libavcodec.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "ios-arm64",
+          "LibraryPath": "libavcodec.a",
+          "SupportedArchitectures": [
+            "arm64"
+          ],
+          "SupportedPlatform": "ios"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/iOS/libavfilter.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libavfilter.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "ios-arm64",
+          "LibraryPath": "libavfilter.a",
+          "SupportedArchitectures": [
+            "arm64"
+          ],
+          "SupportedPlatform": "ios"
+        },
+        {
+          "BinaryPath": "libavfilter.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+          "LibraryPath": "libavfilter.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "ios",
+          "SupportedPlatformVariant": "simulator"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/iOS/libavformat.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libavformat.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "ios-arm64",
+          "LibraryPath": "libavformat.a",
+          "SupportedArchitectures": [
+            "arm64"
+          ],
+          "SupportedPlatform": "ios"
+        },
+        {
+          "BinaryPath": "libavformat.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+          "LibraryPath": "libavformat.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "ios",
+          "SupportedPlatformVariant": "simulator"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/iOS/libavutil.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libavutil.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+          "LibraryPath": "libavutil.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "ios",
+          "SupportedPlatformVariant": "simulator"
+        },
+        {
+          "BinaryPath": "libavutil.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "ios-arm64",
+          "LibraryPath": "libavutil.a",
+          "SupportedArchitectures": [
+            "arm64"
+          ],
+          "SupportedPlatform": "ios"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/iOS/libswresample.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libswresample.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+          "LibraryPath": "libswresample.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "ios",
+          "SupportedPlatformVariant": "simulator"
+        },
+        {
+          "BinaryPath": "libswresample.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "ios-arm64",
+          "LibraryPath": "libswresample.a",
+          "SupportedArchitectures": [
+            "arm64"
+          ],
+          "SupportedPlatform": "ios"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/iOS/libswscale.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libswscale.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "ios-arm64",
+          "LibraryPath": "libswscale.a",
+          "SupportedArchitectures": [
+            "arm64"
+          ],
+          "SupportedPlatform": "ios"
+        },
+        {
+          "BinaryPath": "libswscale.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+          "LibraryPath": "libswscale.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "ios",
+          "SupportedPlatformVariant": "simulator"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/macOS/libavcodec.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libavcodec.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "macos-arm64_x86_64",
+          "LibraryPath": "libavcodec.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "macos"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/macOS/libavfilter.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libavfilter.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "macos-arm64_x86_64",
+          "LibraryPath": "libavfilter.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "macos"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/macOS/libavformat.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libavformat.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "macos-arm64_x86_64",
+          "LibraryPath": "libavformat.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "macos"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/macOS/libavutil.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libavutil.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "macos-arm64_x86_64",
+          "LibraryPath": "libavutil.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "macos"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/macOS/libswresample.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libswresample.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "macos-arm64_x86_64",
+          "LibraryPath": "libswresample.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "macos"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/macOS/libswscale.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libswscale.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "macos-arm64_x86_64",
+          "LibraryPath": "libswscale.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "macos"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/tvOS/libavcodec.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libavcodec.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "tvos-arm64",
+          "LibraryPath": "libavcodec.a",
+          "SupportedArchitectures": [
+            "arm64"
+          ],
+          "SupportedPlatform": "tvos"
+        },
+        {
+          "BinaryPath": "libavcodec.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "tvos-arm64_x86_64-simulator",
+          "LibraryPath": "libavcodec.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "tvos",
+          "SupportedPlatformVariant": "simulator"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/tvOS/libavfilter.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libavfilter.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "tvos-arm64",
+          "LibraryPath": "libavfilter.a",
+          "SupportedArchitectures": [
+            "arm64"
+          ],
+          "SupportedPlatform": "tvos"
+        },
+        {
+          "BinaryPath": "libavfilter.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "tvos-arm64_x86_64-simulator",
+          "LibraryPath": "libavfilter.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "tvos",
+          "SupportedPlatformVariant": "simulator"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/tvOS/libavformat.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libavformat.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "tvos-arm64_x86_64-simulator",
+          "LibraryPath": "libavformat.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "tvos",
+          "SupportedPlatformVariant": "simulator"
+        },
+        {
+          "BinaryPath": "libavformat.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "tvos-arm64",
+          "LibraryPath": "libavformat.a",
+          "SupportedArchitectures": [
+            "arm64"
+          ],
+          "SupportedPlatform": "tvos"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/tvOS/libavutil.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libavutil.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "tvos-arm64",
+          "LibraryPath": "libavutil.a",
+          "SupportedArchitectures": [
+            "arm64"
+          ],
+          "SupportedPlatform": "tvos"
+        },
+        {
+          "BinaryPath": "libavutil.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "tvos-arm64_x86_64-simulator",
+          "LibraryPath": "libavutil.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "tvos",
+          "SupportedPlatformVariant": "simulator"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/tvOS/libswresample.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libswresample.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "tvos-arm64_x86_64-simulator",
+          "LibraryPath": "libswresample.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "tvos",
+          "SupportedPlatformVariant": "simulator"
+        },
+        {
+          "BinaryPath": "libswresample.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "tvos-arm64",
+          "LibraryPath": "libswresample.a",
+          "SupportedArchitectures": [
+            "arm64"
+          ],
+          "SupportedPlatform": "tvos"
+        }
+      ]
+    },
+    {
+      "path": "build/xcframeworks/tvOS/libswscale.xcframework",
+      "slices": [
+        {
+          "BinaryPath": "libswscale.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "tvos-arm64_x86_64-simulator",
+          "LibraryPath": "libswscale.a",
+          "SupportedArchitectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "SupportedPlatform": "tvos",
+          "SupportedPlatformVariant": "simulator"
+        },
+        {
+          "BinaryPath": "libswscale.a",
+          "HeadersPath": "Headers",
+          "LibraryIdentifier": "tvos-arm64",
+          "LibraryPath": "libswscale.a",
+          "SupportedArchitectures": [
+            "arm64"
+          ],
+          "SupportedPlatform": "tvos"
+        }
+      ]
+    }
+  ],
+  "framework_build_matrix": [
+    {
+      "kind": "framework",
+      "platform": "macOS",
+      "sdk": "macosx",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer macOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "macosx",
+        "-destination",
+        "generic/platform=macOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/macosx",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-macosx-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "macOS",
+      "sdk": "macosx",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer macOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "macosx",
+        "-destination",
+        "generic/platform=macOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/macosx",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-macosx-Release.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "iOS",
+      "sdk": "iphoneos",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer iOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/iphoneos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-iphoneos-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "iOS",
+      "sdk": "iphoneos",
+      "configuration": "Release",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer iOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/iphoneos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-iphoneos-Release.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "iOS",
+      "sdk": "iphonesimulator",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer iOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphonesimulator",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/iphonesimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-iphonesimulator-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "iOS",
+      "sdk": "iphonesimulator",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer iOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "iphonesimulator",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/iphonesimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-iphonesimulator-Release.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "tvOS",
+      "sdk": "appletvos",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer tvOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "appletvos",
+        "-destination",
+        "generic/platform=tvOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/appletvos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-appletvos-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "tvOS",
+      "sdk": "appletvos",
+      "configuration": "Release",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer tvOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "appletvos",
+        "-destination",
+        "generic/platform=tvOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/appletvos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-appletvos-Release.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "tvOS",
+      "sdk": "appletvsimulator",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer tvOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "appletvsimulator",
+        "-destination",
+        "generic/platform=tvOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/appletvsimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-appletvsimulator-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "tvOS",
+      "sdk": "appletvsimulator",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer tvOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "appletvsimulator",
+        "-destination",
+        "generic/platform=tvOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/appletvsimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-appletvsimulator-Release.log"
+    }
+  ],
+  "mobile_demo_build_matrix": [
+    {
+      "kind": "demo",
+      "platform": "iOS",
+      "sdk": "iphoneos",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-ios",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/iphoneos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-iphoneos-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "iOS",
+      "sdk": "iphoneos",
+      "configuration": "Release",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-ios",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/iphoneos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-iphoneos-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "iOS",
+      "sdk": "iphonesimulator",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-ios",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphonesimulator",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/iphonesimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-iphonesimulator-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "iOS",
+      "sdk": "iphonesimulator",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-ios",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "iphonesimulator",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/iphonesimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-iphonesimulator-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "tvOS",
+      "sdk": "appletvos",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-tvos",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "appletvos",
+        "-destination",
+        "generic/platform=tvOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/appletvos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-appletvos-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "tvOS",
+      "sdk": "appletvos",
+      "configuration": "Release",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-tvos",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "appletvos",
+        "-destination",
+        "generic/platform=tvOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/appletvos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-appletvos-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "tvOS",
+      "sdk": "appletvsimulator",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-tvos",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "appletvsimulator",
+        "-destination",
+        "generic/platform=tvOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/appletvsimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-appletvsimulator-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "tvOS",
+      "sdk": "appletvsimulator",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-tvos",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "appletvsimulator",
+        "-destination",
+        "generic/platform=tvOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/appletvsimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-appletvsimulator-Release.log"
+    }
+  ],
+  "macos_demo": {
+    "builds": [
+      {
+        "kind": "demo",
+        "platform": "macOS",
+        "sdk": "macosx",
+        "configuration": "Debug",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "exit_code": 0,
+        "command": [
+          "xcodebuild",
+          "-workspace",
+          "demo/demo.xcworkspace",
+          "-scheme",
+          "demo-macos",
+          "-configuration",
+          "Debug",
+          "-sdk",
+          "macosx",
+          "-destination",
+          "generic/platform=macOS",
+          "-derivedDataPath",
+          "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/macosx",
+          "CODE_SIGNING_ALLOWED=NO",
+          "ONLY_ACTIVE_ARCH=NO",
+          "ARCHS=arm64 x86_64",
+          "build"
+        ],
+        "log": "build/verification/xcode-27.1/demo-macosx-Debug.log"
+      },
+      {
+        "kind": "demo",
+        "platform": "macOS",
+        "sdk": "macosx",
+        "configuration": "Release",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "exit_code": 0,
+        "command": [
+          "xcodebuild",
+          "-workspace",
+          "demo/demo.xcworkspace",
+          "-scheme",
+          "demo-macos",
+          "-configuration",
+          "Release",
+          "-sdk",
+          "macosx",
+          "-destination",
+          "generic/platform=macOS",
+          "-derivedDataPath",
+          "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/macosx",
+          "CODE_SIGNING_ALLOWED=NO",
+          "ONLY_ACTIVE_ARCH=NO",
+          "ARCHS=arm64 x86_64",
+          "build"
+        ],
+        "log": "build/verification/xcode-27.1/demo-macosx-Release.log"
+      }
+    ]
+  },
+  "runtime_tests": {
+    "command": "python3 scripts/test-ffmpeg.py --asan --network --hardware",
+    "exit_code": 0,
+    "log": "/Users/mdw/Desktop/SGPlayer/SGPlayer/Classes/Core/SGMetal/SGMetalSphereModel.m:19:31: warning: variable length array folded to constant array as an extension [-Wgnu-folding-constant]\n   19 | static UInt32        indices [indicesCount];\n      |                               ^~~~~~~~~~~~\n/Users/mdw/Desktop/SGPlayer/SGPlayer/Classes/Core/SGMetal/SGMetalSphereModel.m:20:31: warning: variable length array folded to constant array as an extension [-Wgnu-folding-constant]\n   20 | static SGMetalVertex vertices[verticesCount];\n      |                               ^~~~~~~~~~~~~\n2 warnings generated.\n/Users/mdw/Desktop/SGPlayer/SGPlayer/Classes/Core/SGMetal/SGMetalTextureLoader.m:100:23: warning: variable length array folded to constant array as an extension [-Wgnu-folding-constant]\n  100 |     NSUInteger widths[channelCount] = {0};\n      |                       ^~~~~~~~~~~~\n/Users/mdw/Desktop/SGPlayer/SGPlayer/Classes/Core/SGMetal/SGMetalTextureLoader.m:101:24: warning: variable length array folded to constant array as an extension [-Wgnu-folding-constant]\n  101 |     NSUInteger heights[channelCount] = {0};\n      |                        ^~~~~~~~~~~~\n/Users/mdw/Desktop/SGPlayer/SGPlayer/Classes/Core/SGMetal/SGMetalTextureLoader.m:102:28: warning: variable length array folded to constant array as an extension [-Wgnu-folding-constant]\n  102 |     MTLPixelFormat formats[channelCount] = {0};\n      |                            ^~~~~~~~~~~~\n3 warnings generated.\n[tls @ 0x60d000014a20] Unable to negotiate TLS/SSL session: -9807\n127.0.0.1 - - [22/Oct/2026 12:34:55] \"GET /silence.wav HTTP/1.1\" 200 -\n127.0.0.1 - - [22/Oct/2026 12:34:55] \"GET /player.wav HTTP/1.1\" 200 -\nPASS running video clock changes speed immediately; paused rate changes stay paused\nPASS layout ownership, channel bounds, YUV allocation/pool/reference, timestamps\nPASS planar/packed resampling 44100 -> 48000 samples including EOF drain\nPASS mpeg4 -> software decode (60 frames), EOF drain, seek/flush\nPASS WAV -> SGAudioDecoder -> formatter/resampler, all 48000 output samples and repeated EOF\nPASS HTTPS/SecureTransport, untrusted certificate rejection, SGURLDemuxer User-Agent\nPASS h264_videotoolbox -> VideoToolbox decode (60 frames), EOF drain, seek/flush\nPASS h264_videotoolbox -> software decode (60 frames), EOF drain, seek/flush\nPASS hevc_videotoolbox -> VideoToolbox decode (60 frames), EOF drain, seek/flush\nPASS hevc_videotoolbox -> software decode (60 frames), EOF drain, seek/flush\nPASS FFmpeg 9.0.2 migration regression suite\n",
+    "scope": "SGPlayer and test sources instrumented with AddressSanitizer; production FFmpeg libraries linked without sanitizer instrumentation"
+  },
+  "source_snapshot_sha256": {
+    "README.md": "a982ca82b476969c72f4b56cf807278363edd8b181757d56977d7f957f547afb",
+    "SGPlayer.xcodeproj/project.pbxproj": "c7609671b3dbd0842b87ce003824d3bfb1fcd8c0ffc44777ef401ea72b898b7a",
+    "SGPlayer.xcodeproj/xcshareddata/xcschemes/SGPlayer iOS.xcscheme": "e5debdf876824e8e126c6095dee71a5f491c11ea62ffb2544484de812dc67317",
+    "SGPlayer.xcodeproj/xcshareddata/xcschemes/SGPlayer macOS.xcscheme": "7c65c77bf18cbb7831ed6f66b78792baadba45b8089fce85fbf35cec4813b47a",
+    "SGPlayer.xcodeproj/xcshareddata/xcschemes/SGPlayer tvOS.xcscheme": "50e6a5f2ebd25d53c170c77fd11778d1521886f4b12844c430b45c0032e8780a",
+    "SGPlayer/Classes/Core/SGData/SGAudioFrame.m": "9776b3fb6ae2f2d6a8d01ad809f26e2389128dd2aa2f6270bfc32e9471dccda7",
+    "SGPlayer/Classes/Core/SGData/SGFrame.h": "923ab6eae9f60a482d95f5b1ccf49e580f58f2a6c56253ef18ba66590e1a179f",
+    "SGPlayer/Classes/Core/SGData/SGFrame.m": "9b4328bdaf5745aa26f52c17c3f943ff3af55cf9c3d172cf7e7f1b25e4628805",
+    "SGPlayer/Classes/Core/SGData/SGPacket.m": "46778fcd92e0ee8d669001997c49c6e8132d033fb42e711d0b56f99f6cfa3916",
+    "SGPlayer/Classes/Core/SGData/SGVideoFrame.m": "70a3320560ce97bcc26767bbb6ac432d0ca2eba8d04f4d59dd0be7a2aca93db2",
+    "SGPlayer/Classes/Core/SGDecoder/SGAudioDecoder.m": "26a16849918232fa0480cc26473fef7cdc55630df3a0970cc32277b518bbd174",
+    "SGPlayer/Classes/Core/SGDecoder/SGCodecContext.m": "64dae251dec79efe45be018343c2a40ca2750d50029c0ce57fce16a3fce1ff71",
+    "SGPlayer/Classes/Core/SGDecoder/SGVideoDecoder.m": "6b029ae4d8faff04da9b56d965899c64d14fc3920a3e7ac9420ab1e538a5b712",
+    "SGPlayer/Classes/Core/SGDemuxer/SGURLDemuxer.m": "3dffb6185c11133cef2a6ffb44c6f96c4bc15cee4ee195da512c203d1dde769c",
+    "SGPlayer/Classes/Core/SGDescription/SGAudioDescriptor.h": "cc663d93f370f60b0df00e957bf60bc804abba021331a5cbf60649c42dc86b67",
+    "SGPlayer/Classes/Core/SGDescription/SGAudioDescriptor.m": "da38443f0a75434ad8006e90837ac7da2af2c30359228e0ed54bc5503cbaa22d",
+    "SGPlayer/Classes/Core/SGFFmpeg/SGFFmpeg.h": "a78c105a9fc4d17c34ed58720d8d859ff4d95ec2407092b0a36755d959557b0e",
+    "SGPlayer/Classes/Core/SGFFmpeg/SGFFmpeg.m": "6f25391e8079b60c32f1b809d68076edaa77fec343c19a4faa51e55ce55d2d21",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalBGRARenderPipeline.m": "dc8ea6ade0e16b0b060096fb661207c6c6ffb909747dca5dcf8a3d91bde212b7",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalNV12RenderPipeline.m": "8520d9fe4f1e8f1ca7508d66e5e0a44ea476e04fb8c930916e9cfbd2a4230d0a",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalRenderPipelinePool.m": "7dea687eeaa112eebff685d79ce1b69114e4e2155d1e41cf8f88082475253c86",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalShader_iOS.h": null,
+    "SGPlayer/Classes/Core/SGMetal/SGMetalShader_macOS.h": null,
+    "SGPlayer/Classes/Core/SGMetal/SGMetalShader_tvOS.h": null,
+    "SGPlayer/Classes/Core/SGMetal/SGMetalYUVRenderPipeline.m": "f45da1d32224592fedfef3348802dd63beaf319e28d3a1d313e11abf667255b0",
+    "SGPlayer/Classes/Core/SGOption/SGDecoderOptions.h": "953845c6cd099d7ac99a93764e6161948964e11fe6430128eb5f1a7b57661b40",
+    "SGPlayer/Classes/Core/SGOption/SGDecoderOptions.m": "54fb08759a38bc29a2cfe76c677b238485052d768e534d90bcbbd320174832ce",
+    "SGPlayer/Classes/Core/SGOption/SGDemuxerOptions.h": "0182cf32acb586e98694de25612fe407b487d3aab59a9e05c424e91b19a5a939",
+    "SGPlayer/Classes/Core/SGOption/SGDemuxerOptions.m": "76cc3b5f837bc9c781706da3b37c35c4c8a931116d284bdb52ac52cf9a59dfdd",
+    "SGPlayer/Classes/Core/SGProcessor/SGAudioFormatter.m": "dec03ff7eea7e206813bd0e77a77b2448368345d97e55a008b8c20dad002eeab",
+    "SGPlayer/Classes/Core/SGProcessor/SGSWResample.m": "976704085d901cc0cbb34fc5ae508d65d7400e521e131a5e4d465a3c86298cc6",
+    "SGPlayer/Classes/Core/SGRenderer/SGClock.m": "5e969fd787ba4f728345114cc4f67a6d3cfdb81a6933890b8f476e3bb7207571",
+    "build.sh": "20a72a6dedd0795ce960389f18d22fb72f4d865b33109c362c02677b0db67910",
+    "demo/demo-common/SGVideoItem.h": "5ed030dc03c1f8f7c7a81289e566d5c167c4efc3e8b08a364299383a7df2a04a",
+    "demo/demo-common/SGVideoItem.m": "84ac0ffc602f846aad0e59d38b4b2f90272c2efe4b4e38226c11c8eeee56bc1c",
+    "demo/demo-ios/demo-ios.xcodeproj/project.pbxproj": "84cba07a01f4e7cd4f6c03a8f1efca3876b6cd6412b8d86c250a2b88582bad8b",
+    "demo/demo-ios/demo-ios.xcodeproj/xcshareddata/xcschemes/demo-ios.xcscheme": "f193d3dbbdc268ccd85a8204c5c6253a96aace064359baa0433e87dc60f59f1d",
+    "demo/demo-ios/demo-ios/AppDelegate.h": "a166b8d471996cd3d59748f4779b71cd38484ef1c5d855c609aeff65513e08e3",
+    "demo/demo-ios/demo-ios/AppDelegate.m": "148c54a7e3d1a1178cb3e13a8bcdd5f8937d46d460e1e6ac710b4f08381161a5",
+    "demo/demo-ios/demo-ios/Info.plist": "5c76a3ca84acf54ef59b4fd382be68eb57042b989c67a65db2b2067ee72c9ec2",
+    "demo/demo-ios/demo-ios/SGPlayViewController.m": "7041fc7344b585a67737b3582e2a0fd385e254e3ae917b3316f9815046f5563e",
+    "demo/demo-macos/demo-macos.xcodeproj/project.pbxproj": "13511b4b4c75a0d83c7dffddd49ef75284c5061d3dbe47bd514e389b200961fc",
+    "demo/demo-macos/demo-macos.xcodeproj/xcshareddata/xcschemes/demo-macos.xcscheme": "88e5a18594d2d885d91b2447d02d035601db228dbfbdb117227023817c28c501",
+    "demo/demo-macos/demo-macos/AppDelegate.m": "c2bcce2f586aadeb5dc5ca615992391ab508c144d55c5be8d9108430cffcaa4f",
+    "demo/demo-macos/demo-macos/SGPlayViewController.m": "4e80400c9abdb14ac1cfd9a9a8cc6fc662973934abe966198b12f38b3110f788",
+    "demo/demo-tvos/demo-tvos.xcodeproj/project.pbxproj": "f02095d80ff92e62d76ad44cbfc4811d4f1108fd5e50cdf02aef7b2fa4a19a36",
+    "demo/demo-tvos/demo-tvos.xcodeproj/xcshareddata/xcschemes/demo-tvos.xcscheme": "ddeb2405d75d9f81bc648e1b61bdc0325cfe0c8644d2b6b8c9fe01ea262aff5d",
+    "demo/demo-tvos/demo-tvos/AppDelegate.h": "e2503d299ed783bbbe3c577df34b8607a3f88292f410becca5b69a7125a5be95",
+    "demo/demo-tvos/demo-tvos/AppDelegate.m": "148c54a7e3d1a1178cb3e13a8bcdd5f8937d46d460e1e6ac710b4f08381161a5",
+    "demo/demo-tvos/demo-tvos/Info.plist": "f4f3421dca73171d1e3bc00ef19cffc51adbf6f025a643a18320c108508d5dee",
+    "demo/demo-tvos/demo-tvos/ViewController.m": "e43e2c4a485d87f842f6420b07f5f973e73344c99883768d36adf2139b030870",
+    "scripts/avconfig.h": null,
+    "scripts/build-ffmpeg.py": "29a5288afbfcc267171e3f1b0859aafb219ac4fdfb5b1321f892f972922ec562",
+    "scripts/build-metal.py": "e724426b5a756b475c04ae483a7ce2835ccb9c00f2869997c09f6643edb668b7",
+    "scripts/compile-ffmpeg.sh": null,
+    "scripts/compile-openssl.sh": null,
+    "scripts/config.h": null,
+    "scripts/do-compile-ffmpeg.sh": null,
+    "scripts/do-compile-openssl.sh": null,
+    "scripts/ffversion.h": null,
+    "scripts/init-ffmpeg.sh": null,
+    "scripts/init-openssl.sh": null,
+    "scripts/module.sh": null,
+    "scripts/pull-repo-base.sh": null,
+    "scripts/pull-repo-ref.sh": null,
+    "scripts/test-desktop-tv.py": "5acd7b187492b38f563e7c61621cd9d8f417d8017c627a81db4a370647bae657",
+    "scripts/test-ffmpeg.py": "f1beba2ae5d48e939894d376db82fad5d6b9c21016e7893527e0dc1a85c99e84",
+    "scripts/test-iphone.py": "70296d74d14ef241cb06d828c8c701b5e5c8aea731f5bc5dca8dd7902c3438f0",
+    "scripts/verify-apple-builds.py": "416581aa9c8ecfcd074895b0c6ab289a67b4c684ddd273514e85a2857e4564ce",
+    "tests/ffmpeg-migration.m": "bdfd28de7efda03367f83d61cebc4c65c7e2ec39253ff7bf6d20a9dbab6db8ad"
+  },
+  "limitations": [
+    "Runtime automation calls actual player APIs; UI button hit testing, navigation, remote focus, VR gestures/gyroscope and acoustic speaker-output checks are not covered.",
+    "Physical iPhone 11 and current Mac tested; tvOS uses an Apple TV simulator with software decode, without physical Apple TV or oldest supported OS tests.",
+    "No remote RTMP/RTMPS/RTSP live-server tests.",
+    "RTMPE/RTMPTE not enabled with SecureTransport-only dependency build.",
+    "No Main10/HDR render or long-duration performance validation.",
+    "AddressSanitizer instruments SGPlayer/test code; linked production FFmpeg libraries are not sanitizer-instrumented."
+  ],
+  "demo_runtime": {
+    "iPhone11": {
+      "result_path": "build/iPhoneDevice/smoke-result.json",
+      "passed": true,
+      "ffmpegVersion": "9.0.2",
+      "renderedFrames": 1851,
+      "cases": [
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.988632318582515,
+            "rate0.5": 0.5198331446940838,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 321,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire",
+          "hardwareFrames": 321
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9664911612213407,
+            "rate0.5": 0.5142971089999815,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 314,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire, Video Track",
+          "hardwareFrames": 314
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.958277596408506,
+            "rate0.5": 0.5249940864329354,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 0,
+          "phase": 6,
+          "screenshot": false,
+          "error": "",
+          "name": "I See Fire, Audio Track",
+          "hardwareFrames": 0
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9999856372945306,
+            "rate0.5": 0.5149806803455202,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 222,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire, Range: 30s-40s",
+          "hardwareFrames": 222
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9630101937383762,
+            "rate0.5": 0.5219349770861399,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 329,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire, Range: 30s-50s, Scale: 0.5",
+          "hardwareFrames": 329
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "endOfFile": true,
+            "rate2": 1.9641072261570838,
+            "rate0.5": 0.5276042095919448,
+            "seek": true,
+            "pause": true,
+            "segmentBoundary": true,
+            "play": true
+          },
+          "renderedFrames": 350,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire + Google Help",
+          "hardwareFrames": 350
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9582047243025205,
+            "rate0.5": 0.522548661062042,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 315,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "Google Help VR",
+          "hardwareFrames": 315
+        }
+      ],
+      "osVersion": "Version 27.0 (Build 24A437)",
+      "runID": "e4d06dcd-bc95-4ce1-9b5f-dcc665b87720",
+      "bundleIdentifier": "com.omnilink.fufucard",
+      "hardwareFrames": 1851
+    },
+    "macOS_physical": {
+      "result_path": "build/RuntimeMac/runtime-result.json",
+      "passed": true,
+      "ffmpegVersion": "9.0.2",
+      "renderedFrames": 1873,
+      "cases": [
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9777743591261725,
+            "rate0.5": 0.5165855179881976,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 297,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire",
+          "hardwareFrames": 297
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9710279237210682,
+            "rate0.5": 0.5138941627669068,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 321,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire, Video Track",
+          "hardwareFrames": 321
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9860652619759287,
+            "rate0.5": 0.5110946694622427,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 0,
+          "phase": 6,
+          "screenshot": false,
+          "error": "",
+          "name": "I See Fire, Audio Track",
+          "hardwareFrames": 0
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9847634040176294,
+            "rate0.5": 0.5110164692928499,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 249,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire, Range: 30s-40s",
+          "hardwareFrames": 249
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9906529686106407,
+            "rate0.5": 0.5138069858703912,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 324,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire, Range: 30s-50s, Scale: 0.5",
+          "hardwareFrames": 324
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "endOfFile": true,
+            "rate2": 2.000027641204934,
+            "rate0.5": 0.5130530829296003,
+            "seek": true,
+            "pause": true,
+            "segmentBoundary": true,
+            "play": true
+          },
+          "renderedFrames": 364,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire + Google Help",
+          "hardwareFrames": 364
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9848110909257655,
+            "rate0.5": 0.5107640251473414,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 318,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "Google Help VR",
+          "hardwareFrames": 318
+        }
+      ],
+      "osVersion": "Version 27.0.1 (Build 26A434)",
+      "runID": "5505fa7c-cb02-41b7-92c1-7efea466eeb8",
+      "bundleIdentifier": "com.libobjc.SGPlayer.demo-macos",
+      "hardwareFrames": 1873
+    },
+    "tvOS_simulator": {
+      "result_path": "build/RuntimeTV/runtime-result.json",
+      "passed": true,
+      "ffmpegVersion": "9.0.2",
+      "renderedFrames": 1848,
+      "cases": [
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.984049295418105,
+            "rate0.5": 0.5109416468852677,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 312,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire",
+          "hardwareFrames": 0
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9663117855349224,
+            "rate0.5": 0.5143668163546201,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 314,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire, Video Track",
+          "hardwareFrames": 0
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9858726677010201,
+            "rate0.5": 0.5160325507531452,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 0,
+          "phase": 6,
+          "screenshot": false,
+          "error": "",
+          "name": "I See Fire, Audio Track",
+          "hardwareFrames": 0
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9768535219878738,
+            "rate0.5": 0.5113038581938013,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 239,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire, Range: 30s-40s",
+          "hardwareFrames": 0
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9815116888475421,
+            "rate0.5": 0.5111468324180818,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 316,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire, Range: 30s-50s, Scale: 0.5",
+          "hardwareFrames": 0
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "endOfFile": true,
+            "rate2": 1.9815791823523061,
+            "rate0.5": 0.5112245093205217,
+            "seek": true,
+            "pause": true,
+            "segmentBoundary": true,
+            "play": true
+          },
+          "renderedFrames": 350,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "I See Fire + Google Help",
+          "hardwareFrames": 0
+        },
+        {
+          "passed": true,
+          "checks": {
+            "resume": true,
+            "play": true,
+            "rate2": 1.9847997673122413,
+            "rate0.5": 0.5148952885284913,
+            "seek": true,
+            "pause": true,
+            "endOfFile": true
+          },
+          "renderedFrames": 317,
+          "phase": 6,
+          "screenshot": true,
+          "error": "",
+          "name": "Google Help VR",
+          "hardwareFrames": 0
+        }
+      ],
+      "osVersion": "Version 27.0 (Build 24J360)",
+      "runID": "6c1116e5-950d-43eb-bf88-506b0e77ba9d",
+      "bundleIdentifier": "com.libobjc.SGPlayer.demo-tvos",
+      "hardwareFrames": 0
+    }
+  },
+  "signing": {
+    "bundle_identifier": "com.omnilink.fufucard",
+    "account": "whevether@outlook.com",
+    "team_name": "OmniLink Exports Inc.",
+    "team_id": "Z5TKWGS67N",
+    "ipa": "build/iPhoneDevice/com.omnilink.fufucard-development.ipa"
+  },
+  "normal_launch": {
+    "iPhone": "build/iPhoneDevice/normal-launch.json",
+    "tvOS_screenshot": "build/RuntimeTV/normal-launch.png",
+    "macOS": "Restored normal demo window after runtime verification"
+  }
+}
