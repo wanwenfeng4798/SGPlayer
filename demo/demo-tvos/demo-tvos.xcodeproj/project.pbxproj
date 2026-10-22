@@ -11,7 +11,38 @@
         A90200000000000100000004 /* SGPlayer products */ = {isa = PBXGroup; children = (); name = "SGPlayer products"; sourceTree = "<group>"; };
 
 
+
+        A919157951F5F5C712AC4BBD = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ../../tests/SGFeatureUITests.m; sourceTree = SOURCE_ROOT; };
+        FB88224318140A8255306AA4 = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = SGFeatureUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+        22F1C99FD2EC5D83DA86E8EB = {isa = PBXBuildFile; fileRef = A919157951F5F5C712AC4BBD; };
+        AA8C15F23CE86976D47412D8 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (22F1C99FD2EC5D83DA86E8EB,); runOnlyForDeploymentPostprocessing = 0; };
+        027D8FC4D2EF3E1B6F39BBCD = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        6848B22ABD6FC39BC9CB8CCE = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        2E92A6346F0CEE2608D45E17 = {isa = PBXContainerItemProxy; containerPortal = 9C6901EB21901D3C00B546E3; proxyType = 1; remoteGlobalIDString = 9C6901F221901D3C00B546E3; remoteInfo = "demo-tvos"; };
+        1F9BE5EE03A103895E3854CA = {isa = PBXTargetDependency; target = 9C6901F221901D3C00B546E3; targetProxy = 2E92A6346F0CEE2608D45E17; };
+        2A98F2A75CF0124818D2E956 = {isa = XCConfigurationList; buildConfigurations = (4F0186B1B052808141A0A096,80B1681E8B975EC19F50C9A9,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        27CBA698BA361E14D047A174 = {isa = PBXNativeTarget; buildConfigurationList = 2A98F2A75CF0124818D2E956; buildPhases = (AA8C15F23CE86976D47412D8,027D8FC4D2EF3E1B6F39BBCD,6848B22ABD6FC39BC9CB8CCE,); buildRules = (); dependencies = (1F9BE5EE03A103895E3854CA,); name = SGFeatureUITests; productName = SGFeatureUITests; productReference = FB88224318140A8255306AA4; productType = "com.apple.product-type.bundle.ui-testing"; };
+        4F0186B1B052808141A0A096 = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_OBJC_ARC = YES; CLANG_ENABLE_MODULES = YES; CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = Z5TKWGS67N; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = "com.omnilink.fufucard.tvos.uitests"; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = appletvos; SUPPORTED_PLATFORMS = "appletvos appletvsimulator"; TVOS_DEPLOYMENT_TARGET = 15.0; TARGETED_DEVICE_FAMILY = "3"; TEST_TARGET_NAME = "demo-tvos"; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)","@executable_path/Frameworks","@loader_path/Frameworks",); }; name = Debug; };
+        80B1681E8B975EC19F50C9A9 = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_OBJC_ARC = YES; CLANG_ENABLE_MODULES = YES; CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = Z5TKWGS67N; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = "com.omnilink.fufucard.tvos.uitests"; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = appletvos; SUPPORTED_PLATFORMS = "appletvos appletvsimulator"; TVOS_DEPLOYMENT_TARGET = 15.0; TARGETED_DEVICE_FAMILY = "3"; TEST_TARGET_NAME = "demo-tvos"; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)","@executable_path/Frameworks","@loader_path/Frameworks",); }; name = Release; };
+
 /* Begin PBXBuildFile section */
+        C7B669DC6E1FD0DE7C97809E = {isa = PBXBuildFile; fileRef = 430CDBE8557273426E6DD434; };
+        702E3171159C17F9F2862C70 = {isa = PBXBuildFile; fileRef = 244A7D24511668F51F3A34DC; };
+        55E8C107E6893FD204636780 = {isa = PBXBuildFile; fileRef = 5C78F64AD9559D9DC43E405E; };
+        AAF63D7847E8D61DA2854794 = {isa = PBXBuildFile; fileRef = DD89B40598B5E128C34FCC65; };
+        6235D5B1463AF024826B6FA2 = {isa = PBXBuildFile; fileRef = CC64AFB44D9AFA6C438612A0; };
+        D9324FAF0C0F1CA729D5856F = {isa = PBXBuildFile; fileRef = F2C3A4E16B292C809D3E3753; };
+        0BDF5F4FDC847CC98BC568FA = {isa = PBXBuildFile; fileRef = 4A10E806E1D76CADAAB7F7ED; };
+        2013CCD663AE71B5B74D997D = {isa = PBXBuildFile; fileRef = 609B6CEB6297BDD2DE763DB1; };
+        C065D0AB2E0C7F9CC1DEF26E = {isa = PBXBuildFile; fileRef = DF7D5E6A0F750AFE6FCB79DD; };
+        F86467FA9D73F6D3DB8175BB = {isa = PBXBuildFile; fileRef = 626898424B3E0FF53E911BAD; };
+        3157E3611717875606ADFF33 = {isa = PBXBuildFile; fileRef = 8808D8135623D94FCAFCB140; };
+        C95353FF3982E174FD574262 = {isa = PBXBuildFile; fileRef = FAC0DDA01C0BFF87778A9090; };
+        EEE086B8A1B0DD861BDA9F67 /* UniformTypeIdentifiers */ = {isa = PBXBuildFile; fileRef = 9C5F2C004256F1C571465CA3; };
+        075EC73FB17A1E23DAFA7D69 /* ImageIO */ = {isa = PBXBuildFile; fileRef = 0B343743BFFC18A1EBB3E272; };
+        D46C28B371E1B7F26EB92D99 /* CoreText */ = {isa = PBXBuildFile; fileRef = F2AA1794E8EE456903ECF8E2; };
+        DFDFD5E119A342BC9957339C /* CoreImage */ = {isa = PBXBuildFile; fileRef = 75ED4E1A191A466409072718; };
+        6E949784139614F494E4AD1A /* AVKit */ = {isa = PBXBuildFile; fileRef = 8E4C125B04EDA2B5E7843D57; };
         A90300000000000100000007 = {isa = PBXBuildFile; fileRef = A90300000000000100000005; };
         A90300000000000100000006 = {isa = PBXBuildFile; fileRef = A90300000000000100000004; };
         A90300000000000100000003 = {isa = PBXBuildFile; fileRef = A90300000000000100000002; };
@@ -30,6 +61,24 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+        430CDBE8557273426E6DD434 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/orientation.mp4"; sourceTree = SOURCE_ROOT; };
+        244A7D24511668F51F3A34DC = {isa = PBXFileReference; lastKnownFileType = file; path = "../../licenses/NotoSansCJK-OFL.txt"; sourceTree = SOURCE_ROOT; };
+        5C78F64AD9559D9DC43E405E = {isa = PBXFileReference; lastKnownFileType = file; path = "../../SGPlayer/Resources/Fonts/NotoSansCJKsc-Regular.otf"; sourceTree = SOURCE_ROOT; };
+        DD89B40598B5E128C34FCC65 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/ffv1.mkv"; sourceTree = SOURCE_ROOT; };
+        CC64AFB44D9AFA6C438612A0 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/mpeg2.ts"; sourceTree = SOURCE_ROOT; };
+        F2C3A4E16B292C809D3E3753 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/animated.gif"; sourceTree = SOURCE_ROOT; };
+        4A10E806E1D76CADAAB7F7ED = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/wmv2.asf"; sourceTree = SOURCE_ROOT; };
+        609B6CEB6297BDD2DE763DB1 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/h264.mkv"; sourceTree = SOURCE_ROOT; };
+        DF7D5E6A0F750AFE6FCB79DD = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/mpeg4.nut"; sourceTree = SOURCE_ROOT; };
+        626898424B3E0FF53E911BAD = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/huffyuv.avi"; sourceTree = SOURCE_ROOT; };
+        8808D8135623D94FCAFCB140 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/sorenson.flv"; sourceTree = SOURCE_ROOT; };
+        6034E39D392A0B6714B17182 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "../demo-common/SGFeatureDemo.h"; sourceTree = SOURCE_ROOT; };
+        FAC0DDA01C0BFF87778A9090 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "../demo-common/SGFeatureDemo.m"; sourceTree = SOURCE_ROOT; };
+        9C5F2C004256F1C571465CA3 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+        0B343743BFFC18A1EBB3E272 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+        F2AA1794E8EE456903ECF8E2 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+        75ED4E1A191A466409072718 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+        8E4C125B04EDA2B5E7843D57 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
         A90300000000000100000005 = {isa = PBXFileReference; lastKnownFileType = file; path = "../demo-assset/google-help-vr.mp4"; sourceTree = SOURCE_ROOT; };
         A90300000000000100000004 = {isa = PBXFileReference; lastKnownFileType = file; path = "../demo-assset/i-see-fire.mp4"; sourceTree = SOURCE_ROOT; };
         A90300000000000100000001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../demo-common/SGVideoItem.h; sourceTree = SOURCE_ROOT; };
@@ -58,6 +107,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                EEE086B8A1B0DD861BDA9F67 /* UniformTypeIdentifiers */,
+                075EC73FB17A1E23DAFA7D69 /* ImageIO */,
+                D46C28B371E1B7F26EB92D99 /* CoreText */,
+                DFDFD5E119A342BC9957339C /* CoreImage */,
+                6E949784139614F494E4AD1A /* AVKit */,
 				9C86356A21902E5000D730EC /* SGPlayer.framework in Frameworks */,
 				9CD90238230BE08E00A358AA /* AVFoundation.framework in Frameworks */,
 				9C8637E72190479F00D730EC /* AudioToolbox.framework in Frameworks */,
@@ -74,6 +128,20 @@
 		9C6901EA21901D3C00B546E3 = {
 			isa = PBXGroup;
 			children = (
+                430CDBE8557273426E6DD434,
+                244A7D24511668F51F3A34DC,
+                5C78F64AD9559D9DC43E405E,
+                A919157951F5F5C712AC4BBD,
+                DD89B40598B5E128C34FCC65,
+                CC64AFB44D9AFA6C438612A0,
+                F2C3A4E16B292C809D3E3753,
+                4A10E806E1D76CADAAB7F7ED,
+                609B6CEB6297BDD2DE763DB1,
+                DF7D5E6A0F750AFE6FCB79DD,
+                626898424B3E0FF53E911BAD,
+                8808D8135623D94FCAFCB140,
+                6034E39D392A0B6714B17182,
+                FAC0DDA01C0BFF87778A9090,
 				A90300000000000100000001, A90300000000000100000002,
                 A90300000000000100000004,
                 A90300000000000100000005,
@@ -86,6 +154,7 @@
 		9C6901F421901D3C00B546E3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+                FB88224318140A8255306AA4,
 				9C6901F321901D3C00B546E3 /* SGPlayer.app */,
 			);
 			name = Products;
@@ -178,6 +247,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+                27CBA698BA361E14D047A174,
 				9C6901F221901D3C00B546E3 /* demo-tvos */,
 			);
 		};
@@ -188,6 +258,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                C7B669DC6E1FD0DE7C97809E,
+                702E3171159C17F9F2862C70,
+                55E8C107E6893FD204636780,
+                AAF63D7847E8D61DA2854794,
+                6235D5B1463AF024826B6FA2,
+                D9324FAF0C0F1CA729D5856F,
+                0BDF5F4FDC847CC98BC568FA,
+                2013CCD663AE71B5B74D997D,
+                C065D0AB2E0C7F9CC1DEF26E,
+                F86467FA9D73F6D3DB8175BB,
+                3157E3611717875606ADFF33,
 				A90300000000000100000006,
                 A90300000000000100000007,
                 9C69020021901D3D00B546E3 /* Assets.xcassets in Resources */,
@@ -202,6 +283,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                C95353FF3982E174FD574262,
 				A90300000000000100000003,
                 9C6901FB21901D3C00B546E3 /* ViewController.m in Sources */,
 				9C69020321901D3D00B546E3 /* main.m in Sources */,
@@ -340,7 +422,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z5TKWGS67N;
 				INFOPLIST_FILE = "demo-tvos/Info.plist";
-				OTHER_LDFLAGS = ("$(inherited)", "-framework", Security, "-framework", CoreFoundation);
+				OTHER_LDFLAGS = ("-lc++", "-liconv", "$(inherited)", "-framework", Security, "-framework", CoreFoundation);
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -359,7 +441,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z5TKWGS67N;
 				INFOPLIST_FILE = "demo-tvos/Info.plist";
-				OTHER_LDFLAGS = ("$(inherited)", "-framework", Security, "-framework", CoreFoundation);
+				OTHER_LDFLAGS = ("-lc++", "-liconv", "$(inherited)", "-framework", Security, "-framework", CoreFoundation);
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

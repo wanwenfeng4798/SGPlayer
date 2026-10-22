@@ -11,7 +11,38 @@
         A90200000000000000000004 /* SGPlayer products */ = {isa = PBXGroup; children = (); name = "SGPlayer products"; sourceTree = "<group>"; };
 
 
+
+        56FF40E3659DE6B6286F64CC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ../../tests/SGFeatureUITests.m; sourceTree = SOURCE_ROOT; };
+        98142358BAD11CB3A276D63D = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = SGFeatureUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+        4934EE22063127F93219B2C3 = {isa = PBXBuildFile; fileRef = 56FF40E3659DE6B6286F64CC; };
+        79131627D85EC269FB3398BC = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (4934EE22063127F93219B2C3,); runOnlyForDeploymentPostprocessing = 0; };
+        E36D0C7A89F6FEFB1B516E18 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        A9E2CAFA9997FC288EE76A89 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        5C49E6D3C29BD2E06F65CCCA = {isa = PBXContainerItemProxy; containerPortal = 9C886B8B1E78EC9F00F2CFD1; proxyType = 1; remoteGlobalIDString = 9C886B921E78EC9F00F2CFD1; remoteInfo = "demo-ios"; };
+        D9FF19944FCCCAC785F49E8E = {isa = PBXTargetDependency; target = 9C886B921E78EC9F00F2CFD1; targetProxy = 5C49E6D3C29BD2E06F65CCCA; };
+        519E08E34D9FA561F8372B68 = {isa = XCConfigurationList; buildConfigurations = (E6222006D78CF990C4AF496D,E77F2BF44C396360FED888C4,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        5A1954031626C0F8F1079E0F = {isa = PBXNativeTarget; buildConfigurationList = 519E08E34D9FA561F8372B68; buildPhases = (79131627D85EC269FB3398BC,E36D0C7A89F6FEFB1B516E18,A9E2CAFA9997FC288EE76A89,); buildRules = (); dependencies = (D9FF19944FCCCAC785F49E8E,); name = SGFeatureUITests; productName = SGFeatureUITests; productReference = 98142358BAD11CB3A276D63D; productType = "com.apple.product-type.bundle.ui-testing"; };
+        E6222006D78CF990C4AF496D = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_OBJC_ARC = YES; CLANG_ENABLE_MODULES = YES; CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = Z5TKWGS67N; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = "com.omnilink.fufucard.ios.uitests"; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = iphoneos; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; IPHONEOS_DEPLOYMENT_TARGET = 15.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = "demo-ios"; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)","@executable_path/Frameworks","@loader_path/Frameworks",); }; name = Debug; };
+        E77F2BF44C396360FED888C4 = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_OBJC_ARC = YES; CLANG_ENABLE_MODULES = YES; CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = Z5TKWGS67N; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = "com.omnilink.fufucard.ios.uitests"; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = iphoneos; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; IPHONEOS_DEPLOYMENT_TARGET = 15.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = "demo-ios"; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)","@executable_path/Frameworks","@loader_path/Frameworks",); }; name = Release; };
+
 /* Begin PBXBuildFile section */
+        2BDA19E22A1AD887C870F7C5 = {isa = PBXBuildFile; fileRef = DD6F0A831FD6477CAB6D7826; };
+        174596E7B641D0315154443D = {isa = PBXBuildFile; fileRef = 0677E4F5BEF563380C4EDA46; };
+        A0F56E14AB01F99881AE9B74 = {isa = PBXBuildFile; fileRef = B515EC1B318B9F89990220D9; };
+        4302EA7FBF9A65BE50AF8E16 = {isa = PBXBuildFile; fileRef = A7257CCBC752627DB83C6EA8; };
+        9DDEF3F9E7ACD7E4D1E47C0A = {isa = PBXBuildFile; fileRef = 08445DF8A8FBA3EAFDCF7BAA; };
+        8C9CE70143A76DC870C07B38 = {isa = PBXBuildFile; fileRef = 7622D951C9E5B71E3ACEE065; };
+        463FA40C7E1C01FCC64D0BC0 = {isa = PBXBuildFile; fileRef = 482482C2FA321873C22D899C; };
+        76A03168408A856DB9F1E6D7 = {isa = PBXBuildFile; fileRef = DB20274E0F572505EA0235A7; };
+        84D84C2DDB737105F83695E2 = {isa = PBXBuildFile; fileRef = CD58EAB81CFD0A0D65C787DC; };
+        9FABEF7865C62B9FB0DB0B30 = {isa = PBXBuildFile; fileRef = 7FEA72E92193E155C0C54D5C; };
+        BB02AEDDD80F04043DB63C82 = {isa = PBXBuildFile; fileRef = 0C1F89E2EBC65E2DB237383A; };
+        3A32B6B51ED25DC8006AA45D = {isa = PBXBuildFile; fileRef = 1CA86D84A5B1C164415A2E05; };
+        49D3B4C9F15E1C98230CFBF2 /* UniformTypeIdentifiers */ = {isa = PBXBuildFile; fileRef = 0E1114FF5C3750ED217E9D2A; };
+        DE5B413B351EF087B1D1BE6C /* ImageIO */ = {isa = PBXBuildFile; fileRef = 971DAB53951BCC1C30ED1531; };
+        0AF2321E783F6C312AA5CEF6 /* CoreText */ = {isa = PBXBuildFile; fileRef = 5783A4364373B52501A04327; };
+        8E1E17D35A445EFBE5D414A3 /* CoreImage */ = {isa = PBXBuildFile; fileRef = AC27FBA84D59DF28E3571D11; };
+        89F4072D4448D07773ED02D4 /* AVKit */ = {isa = PBXBuildFile; fileRef = F87E3C02A3C74870508CA6F0; };
 		9C02F6521E79293A00932489 /* SGPlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C02F6501E79293A00932489 /* SGPlayViewController.xib */; };
 		9C03E5F3212E732B001F0E1B /* SGPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C03E5F2212E732B001F0E1B /* SGPlayViewController.m */; };
 		9C36DD461E79538500959FDA /* google-help-vr.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9C36DD441E79538500959FDA /* google-help-vr.mp4 */; };
@@ -33,6 +64,24 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+        DD6F0A831FD6477CAB6D7826 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/orientation.mp4"; sourceTree = SOURCE_ROOT; };
+        0677E4F5BEF563380C4EDA46 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../licenses/NotoSansCJK-OFL.txt"; sourceTree = SOURCE_ROOT; };
+        B515EC1B318B9F89990220D9 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../SGPlayer/Resources/Fonts/NotoSansCJKsc-Regular.otf"; sourceTree = SOURCE_ROOT; };
+        A7257CCBC752627DB83C6EA8 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/ffv1.mkv"; sourceTree = SOURCE_ROOT; };
+        08445DF8A8FBA3EAFDCF7BAA = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/mpeg2.ts"; sourceTree = SOURCE_ROOT; };
+        7622D951C9E5B71E3ACEE065 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/animated.gif"; sourceTree = SOURCE_ROOT; };
+        482482C2FA321873C22D899C = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/wmv2.asf"; sourceTree = SOURCE_ROOT; };
+        DB20274E0F572505EA0235A7 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/h264.mkv"; sourceTree = SOURCE_ROOT; };
+        CD58EAB81CFD0A0D65C787DC = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/mpeg4.nut"; sourceTree = SOURCE_ROOT; };
+        7FEA72E92193E155C0C54D5C = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/huffyuv.avi"; sourceTree = SOURCE_ROOT; };
+        0C1F89E2EBC65E2DB237383A = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/sorenson.flv"; sourceTree = SOURCE_ROOT; };
+        7940EB33320BCFDEBFE8ECA6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "../demo-common/SGFeatureDemo.h"; sourceTree = SOURCE_ROOT; };
+        1CA86D84A5B1C164415A2E05 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "../demo-common/SGFeatureDemo.m"; sourceTree = SOURCE_ROOT; };
+        0E1114FF5C3750ED217E9D2A /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+        971DAB53951BCC1C30ED1531 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+        5783A4364373B52501A04327 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+        AC27FBA84D59DF28E3571D11 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+        F87E3C02A3C74870508CA6F0 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		9C02F64E1E79293A00932489 /* SGPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGPlayViewController.h; sourceTree = "<group>"; };
 		9C02F6501E79293A00932489 /* SGPlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SGPlayViewController.xib; sourceTree = "<group>"; };
 		9C03E5F2212E732B001F0E1B /* SGPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGPlayViewController.m; sourceTree = "<group>"; };
@@ -75,6 +124,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                49D3B4C9F15E1C98230CFBF2 /* UniformTypeIdentifiers */,
+                DE5B413B351EF087B1D1BE6C /* ImageIO */,
+                0AF2321E783F6C312AA5CEF6 /* CoreText */,
+                8E1E17D35A445EFBE5D414A3 /* CoreImage */,
+                89F4072D4448D07773ED02D4 /* AVKit */,
 				9C8A0E342190A687006F7AE8 /* SGPlayer.framework in Frameworks */,
 				9CD90232230BDF1900A358AA /* AVFoundation.framework in Frameworks */,
 				9CD90234230BDF2C00A358AA /* AudioToolbox.framework in Frameworks */,
@@ -101,6 +155,20 @@
 		9C886B8A1E78EC9F00F2CFD1 = {
 			isa = PBXGroup;
 			children = (
+                DD6F0A831FD6477CAB6D7826,
+                0677E4F5BEF563380C4EDA46,
+                B515EC1B318B9F89990220D9,
+                56FF40E3659DE6B6286F64CC,
+                A7257CCBC752627DB83C6EA8,
+                08445DF8A8FBA3EAFDCF7BAA,
+                7622D951C9E5B71E3ACEE065,
+                482482C2FA321873C22D899C,
+                DB20274E0F572505EA0235A7,
+                CD58EAB81CFD0A0D65C787DC,
+                7FEA72E92193E155C0C54D5C,
+                0C1F89E2EBC65E2DB237383A,
+                7940EB33320BCFDEBFE8ECA6,
+                1CA86D84A5B1C164415A2E05,
 				9C49E5F02304F77B00C5FB1F /* demo-common */,
 				9C886B951E78EC9F00F2CFD1 /* demo-ios */,
 				9C886B941E78EC9F00F2CFD1 /* Products */,
@@ -111,6 +179,7 @@
 		9C886B941E78EC9F00F2CFD1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+                98142358BAD11CB3A276D63D,
 				9C886B931E78EC9F00F2CFD1 /* SGPlayer.app */,
 			);
 			name = Products;
@@ -226,6 +295,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+                5A1954031626C0F8F1079E0F,
 				9C886B921E78EC9F00F2CFD1 /* demo-ios */,
 			);
 		};
@@ -236,6 +306,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                2BDA19E22A1AD887C870F7C5,
+                174596E7B641D0315154443D,
+                A0F56E14AB01F99881AE9B74,
+                4302EA7FBF9A65BE50AF8E16,
+                9DDEF3F9E7ACD7E4D1E47C0A,
+                8C9CE70143A76DC870C07B38,
+                463FA40C7E1C01FCC64D0BC0,
+                76A03168408A856DB9F1E6D7,
+                84D84C2DDB737105F83695E2,
+                9FABEF7865C62B9FB0DB0B30,
+                BB02AEDDD80F04043DB63C82,
 				9C886BA61E78EC9F00F2CFD1 /* LaunchScreen.storyboard in Resources */,
 				9C886BA31E78EC9F00F2CFD1 /* Assets.xcassets in Resources */,
 				9C36DD461E79538500959FDA /* google-help-vr.mp4 in Resources */,
@@ -252,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                3A32B6B51ED25DC8006AA45D,
 				9C886B9E1E78EC9F00F2CFD1 /* SGListViewController.m in Sources */,
 				9C03E5F3212E732B001F0E1B /* SGPlayViewController.m in Sources */,
 				9C49E5F32304F77B00C5FB1F /* SGVideoItem.m in Sources */,
@@ -398,7 +480,7 @@
 				INFOPLIST_FILE = "demo-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
+				OTHER_LDFLAGS = ("-lc++", "-liconv",
 					"-framework",
 					Security,
 					"-framework",
@@ -421,7 +503,7 @@
 				INFOPLIST_FILE = "demo-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
+				OTHER_LDFLAGS = ("-lc++", "-liconv",
 					"-framework",
 					Security,
 					"-framework",

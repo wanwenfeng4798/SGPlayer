@@ -6,6 +6,20 @@ English | [简体中文](CHANGELOG.zh-CN.md)
 
 These changes are present in the working tree. This entry does not indicate a published release or Git tag.
 
+### Playback effects and backend control
+
+- Add `SGPlaybackController` with explicit FFmpeg/native selection, time-preserving switches and common composed output for display, capture and system PiP.
+- Decode external/embedded subtitles with owned cues, track metadata, font attachments and bitmap placement; render styled ASS through libass, FreeType, HarfBuzz and FriBidi.
+- Add media-clock danmaku, text/image watermarks, animated GIF stickers and independent cancellable GIF clip export with atomic output replacement.
+- Route filters through libavfilter for FFmpeg and Core Image for native playback: brightness, contrast, saturation, grayscale, flips, blur and RGB curves.
+- Add the shared 16-control feature demo and eight cross-platform UI scenarios, additional format playback, pixel/data assertions and deterministic stale-capacity regression.
+- Infer missing video duration from adjacent PTS, preserving FLV/ASF frames and EOF timing. Reject stale decoder-capacity snapshots so older notifications cannot overwrite drained state.
+- Avoid synchronous main-thread renderer initialization from the demux operation and remove self-retaining deallocation callbacks during rapid replacement/teardown.
+- Correct the Metal-to-Core Image vertical origin and ASS glyph orientation; check real red-top/blue-bottom output pixels in both backends.
+- Bundle and register a pinned Noto CJK font, copy static-framework resources into all demo apps, and verify the full Chinese subtitle phrase using screenshot OCR with a missing-glyph negative control.
+- Add bounded CPU output for iPhone background PiP and retain composed buffers for lazy capture. Count frames only after submission to the system display layer.
+- Preserve the pre-implementation assessment and initial format failures as historical evidence; see the current bilingual feature implementation/testing documents for exact acceptance and limits.
+
 ### Breaking changes
 
 - Require FFmpeg 9.0.2 and Xcode 27.1 with Metal Toolchain. Set deployment targets directly to iOS/tvOS 15.0 and macOS 12.0.
@@ -43,8 +57,6 @@ These changes are present in the working tree. This entry does not indicate a pu
 - Pass all seven samples on physical iPhone 11, physical Mac and Apple TV simulator: 21 sample runs. Check playback, pause/resume, 0.5x/2x rates, seek, EOF, frame output and video screenshots; cross a segment boundary in the concatenation case.
 - Publish matching Chinese/English READMEs, migration guides, test records and changelogs. Preserve the pre-upgrade audit as a historical archive.
 
-### Verification limits
+### Historical assessment and initial format findings (2026-10-22)
 
-Player-API automation does not validate every UI click, remote focus, VR gesture/gyroscope interaction or acoustic speaker output. Physical Apple TV, oldest supported systems, remote live streams, HDR/Main10 rendering and long-duration performance were not tested. The tvOS simulator uses software decoding. AddressSanitizer covers SGPlayer/test sources; the linked production FFmpeg libraries are not sanitizer-instrumented.
-
-See the [test record](documents/ffmpeg-9.0.2-testing.en.md) and [migration guide](documents/ffmpeg-9.0.2-migration.en.md).
+Before implementation, the bilingual assessment proposed these capabilities. The first format run passed raw decoding 8/8 but strict player acceptance only 6/8: FLV/ASF lost a frame and emitted zero-duration frames. These findings led to the duration fix above; current strict acceptance is 8/8. The initial evidence is retained in `documents/ffmpeg-formats-validation.initial.json`.

@@ -47,17 +47,13 @@
 
 - (void)dealloc
 {
-    SGLockCondEXE10(self->_lock, ^BOOL {
-        return self->_flags.state != SGDecodeLoopStateClosed;
-    }, ^SGBlock {
-        [self setState:SGDecodeLoopStateClosed];
-        [self->_contexts enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, SGDecodeContext *obj, BOOL *stop) {
-            [obj destory];
-        }];
-        [self->_operationQueue cancelAllOperations];
-        [self->_operationQueue waitUntilAllOperationsAreFinished];
-        return nil;
-    });
+    // Teardown must not create autoreleased blocks retaining a dying self.
+    self->_delegate = nil;
+    [self->_lock lock]; self->_flags.state = SGDecodeLoopStateClosed; [self->_lock unlock];
+    [self->_wakeup lock]; [self->_wakeup broadcast]; [self->_wakeup unlock];
+    [self->_operationQueue cancelAllOperations];
+    if (NSOperationQueue.currentQueue != self->_operationQueue) [self->_operationQueue waitUntilAllOperationsAreFinished];
+    for (SGDecodeContext *context in self->_contexts.allValues) [context destory];
 }
 
 #pragma mark - Setter & Getter
@@ -87,6 +83,14 @@
         ret = self->_flags.state;
     });
     return ret;
+}
+
+- (SGCapacity)capacity
+{
+    [self->_lock lock];
+    SGCapacity capacity = self->_capacity;
+    [self->_lock unlock];
+    return capacity;
 }
 
 - (SGBlock)setCapacityIfNeeded

@@ -82,3 +82,6 @@ The iPhone must be unlocked, trust the Mac, have Developer Mode enabled and use 
 ## Uncovered scope
 
 This is not complete interactive acceptance testing of every feature. UI click/navigation hit testing, remote focus, VR gestures/gyroscope interaction, acoustic speaker output, physical Apple TV, oldest supported systems, remote live-stream interaction/reconnection, HDR/Main10 color rendering and long-duration performance were not tested. Enabled protocol components do not establish compatibility with actual remote services. RTMPE/RTMPTE are not enabled in the SecureTransport build.
+
+
+Current implementation addendum: additional format acceptance is now 8/8 after the FLV/ASF duration fix. The feature implementation has separate real-device/UI/data evidence; use the [current feature test record](media-features-testing.en.md). This original migration record remains a historical baseline.

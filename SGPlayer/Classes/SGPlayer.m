@@ -90,6 +90,7 @@ NSNotificationName const SGPlayerDidChangeInfosNotification = @"SGPlayerDidChang
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 #endif
     [SGActivity removeTarget:self];
+    self->_currentItem.delegate = nil;
     [self->_currentItem close];
     [self->_clock close];
     [self->_audioRenderer close];
@@ -518,7 +519,16 @@ NSNotificationName const SGPlayerDidChangeInfosNotification = @"SGPlayerDidChang
 
 - (void)playerItem:(SGPlayerItem *)playerItem didChangeState:(SGPlayerItemState)state
 {
+    // Opening a renderer requires the main thread. Never synchronously wait
+    // for it from the demux operation: close/replacement may be joining that
+    // operation on the main thread at the same time.
+    if (!NSThread.isMainThread) {
+        __weak SGPlayer *weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{ [weakSelf playerItem:playerItem didChangeState:state]; });
+        return;
+    }
     SGLockEXE10(self->_lock, ^SGBlock {
+        if (self->_currentItem != playerItem) return nil;
         SGInfoAction action = SGInfoActionNone;
         SGBlock b1 = ^{}, b2 = ^{}, b3 = ^{}, b4 = ^{};
         switch (state) {

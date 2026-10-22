@@ -23,6 +23,8 @@ ROOT = Path(__file__).resolve().parent.parent
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--asan', action='store_true')
+    parser.add_argument('--features', action='store_true', help='Check effects, subtitle parsing, GIF and per-kernel filter pixels')
+    parser.add_argument('--formats', action='store_true', help='Generate and test MKV, AVI, FLV, TS, ASF, NUT and GIF through the player demux/decode path')
     parser.add_argument('--network', action='store_true', help='Test HTTPS on a local TLS server')
     parser.add_argument('--hardware', action='store_true', help='Require H.264/HEVC VideoToolbox encode/decode')
     args = parser.parse_args()
@@ -37,7 +39,7 @@ def main():
         name = objects[objects[ref]['fileRef']]['path']
         if Path(name).suffix not in ('.m', '.c'):
             continue
-        matches = list((ROOT / 'SGPlayer').rglob(name))
+        matches = [ROOT / name] if (ROOT / name).is_file() else list((ROOT / 'SGPlayer').rglob(name))
         if len(matches) != 1:
             raise SystemExit(f'Ambiguous source: {name}')
         sources.append(matches[0])
@@ -62,7 +64,7 @@ def main():
     def compile_source(source):
         obj = build / (source.name + '.o')
         stamp = obj.with_suffix('.inputs')
-        digest = hashlib.sha256(header_hash.digest() + source.read_bytes() + repr(flags).encode()).hexdigest()
+        digest = hashlib.sha256(header_hash.digest() + source.read_bytes() + (ROOT / 'tests/ffmpeg-formats.inc').read_bytes() + (ROOT / 'tests/media-features.inc').read_bytes() + repr(flags).encode()).hexdigest()
         if obj.exists() and stamp.exists() and stamp.read_text() == digest:
             return str(obj)
         command = ['xcrun', 'clang', *flags]
@@ -74,11 +76,11 @@ def main():
 
     with ThreadPoolExecutor(max_workers=4) as executor:
         compiled = list(executor.map(compile_source, sources))
-    frameworks = ['Cocoa', 'AVFoundation', 'AudioToolbox', 'VideoToolbox', 'CoreMedia',
+    frameworks = ['AVKit', 'CoreImage', 'CoreText', 'ImageIO', 'UniformTypeIdentifiers', 'Cocoa', 'AVFoundation', 'AudioToolbox', 'VideoToolbox', 'CoreMedia',
                   'CoreVideo', 'Metal', 'MetalKit', 'GLKit', 'QuartzCore', 'Security', 'CoreFoundation']
     command = ['xcrun', 'clang', *flags, *compiled, '-o', str(build / 'ffmpeg-migration'),
                '-L', str(ROOT / 'build/libs/macOS/universal/lib'),
-               '-lavformat', '-lavcodec', '-lavfilter', '-lswscale', '-lswresample', '-lavutil', '-lz']
+               '-liconv', '-lass', '-lharfbuzz', '-lfreetype', '-lfribidi', '-lc++', '-lavformat', '-lavcodec', '-lavfilter', '-lswscale', '-lswresample', '-lavutil', '-lz']
     for framework in frameworks:
         command += ['-framework', framework]
     subprocess.run(command, check=True)
@@ -111,7 +113,8 @@ def main():
         url = f'https://127.0.0.1:{server.server_port}/silence.wav'
     try:
         subprocess.run([str(build / 'ffmpeg-migration'), str(build / 'bframes.mp4'), url,
-                        'hardware' if args.hardware else '', str(build / 'silence.wav')], check=True, timeout=120)
+                        'hardware' if args.hardware else '', str(build / 'silence.wav'),
+                        str(build / 'formats') if args.formats else '', str(build / 'features') if args.features else ''], check=True, timeout=180)
     finally:
         if server:
             server.shutdown()

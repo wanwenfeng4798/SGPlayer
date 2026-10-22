@@ -1,0 +1,1579 @@
+{
+  "date": "2026-10-22",
+  "timezone": "Asia/Shanghai",
+  "status": "listed suites passed; tvOS active PiP unsupported and unaccepted",
+  "toolchain": "Xcode 27.1\nBuild version 27A9275",
+  "ffmpeg": "9.0.2",
+  "ui": {
+    "macos": {
+      "methods": 8,
+      "firstAttemptFailures": 1,
+      "firstAttemptOutcomes": {
+        "testAllBundledFormats": "passed",
+        "testControlsAndKernelSwitch": "failed",
+        "testEffectsAndGIF": "passed",
+        "testEffectsWhilePaused": "passed",
+        "testInvalidSourceRecovery": "passed",
+        "testPictureInPicture": "passed",
+        "testProjectionOrientation": "passed",
+        "testVRAndStop": "passed"
+      },
+      "skipped": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/FeatureUIMac/Logs/Test/Test-features-ui-macos-2026.10.22_18-12-03-+0800.xcresult",
+      "log": {
+        "path": "/private/tmp/sgplayer-ui-macos-orientation-final.log",
+        "sha256": "f5bcac710e9fca6fe97f981a63c46a0d35eb1aa5ab7baed52d3cd4fc66b2fa8e"
+      },
+      "physical": true,
+      "retry": {
+        "method": "testControlsAndKernelSwitch",
+        "outcome": "passed",
+        "reason": "First attempt interrupted while resolving an Accessibility snapshot; no source change before retry.",
+        "log": {
+          "path": "/private/tmp/sgplayer-ui-macos-controls-retry.log",
+          "sha256": "cdd0f58a9ef733cc479800017c5cb4c8fe9956dcca85db372e5663ec54aba2e1"
+        },
+        "xcresult": "/Users/mdw/Desktop/SGPlayer/build/FeatureUIMac/Logs/Test/Test-features-ui-macos-2026.10.22_18-20-40-+0800.xcresult"
+      },
+      "passedAfterRetry": 8,
+      "finalOutcomes": {
+        "testAllBundledFormats": "passed",
+        "testControlsAndKernelSwitch": "passed",
+        "testEffectsAndGIF": "passed",
+        "testEffectsWhilePaused": "passed",
+        "testInvalidSourceRecovery": "passed",
+        "testPictureInPicture": "passed",
+        "testProjectionOrientation": "passed",
+        "testVRAndStop": "passed"
+      }
+    },
+    "ios": {
+      "methods": 8,
+      "firstAttemptFailures": 0,
+      "firstAttemptOutcomes": {
+        "testAllBundledFormats": "passed",
+        "testControlsAndKernelSwitch": "passed",
+        "testEffectsAndGIF": "passed",
+        "testEffectsWhilePaused": "passed",
+        "testInvalidSourceRecovery": "passed",
+        "testPictureInPicture": "passed",
+        "testProjectionOrientation": "passed",
+        "testVRAndStop": "passed"
+      },
+      "skipped": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/FeatureUIPhone/Logs/Test/Test-features-ui-ios-2026.10.22_18-09-58-+0800.xcresult",
+      "log": {
+        "path": "/private/tmp/sgplayer-ui-ios-orientation-final.log",
+        "sha256": "c8f783f3d4ee4b615f494e89ac8b1667feb7dca45a3a5f6decf840417bdc60e9"
+      },
+      "physical": true,
+      "passedAfterRetry": 8,
+      "finalOutcomes": {
+        "testAllBundledFormats": "passed",
+        "testControlsAndKernelSwitch": "passed",
+        "testEffectsAndGIF": "passed",
+        "testEffectsWhilePaused": "passed",
+        "testInvalidSourceRecovery": "passed",
+        "testPictureInPicture": "passed",
+        "testProjectionOrientation": "passed",
+        "testVRAndStop": "passed"
+      }
+    },
+    "tvos": {
+      "methods": 8,
+      "firstAttemptFailures": 0,
+      "firstAttemptOutcomes": {
+        "testAllBundledFormats": "passed",
+        "testControlsAndKernelSwitch": "passed",
+        "testEffectsAndGIF": "passed",
+        "testEffectsWhilePaused": "passed",
+        "testInvalidSourceRecovery": "passed",
+        "testPictureInPicture": "skipped",
+        "testProjectionOrientation": "passed",
+        "testVRAndStop": "passed"
+      },
+      "skipped": 1,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/FeatureUITV/Logs/Test/Test-features-ui-tvos-2026.10.22_18-12-29-+0800.xcresult",
+      "log": {
+        "path": "/private/tmp/sgplayer-ui-tvos-orientation-final.log",
+        "sha256": "bcd8e6f00d9bf1373b80c51e70f0708e894782a68ebef1e3e4c413e5135722ce"
+      },
+      "physical": false,
+      "passedAfterRetry": 7,
+      "finalOutcomes": {
+        "testAllBundledFormats": "passed",
+        "testControlsAndKernelSwitch": "passed",
+        "testEffectsAndGIF": "passed",
+        "testEffectsWhilePaused": "passed",
+        "testInvalidSourceRecovery": "passed",
+        "testPictureInPicture": "skipped",
+        "testProjectionOrientation": "passed",
+        "testVRAndStop": "passed"
+      }
+    }
+  },
+  "originalDemos": {
+    "macos": {
+      "result": {
+        "passed": true,
+        "ffmpegVersion": "9.0.2",
+        "renderedFrames": 1867,
+        "cases": [
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9847913169385767,
+              "rate0.5": 0.5149674255938431,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 321,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire",
+            "hardwareFrames": 321
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.987574904515303,
+              "rate0.5": 0.5006149987817196,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 321,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire, Video Track",
+            "hardwareFrames": 321
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9955698258295549,
+              "rate0.5": 0.5144447576808073,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 0,
+            "phase": 6,
+            "screenshot": false,
+            "error": "",
+            "name": "I See Fire, Audio Track",
+            "hardwareFrames": 0
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9955286630626488,
+              "rate0.5": 0.5113715758118014,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 236,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire, Range: 30s-40s",
+            "hardwareFrames": 236
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9847674464251974,
+              "rate0.5": 0.5157840875658873,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 325,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire, Range: 30s-50s, Scale: 0.5",
+            "hardwareFrames": 325
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "endOfFile": true,
+              "rate2": 1.9777645354804374,
+              "rate0.5": 0.5284967102375745,
+              "seek": true,
+              "pause": true,
+              "segmentBoundary": true,
+              "play": true
+            },
+            "renderedFrames": 349,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire + Google Help",
+            "hardwareFrames": 349
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9847897958789589,
+              "rate0.5": 0.514989925806476,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 315,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "Google Help VR",
+            "hardwareFrames": 315
+          }
+        ],
+        "osVersion": "Version 27.0.1 (Build 26A434)",
+        "runID": "7e85e5e2-d26f-46b9-8715-669f2d31dfd6",
+        "bundleIdentifier": "com.libobjc.SGPlayer.demo-macos",
+        "hardwareFrames": 1867
+      },
+      "evidence": {
+        "path": "/Users/mdw/Desktop/SGPlayer/build/RuntimeMac/runtime-result.json",
+        "sha256": "4611d84cbb9bcb3cd5c6452dfc848a99841281f82fe4e97aa2e7ead0927f2b57"
+      },
+      "log": {
+        "path": "/private/tmp/sgplayer-smoke-macos-orientation-final.log",
+        "sha256": "41e6c0545d43e417d272939c956ef577aa49f479cd8e1b34ba361c82dd254533"
+      }
+    },
+    "ios": {
+      "result": {
+        "passed": true,
+        "ffmpegVersion": "9.0.2",
+        "renderedFrames": 1866,
+        "cases": [
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9892504154752588,
+              "rate0.5": 0.5186270028877978,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 324,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire",
+            "hardwareFrames": 324
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.988174043420655,
+              "rate0.5": 0.500093337391877,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 320,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire, Video Track",
+            "hardwareFrames": 320
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9642986201523827,
+              "rate0.5": 0.5250087052263086,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 0,
+            "phase": 6,
+            "screenshot": false,
+            "error": "",
+            "name": "I See Fire, Audio Track",
+            "hardwareFrames": 0
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9643893876813168,
+              "rate0.5": 0.5204070428283212,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 232,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire, Range: 30s-40s",
+            "hardwareFrames": 232
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9887644089600416,
+              "rate0.5": 0.5161778321837981,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 325,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire, Range: 30s-50s, Scale: 0.5",
+            "hardwareFrames": 325
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "endOfFile": true,
+              "rate2": 1.9581313336415151,
+              "rate0.5": 0.5248675007384409,
+              "seek": true,
+              "pause": true,
+              "segmentBoundary": true,
+              "play": true
+            },
+            "renderedFrames": 356,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire + Google Help",
+            "hardwareFrames": 356
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9582397422577658,
+              "rate0.5": 0.529542081399217,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 309,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "Google Help VR",
+            "hardwareFrames": 309
+          }
+        ],
+        "osVersion": "Version 27.0 (Build 24A437)",
+        "runID": "53752f45-feb1-4ed2-adf0-5c519623d773",
+        "bundleIdentifier": "com.omnilink.fufucard",
+        "hardwareFrames": 1866
+      },
+      "evidence": {
+        "path": "/Users/mdw/Desktop/SGPlayer/build/iPhoneDevice/smoke-result.json",
+        "sha256": "2d5908f4ed1a64a340215d7e157f5292a6270ca50b7589726e60fe827efbc8b7"
+      },
+      "log": {
+        "path": "/private/tmp/sgplayer-smoke-ios-orientation-final.log",
+        "sha256": "63f4c67766f9ae23b67d42ff5613765adccbf1219e39cc605b2a4296938793f8"
+      }
+    },
+    "tvos": {
+      "result": {
+        "passed": true,
+        "ffmpegVersion": "9.0.2",
+        "renderedFrames": 1858,
+        "cases": [
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9777836282752184,
+              "rate0.5": 0.5111788239196937,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 312,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire",
+            "hardwareFrames": 0
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9666404091843963,
+              "rate0.5": 0.5186327819427096,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 312,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire, Video Track",
+            "hardwareFrames": 0
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9847728953733978,
+              "rate0.5": 0.515655242038854,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 0,
+            "phase": 6,
+            "screenshot": false,
+            "error": "",
+            "name": "I See Fire, Audio Track",
+            "hardwareFrames": 0
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.995536720095706,
+              "rate0.5": 0.5110978386814303,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 239,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire, Range: 30s-40s",
+            "hardwareFrames": 0
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.9847686702919791,
+              "rate0.5": 0.5145639996068188,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 333,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire, Range: 30s-50s, Scale: 0.5",
+            "hardwareFrames": 0
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "endOfFile": true,
+              "rate2": 1.984705438497576,
+              "rate0.5": 0.5163969328989038,
+              "seek": true,
+              "pause": true,
+              "segmentBoundary": true,
+              "play": true
+            },
+            "renderedFrames": 358,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "I See Fire + Google Help",
+            "hardwareFrames": 0
+          },
+          {
+            "passed": true,
+            "checks": {
+              "resume": true,
+              "play": true,
+              "rate2": 1.99552998014076,
+              "rate0.5": 0.5107620933102963,
+              "seek": true,
+              "pause": true,
+              "endOfFile": true
+            },
+            "renderedFrames": 304,
+            "phase": 6,
+            "screenshot": true,
+            "error": "",
+            "name": "Google Help VR",
+            "hardwareFrames": 0
+          }
+        ],
+        "osVersion": "Version 27.0 (Build 24J360)",
+        "runID": "5d32a796-84e6-49dc-979d-5e148e2639c6",
+        "bundleIdentifier": "com.libobjc.SGPlayer.demo-tvos",
+        "hardwareFrames": 0
+      },
+      "evidence": {
+        "path": "/Users/mdw/Desktop/SGPlayer/build/RuntimeTV/runtime-result.json",
+        "sha256": "f09f9c3c50014f91243f05de454898757dac52fba6793fa80b9802a89a53aceb"
+      },
+      "log": {
+        "path": "/private/tmp/sgplayer-smoke-tvos-orientation-final.log",
+        "sha256": "6163dd620d72a737de393efcb4697bf3f21d5af5030be8ee068add633dde7f86"
+      }
+    }
+  },
+  "builds": [
+    {
+      "kind": "framework",
+      "platform": "macOS",
+      "sdk": "macosx",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer macOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "macosx",
+        "-destination",
+        "generic/platform=macOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/macosx",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-macosx-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "macOS",
+      "sdk": "macosx",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer macOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "macosx",
+        "-destination",
+        "generic/platform=macOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/macosx",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-macosx-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "macOS",
+      "sdk": "macosx",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-macos",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "macosx",
+        "-destination",
+        "generic/platform=macOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/macosx",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-macosx-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "macOS",
+      "sdk": "macosx",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-macos",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "macosx",
+        "-destination",
+        "generic/platform=macOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/macosx",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-macosx-Release.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "iOS",
+      "sdk": "iphoneos",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer iOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/iphoneos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-iphoneos-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "iOS",
+      "sdk": "iphoneos",
+      "configuration": "Release",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer iOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/iphoneos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-iphoneos-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "iOS",
+      "sdk": "iphoneos",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-ios",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/iphoneos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-iphoneos-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "iOS",
+      "sdk": "iphoneos",
+      "configuration": "Release",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-ios",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/iphoneos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-iphoneos-Release.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "iOS",
+      "sdk": "iphonesimulator",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer iOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphonesimulator",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/iphonesimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-iphonesimulator-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "iOS",
+      "sdk": "iphonesimulator",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer iOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "iphonesimulator",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/iphonesimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-iphonesimulator-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "iOS",
+      "sdk": "iphonesimulator",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-ios",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphonesimulator",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/iphonesimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-iphonesimulator-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "iOS",
+      "sdk": "iphonesimulator",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-ios",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "iphonesimulator",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/iphonesimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-iphonesimulator-Release.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "tvOS",
+      "sdk": "appletvos",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer tvOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "appletvos",
+        "-destination",
+        "generic/platform=tvOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/appletvos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-appletvos-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "tvOS",
+      "sdk": "appletvos",
+      "configuration": "Release",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer tvOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "appletvos",
+        "-destination",
+        "generic/platform=tvOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/appletvos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-appletvos-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "tvOS",
+      "sdk": "appletvos",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-tvos",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "appletvos",
+        "-destination",
+        "generic/platform=tvOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/appletvos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-appletvos-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "tvOS",
+      "sdk": "appletvos",
+      "configuration": "Release",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-tvos",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "appletvos",
+        "-destination",
+        "generic/platform=tvOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/appletvos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-appletvos-Release.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "tvOS",
+      "sdk": "appletvsimulator",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer tvOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "appletvsimulator",
+        "-destination",
+        "generic/platform=tvOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/appletvsimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-appletvsimulator-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "tvOS",
+      "sdk": "appletvsimulator",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer tvOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "appletvsimulator",
+        "-destination",
+        "generic/platform=tvOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/appletvsimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-appletvsimulator-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "tvOS",
+      "sdk": "appletvsimulator",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-tvos",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "appletvsimulator",
+        "-destination",
+        "generic/platform=tvOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/appletvsimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-appletvsimulator-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "tvOS",
+      "sdk": "appletvsimulator",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-tvos",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "appletvsimulator",
+        "-destination",
+        "generic/platform=tvOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/appletvsimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-appletvsimulator-Release.log"
+    }
+  ],
+  "dataFeatures": {
+    "platform": "Version 27.0.1 (Build 26A434)",
+    "passed": true,
+    "checks": [
+      "Delayed nonempty capacity callbacks cannot overwrite drained decoder/item state",
+      "Thirty immediate open/close cycles without main-thread/demux join deadlock",
+      "FFmpeg filter graph pixels, flips, grayscale, combined controls and invalid-parameter errors",
+      "Native Core Image filter pixels and validation",
+      "SRT decoding, cue boundaries, visibility, offset, deterministic danmaku seek and watermark opacity",
+      "WebVTT decoder",
+      "Asymmetric ASS vector verifies upright orientation and top-left placement",
+      "Embedded Matroska ASS multi-track language/default/forced metadata, attached font ownership and real DVD bitmap subtitle palette/placement/lifetime",
+      "Real libass font rendering, ASS position/outline/color overrides and cue timing",
+      "In-progress GIF cancellation and past-EOF failure preserve the previous output atomically",
+      "Independent GIF export, watermark composition, frame count/delays, animation budget and cancellation"
+    ]
+  },
+  "formats": "ffmpeg-formats-validation.json",
+  "dependencies": [
+    {
+      "name": "freetype",
+      "version": "2.14.3",
+      "url": "https://codeload.github.com/freetype/freetype/tar.gz/refs/tags/VER-2-14-3",
+      "filename": "freetype-2.14.3.tar.gz",
+      "sha256": "dc49de6b01a266eef4876a4dd34d9842c475d3e28ff2eff63bd2fb760ab56261"
+    },
+    {
+      "name": "fribidi",
+      "version": "1.0.16",
+      "url": "https://codeload.github.com/fribidi/fribidi/tar.gz/refs/tags/v1.0.16",
+      "filename": "fribidi-1.0.16.tar.gz",
+      "sha256": "5a1d187a33daa58fcee2ad77f0eb9d136dd6fa4096239199ba31e850d397e8a8"
+    },
+    {
+      "name": "harfbuzz",
+      "version": "14.4.0",
+      "url": "https://github.com/harfbuzz/harfbuzz/releases/download/14.4.0/harfbuzz-14.4.0.tar.xz",
+      "filename": "harfbuzz-14.4.0.tar.xz",
+      "sha256": "2357ed966c6ced7bfa720b0640c0231065af01158fbea215093ffa15aed44371"
+    },
+    {
+      "name": "libass",
+      "version": "0.17.5",
+      "url": "https://codeload.github.com/libass/libass/tar.gz/refs/tags/0.17.5",
+      "filename": "libass-0.17.5.tar.gz",
+      "sha256": "fa286fc9ee1ba3b932703a3df7b8474d01dc8abe29ec69b6fa68781dc4bf7acc"
+    }
+  ],
+  "fallbackFont": {
+    "name": "Noto Sans CJK SC Regular",
+    "version": "Sans2.004",
+    "file": "SGPlayer/Resources/Fonts/NotoSansCJKsc-Regular.otf",
+    "url": "https://raw.githubusercontent.com/notofonts/noto-cjk/Sans2.004/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf",
+    "sha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b",
+    "bytes": 16437364,
+    "license": "licenses/NotoSansCJK-OFL.txt",
+    "licenseURL": "https://raw.githubusercontent.com/notofonts/noto-cjk/Sans2.004/LICENSE"
+  },
+  "sourceHashes": {
+    "SGPlayer/Classes/Core/SGDecoder/SGDecodeLoop.m": "0e6bbc9232764b4829a7e2f4c100cbb3e8da7f43b46cb1e688596767903a7638",
+    "SGPlayer/Classes/Core/SGRenderer/SGVideoRenderer.m": "3538a3b17e8c329a98e3c8055be0d31ec1faf7457eb5ec4e4fff43ace23506ef",
+    "SGPlayer/Classes/Core/SGSession/SGFrameOutput.m": "08455db881c61e2450afeddbbd3afa205879bc21c3ec0f5702b06a33103fdd65",
+    "SGPlayer/Classes/Core/SGSession/SGPlayerItem.m": "28a85c4380e88789a0b31bf4959e5bc0b730e613755d47f96e794265329e3036",
+    "SGPlayer/Classes/Features/SGGIFExporter.m": "3064b65dfed84edba7105c538b19c106b5271a0b154157a923cde4b16ccef31c",
+    "SGPlayer/Classes/Features/SGMediaEffects.h": "97fa33e0202e470f1a5d4f998ffa4f908948516f82aaa2c87d5ebf853acf2d92",
+    "SGPlayer/Classes/Features/SGMediaEffects.m": "d57c4e45c3b210117115160469d59103b4471d76f907296d2f28bb842d13cc28",
+    "SGPlayer/Classes/Features/SGPlaybackController.h": "8a601923cdbcc1f05180fd591efdc10c1551b7e595774b77509b663552ee1817",
+    "SGPlayer/Classes/Features/SGPlaybackController.m": "a679efc4e351b1b65f2597d19a8f059683b143c61f5652c813d984a84a3e9446",
+    "SGPlayer/Classes/Features/SGSubtitleReader.m": "c8592b2330a6a920191c9a99aedb4eb47d24e81c25bf31be4d5e3dd318600f4d",
+    "SGPlayer.xcodeproj/project.pbxproj": "c75b0ed9ae7a1307d647895b8d0cf8dbf96fdbebfdfdb03943c2a01df0179d4c",
+    "demo/demo-common/SGFeatureDemo.m": "0f690e662c38c786b96e0b174a96eda90637c07a8b979fd45387a84a95da8007",
+    "demo/demo-ios/demo-ios.xcodeproj/project.pbxproj": "92f7ed6f7fa49abb50f5b38b10cf78bef66208d9465532511e9f9e4ab85d9c40",
+    "demo/demo-macos/demo-macos.xcodeproj/project.pbxproj": "6291093bdb4a17803f21198bcc2ed088a839afdd8c9bd4c05b8bea57f9dc8240",
+    "demo/demo-tvos/demo-tvos.xcodeproj/project.pbxproj": "b3f7730f13a8a1f2a09aea3921f45a21dac58d3ac712be5be3dd67dfbaef796d",
+    "scripts/build-subtitles.py": "1fac7bd8fa906907ad2494bde8d8732a0e3b66fdd1d0e0ee2cdccf83dc485054",
+    "scripts/check-caption-capture.swift": "6c1ae858fa9da6a2ca2d490708b84e73b47a6084c33928b53a2b1c738ae003a4",
+    "scripts/make-orientation-fixture.swift": "45091f41228a1d64131947d2774623183b98a9dc3f7a7dde6b96e90b9dfeba92",
+    "scripts/subtitle-font.json": "dbb4e79daf78b761487cee77d3c6c89b323b7f7511764611449aae1ec66839f0",
+    "tests/SGFeatureUITests.m": "1ad8b9a0e42317dcbb14067a6570214cc9cb1eac88ae7e3c72a01d053449057d",
+    "tests/fixtures/animated.gif": "d0d71d441c41129af75a226b6802b776814f56ef82d4e0ff21565c7a3be5fe23",
+    "tests/fixtures/ffv1.mkv": "484c26ffb97f88ca029a13fd4d38a649ecece233f52a83cfed624972490733b6",
+    "tests/fixtures/h264.mkv": "8df0fc9207a451d6db467897dfa51dc5b0b0b6de029bdeeeb0ad15599fa45213",
+    "tests/fixtures/huffyuv.avi": "77dcea74245557708e7cf60fd794cb2c7f6da9b8b8a02d9f866bb01d36d81b56",
+    "tests/fixtures/mpeg2.ts": "8a8f2ff25e4f67a8e59340f46ea6845fb41242c530b4511895dce92c41d4dd86",
+    "tests/fixtures/mpeg4.nut": "f00762cfe30b1155bc23fae29a37bcd729411accbc19d3027d51de29e1738332",
+    "tests/fixtures/orientation.mp4": "fd55ec1540dae38ade27efb1cdb3daf538c03220f1915ef553a8e7737709f7b1",
+    "tests/fixtures/sorenson.flv": "f712fd1cab0903d0f4b4f0473c6f53006d87dd32ff5074205330a762809dc988",
+    "tests/fixtures/wmv2.asf": "a0f729ce1e020965ecef559a5c39522de4e05e970b2cd1d2b22c1154ef156e5d",
+    "tests/media-features.inc": "948e878f8f78b5fe5f5882a84e0aa37f5961427ebfa28c3e108e3c353734ad33"
+  },
+  "limitations": [
+    "No physical Apple TV. Simulator reports PiP unsupported; active tvOS PiP is not accepted.",
+    "Coverage applies to the listed scenarios, not every possible media/device/feature combination.",
+    "Background FFmpeg PiP is flat CPU output capped to 640 pixels; no VR projection in background.",
+    "GIF export applies effects to source frames; it does not capture live VR projection.",
+    "PGS/DVB-specific media, HDR/DRM/4K, oldest OS versions and long-run power/memory stability remain unvalidated.",
+    "Production dependency libraries were not ASan-instrumented."
+  ],
+  "findingsResolved": [
+    "FLV/ASF missing duration and initial frame loss",
+    "Main-thread/demux close deadlock",
+    "Rapid deallocation retained-self lifetime bug",
+    "Out-of-order stale capacity snapshots affecting EOF",
+    "ASS bitmap vertical orientation",
+    "Metal texture to Core Image vertical orientation",
+    "CJK font selection and explicit resource copying for static-framework demo apps"
+  ],
+  "captionOCR": {
+    "build/feature-ui-artifacts/iphone-ffmpeg-caption-ocr.json": {
+      "expected": "同步字幕",
+      "file": "/Users/mdw/Desktop/SGPlayer/build/feature-ui-artifacts/iphone-ffmpeg-final.png",
+      "passed": true,
+      "recognizedLines": [
+        "18:12",
+        "100▶",
+        "OmniLink/",
+        "SGPlayer",
+        "同步字幕 ／ Synchronized",
+        "captions",
+        "FFmpeg|39.0s |1.0x|1164 frames | PiP:off li-see-fire.mp4 | BgFrames:0",
+        "播放 Play",
+        "暂停 Pause",
+        "跳转 Seek",
+        "内核 Kernel",
+        "字幕 Subs",
+        "弹幕 Danmaku",
+        "水印 Mark",
+        "滤镜 Filter",
+        "贴纸 Sticker",
+        "画中画 PiP",
+        "导出 GIF",
+        "停止 Stop",
+        "媒体 Source",
+        "全景 VR",
+        "倍速 Rate",
+        "截图 Capture"
+      ]
+    },
+    "build/feature-ui-artifacts/iphone-native-caption-ocr.json": {
+      "expected": "同步字幕",
+      "file": "/Users/mdw/Desktop/SGPlayer/build/feature-ui-artifacts/iphone-native-final.png",
+      "passed": true,
+      "recognizedLines": [
+        "18:13",
+        "••••",
+        "100",
+        "OmniLink /",
+        "SGPlaver",
+        "弹幕 Danmaku 2",
+        "弹幕 Da",
+        "同步字幕/Synchronized captions",
+        "Native 1 60.0s | 1.0x |1032 frames ｜ Pip:off ｜i-see-fire.mp4 ｜ BgFrames:0",
+        "播放 Play",
+        "字幕 Subs",
+        "贴纸 Sticker",
+        "暂停 Pause",
+        "弹幕 Danmaku",
+        "画中画 PiP",
+        "跳转 Seek",
+        "水印 Mark",
+        "导出 GIF",
+        "内核 Kernel",
+        "滤镜 Filter",
+        "停止 Stop",
+        "媒体 Source",
+        "全景 VR",
+        "倍速 Rate",
+        "截图 Capture"
+      ]
+    },
+    "build/feature-ui-artifacts/macos-ffmpeg-caption-ocr.json": {
+      "expected": "同步字幕",
+      "file": "/Users/mdw/Desktop/SGPlayer/build/feature-ui-artifacts/macos-ffmpeg-final.png",
+      "passed": true,
+      "recognizedLines": [
+        "SGPlayer",
+        "12223 24",
+        "宁都县1",
+        "21°",
+        "局部多云",
+        "需24° 17°",
+        "处理完成后，照片将在此处显示",
+        "SGPlayer All Features",
+        "Codex",
+        "新聊天",
+        "项目",
+        "＝ SGPlayer",
+        "审核井迁移至最新版 FFmpeg",
+        "• autojs-yello",
+        "修改momo333.js，使用autois搭配安",
+        "审核井迁移至最新版 FFmpeg",
+        "回 运行了命令",
+        "肉 已查看1张图像",
+        "回 已在 1s内运行 swift scripts/check-caption-capture.swift build/feature-ui-artifacts/iphone-ffmpeg-final.pn..",
+        "包已查看1张图像",
+        "白 已读取文件运行了命令",
+        "包已查看1张图像",
+        "DCR。与同一时刻的原始视频帧对比时，又发现 FFmpeg的Metal→Core Image 合成路",
+        "则正常。我会修正这处坐标转换，并新增红上蓝下的专用视频测试，检查两个内核画",
+        "Omnilink /SGPlayer",
+        "no 均已通过，tvOS 资源修正版 UI也已完成。现在补验新增的画面方向检查：它直接",
+        "为红色、下半部为蓝色，能够检测此前状态测试漏掉的翻转问题。",
+        "过，正在安排加入该检查后的最终回归。",
+        "夏测时超时，未给出审批结论；这不是安全拒绝。我会按系统允许的规则重试一次。",
+        "均通过。旧版缺字截图也被完整短语“同步字幕”的 OCR 检查正确拒绝，避免误把界面按",
+        "正在完成包含方向像素断言的8项UI套件，之后只剩原有 demo的EOF 回归和结果归",
+        "from pathlib import Path for file,lang in ［（'CHANGELOG.md,en'），（'CHANGELOG.i",
+        "同步字幕/Syncnronized captons",
+        "FFmpeg|39.5s|1.0x｜ 1105 frames | PiP:off li-see-fire.mp4 /BgFrames:0",
+        "播放 Play",
+        "字幕 Subs",
+        "贴纸 Sticker",
+        "媒体 Source",
+        "暂停 Pause",
+        "弹幕 Danmaku",
+        "画中画 PiP",
+        "全景 VR",
+        "跳转 Seek",
+        "水印 Mark",
+        "导出 GIF",
+        "倍速 Rate",
+        "GPT-6.1 Sol中、",
+        "内核 Kernel",
+        "滤镜 Filter",
+        "停止 Stop",
+        "截图 Capture",
+        "MtV",
+        "•19°C",
+        "10月22日周四 18:15",
+        "SGPlayer",
+        "因变更",
+        "+5,157-99",
+        "来源",
+        "ginu.comt ass/t ass/ rop/master",
+        "ChatGPT App Tools",
+        "网页搜索",
+        "O。",
+        "查看全部",
+        "图.zik",
+        "autojs-yello"
+      ]
+    },
+    "build/feature-ui-artifacts/macos-native-caption-ocr.json": {
+      "expected": "同步字幕",
+      "file": "/Users/mdw/Desktop/SGPlayer/build/feature-ui-artifacts/macos-native-final.png",
+      "passed": true,
+      "recognizedLines": [
+        "SGPlayer",
+        "12 15 1415 1617",
+        "18 19 20 21 22 23 24",
+        "25 26 27 28 29 30 31",
+        "Tormar",
+        "AView Window",
+        "宁都县1",
+        "21°",
+        "局部多云",
+        "菁24° 17°",
+        "处理完成后，照片将在此处显示",
+        "SGPlayer All Features",
+        "Codex、",
+        "新聊天",
+        "项目",
+        "日 SGPlayer",
+        "审核井迁移至最新版 FFmpeg",
+        "autojs-yello",
+        "修改momo333.js，使用autois搭配安",
+        "日",
+        "审核井迁移至最新版 FFmpeg",
+        "回 运行了命令",
+        "肉 已查看1张图像",
+        "四 已在 1s 内运行 swift scripts/check-caption-capture.swift buiild/feature-ui-artifacts/iphone-ffmpeg-final.pn.",
+        "包已查看1张图像",
+        "白 已读取文件运行了命令",
+        "包已查看1张图像",
+        "DCR。与同一时刻的原始视频帧对比时，又发现 FFmpeg的 Metal→Core Image 合成路",
+        "则正常。我会修正这处坐标转换，并新增红上蓝下的专用视频测试，检查两个内核画",
+        "mniLin",
+        "GPIayE",
+        "no 均已通过，tvOS 资源修正版 UI也已完成。现在补验新增的画面方向检查：它直接",
+        "为红色、下半部为蓝色，能够检测此前状态测试漏掉的翻转问题。",
+        "过，正在安排加入该检查后的最终回归。",
+        "夏测时超时，未给出审批结论；这不是安全拒绝。我会按系统允许规则重试一次。",
+        "均通过。旧版缺字截图也被完整短语“同步字幕” OCR 检查正确拒绝，避免误把界面按",
+        "正在完成包含方向像素断言的8项UI套件，之后只剩原有 demo的EOF 回归和结果归",
+        "同步字幕/Synchronized captions",
+        "Native |60.0s |1.0x |1054 frames | PiP:off |i-see-fire.mp4| BgFrames:0",
+        "播放 Play",
+        "字幕 Subs",
+        "贴纸 Sticker",
+        "媒体 Source",
+        "暂停 Pause",
+        "弹幕 Danmaku",
+        "画中画 PiP",
+        "全景 VR",
+        "跳转 Seek",
+        "水印 Mark",
+        "导出 GIF",
+        "倍速 Rate",
+        "GPT-6.1 Sol中",
+        "内核 Kernel",
+        "滤镜 Filter",
+        "停止 Stop",
+        "截图 Capture",
+        "MtV",
+        "•19°C",
+        "10月22日周四 18:16",
+        "SGPlayer",
+        "因变更",
+        "+5,157-99",
+        "来源",
+        "ginu .comyt ass/tlass/ roo/master",
+        "ChatGPT App Tools",
+        "网页搜索",
+        "O。",
+        "查看全部",
+        "图.zik",
+        "autojs-yello"
+      ]
+    },
+    "build/feature-ui-artifacts/tvos-ffmpeg-caption-ocr.json": {
+      "expected": "同步字幕",
+      "file": "/Users/mdw/Desktop/SGPlayer/build/feature-ui-artifacts/tvos-ffmpeg-final.png",
+      "passed": true,
+      "recognizedLines": [
+        "FFmpeg | 37.2s|1.0x| 1074 frames ｜ PiP:off |i-see-fire.mp4 ｜ BgFrames:0",
+        "播放 Play",
+        "字幕 Subs",
+        "貼纸 Sticker",
+        "媒体 Source",
+        "OmniLink /SGPlayer",
+        "同步字幕/Synchronized captions",
+        "哲停 Pause",
+        "跳转 Seek",
+        "弹幕 Danmaku",
+        "水印 Mark",
+        "画中画 PiP",
+        "导出 GIF",
+        "全景 VR",
+        "倍速 Rate"
+      ]
+    },
+    "build/feature-ui-artifacts/tvos-native-caption-ocr.json": {
+      "expected": "同步字幕",
+      "file": "/Users/mdw/Desktop/SGPlayer/build/feature-ui-artifacts/tvos-native-final.png",
+      "passed": true,
+      "recognizedLines": [
+        "Native | 60.0s|1.0x|1040 frames | PiP:off li-see-fire.mp4 ｜ BgFrames:0",
+        "推放 Play",
+        "字幕 Subs",
+        "贴紙 Sticker",
+        "媒体 Source",
+        "omniLink /",
+        "SらPlayer",
+        "弹幕 Danmaku 2",
+        "弹幕 Danmaku 1",
+        "弹幕 Danmaku 3",
+        "同步字幕/ Synchronized captions",
+        "暂停 Pause",
+        "跳转 Seek",
+        "弹幕 Danmaku",
+        "水印 Mark",
+        "画中画 PiP",
+        "导出 GIF",
+        "停止 Stop",
+        "全景 VR",
+        "倍速 Rate",
+        "截图 Capture"
+      ]
+    }
+  },
+  "captionNegativeControl": {
+    "expected": "同步字幕",
+    "file": "/Users/mdw/Desktop/SGPlayer/build/feature-ui-artifacts/iphone-visual/05A4E962-08BB-4501-9978-FB1151E0D3E7.png",
+    "passed": false,
+    "recognizedLines": [
+      "17:11",
+      "100▶",
+      "OmniLink/",
+      "SGPlayer",
+      "ロロロO\\2AUCHLOwIseq",
+      "CSDF!OU2",
+      "FFmpeg |60.0s ｜1.0x| 618 frames | PiP:off |i-see-fire.mp4 | BgFrames:0",
+      "播放 Play",
+      "暂停 Pause",
+      "跳转 Seek",
+      "内核 Kernel",
+      "字幕 Subs",
+      "弹幕 Danmaku",
+      "水印 Mark",
+      "滤镜 Filter",
+      "贴纸 Sticker",
+      "画中画 PiP",
+      "导出 GIF",
+      "停止 Stop",
+      "媒体 Source",
+      "全景 VR",
+      "倍速 Rate",
+      "截图 Capture"
+    ]
+  },
+  "historicalMacEOFStall": {
+    "path": "/private/tmp/sgplayer-smoke-macos-final.log",
+    "sha256": "7a326af340a1f6f428606eeae5400b303b1e65c815b9271d5d1f3723ea713a8a"
+  }
+}

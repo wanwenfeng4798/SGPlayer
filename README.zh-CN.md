@@ -12,13 +12,16 @@ SGPlayer 是面向 iOS、macOS 和 tvOS 的媒体播放框架。
 - 后台播放、RTMP/RTSP 流媒体和播放倍速设置。
 - 多音视频轨道、H.264/H.265 硬件解码。
 - 播放状态通知与线程安全。
+- 显式 FFmpeg/原生内核选择，共用字幕、弹幕、水印、GIF 贴纸、画中画合成。
+- FFmpeg libavfilter / 原生 Core Image 滤镜、ASS 样式、截图与独立 GIF 片段导出。
 
 以上为框架功能清单，实际验证范围见下方测试记录。
 
 ## 依赖与要求
 
 - FFmpeg 9.0.2、Metal、AudioToolbox。
-- Xcode 27.1、Metal Toolchain、对应平台 SDK、Python 3。
+- Xcode 27.1、Metal Toolchain、对应平台 SDK、Python 3、PATH 中的 `pkg-config`。
+- 字幕依赖固定为 libass 0.17.5、FreeType 2.14.3、HarfBuzz 14.4.0、FriBidi 1.0.16；Meson/Ninja 安装在本地构建虚拟环境。
 - 最低 iOS 15.0、tvOS 15.0、macOS 12.0；最低系统版本尚未完成实机验收。
 
 `.xcode-version` 固定工具链版本。HTTPS/RTMPS 使用 Apple SecureTransport，无需 OpenSSL。
@@ -82,6 +85,8 @@ Debug 自动化逐项运行 7 个示例，检查播放、暂停恢复、0.5/2 �
 - 升级说明：[中文](documents/ffmpeg-9.0.2-migration.md) / [English](documents/ffmpeg-9.0.2-migration.en.md)
 - 验证记录：[中文](documents/ffmpeg-9.0.2-testing.zh-CN.md) / [English](documents/ffmpeg-9.0.2-testing.en.md)
 - 修改日志：[中文](CHANGELOG.zh-CN.md) / [English](CHANGELOG.md)
+- 历史功能可行性评估：[中文](documents/media-features-assessment.zh-CN.md) / [English](documents/media-features-assessment.en.md)
+- 多格式测试（播放器验收 8/8，FLV/ASF 时长问题已修复）：[中文](documents/ffmpeg-formats-testing.zh-CN.md) / [English](documents/ffmpeg-formats-testing.en.md)
 - [机器可读验证证据](documents/ffmpeg-9.0.2-validation.json)
 - 升级前审核归档：[中文](documents/ffmpeg-upgrade-audit.md) / [English](documents/ffmpeg-upgrade-audit.en.md)。仅记录旧基线，不代表当前实现状态。
 
@@ -94,3 +99,9 @@ Debug 自动化逐项运行 7 个示例，检查播放、暂停恢复、0.5/2 �
 [Single](https://github.com/libobjc) · libobjc@gmail.com
 
 原作者的其他项目：[KTVHTTPCache](https://github.com/ChangbaDevs/KTVHTTPCache)、[KTVVideoProcess](https://github.com/ChangbaDevs/KTVVideoProcess)。
+
+## 播放效果与第三方依赖
+
+- 使用与内核路由：[中文](documents/media-features.zh-CN.md) / [English](documents/media-features.en.md)。
+- 当前功能验收：[中文](documents/media-features-testing.zh-CN.md) / [English](documents/media-features-testing.en.md)。
+- [第三方许可证](licenses/README.md)。Portions of this software are copyright © The FreeType Project (www.freetype.org). All rights reserved.

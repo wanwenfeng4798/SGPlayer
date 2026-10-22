@@ -21,6 +21,8 @@ English | [简体中文](README.zh-CN.md)
 - H.264/H.265 hardware accelerator.
 - Accurate status notifications.
 - Thread safety.
+- Explicit FFmpeg/native playback kernels with shared subtitle, danmaku, watermark, GIF sticker and PiP composition.
+- FFmpeg libavfilter / native Core Image filters, styled ASS, captures and independent GIF clip export.
 
 The list above describes framework features; observed verification coverage is documented below.
 
@@ -44,7 +46,9 @@ The oldest supported systems have not been tested on devices.
 
 The build uses the official FFmpeg 9.0.2 release archive with a pinned SHA-256.
 HTTPS/RTMPS use Apple SecureTransport; OpenSSL is not required.
-Xcode 27.1 (including the Metal Toolchain), its platform SDKs, and Python 3 are required.
+Xcode 27.1 (including the Metal Toolchain), its platform SDKs, Python 3, and `pkg-config` on PATH are required.
+The build also pins libass 0.17.5, FreeType 2.14.3, HarfBuzz 14.4.0 and FriBidi 1.0.16;
+Meson/Ninja are installed in a local build virtual environment.
 The required Xcode version is pinned in `.xcode-version`.
 
 ```sh
@@ -106,6 +110,10 @@ interaction remain outside this verification scope.
 - Migration guide: [English](documents/ffmpeg-9.0.2-migration.en.md) / [中文](documents/ffmpeg-9.0.2-migration.md)
 - Test record: [English](documents/ffmpeg-9.0.2-testing.en.md) / [中文](documents/ffmpeg-9.0.2-testing.zh-CN.md)
 - Changelog: [English](CHANGELOG.md) / [中文](CHANGELOG.zh-CN.md)
+- Playback features and backend routing: [English](documents/media-features.en.md) / [中文](documents/media-features.zh-CN.md)
+- Feature test record: [English](documents/media-features-testing.en.md) / [中文](documents/media-features-testing.zh-CN.md)
+- Historical feature assessment: [English](documents/media-features-assessment.en.md) / [中文](documents/media-features-assessment.zh-CN.md)
+- Additional format tests (8/8 after FLV/ASF timing fix): [English](documents/ffmpeg-formats-testing.en.md) / [中文](documents/ffmpeg-formats-testing.zh-CN.md)
 - [Machine-readable validation evidence](documents/ffmpeg-9.0.2-validation.json)
 - Pre-upgrade audit archive: [English](documents/ffmpeg-upgrade-audit.en.md) / [中文](documents/ffmpeg-upgrade-audit.md). It describes the old baseline, not the current implementation.
 
@@ -117,6 +125,13 @@ interaction remain outside this verification scope.
 
 ```obj-c
 - SGPlayer.framework
+- AVKit.framework
+- CoreImage.framework
+- CoreText.framework
+- ImageIO.framework
+- UniformTypeIdentifiers.framework
+- libc++.tbd
+- libiconv.tbd
 - AVFoundation.framework
 - AudioToolBox.framework
 - VideoToolBox.framework
@@ -138,3 +153,7 @@ interaction remain outside this verification scope.
 
 - [KTVHTTPCache](https://github.com/ChangbaDevs/KTVHTTPCache) - A smart media cache framework.
 - [KTVVideoProcess](https://github.com/ChangbaDevs/KTVVideoProcess) - A High-Performance video effects processing framework.
+
+## Third-party notices
+
+See [subtitle dependency licenses](licenses/README.md). Portions of this software are copyright © The FreeType Project (www.freetype.org). All rights reserved.

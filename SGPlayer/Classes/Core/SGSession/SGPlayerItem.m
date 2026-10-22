@@ -57,19 +57,12 @@
 
 - (void)dealloc
 {
-    SGLockCondEXE10(self->_lock, ^BOOL {
-        return self->_flags.state != SGPlayerItemStateClosed;
-    }, ^SGBlock {
-        [self setState:SGPlayerItemStateClosed];
-        [self->_frameOutput close];
-        SGLockEXE00(self->_lock, ^{
-            [self->_audioProcessor close];
-            [self->_videoProcessor close];
-            [self->_audioQueue destroy];
-            [self->_videoQueue destroy];
-        });
-        return nil;
-    });
+    // Teardown must not create autoreleased blocks retaining a dying self.
+    self->_delegate = nil; self->_frameOutput.delegate = nil;
+    [self->_lock lock]; self->_flags.state = SGPlayerItemStateClosed; [self->_lock unlock];
+    [self->_frameOutput close];
+    [self->_audioProcessor close]; [self->_videoProcessor close];
+    [self->_audioQueue destroy]; [self->_videoQueue destroy];
 }
 
 #pragma mark - Mapping
@@ -379,7 +372,7 @@ SGSet1Map(void, setDecoderOptions, SGDecoderOptions *, self->_frameOutput)
 {
     SGLockEXE10(self->_lock, ^SGBlock {
         SGCapacity additional = [self frameQueueCapacity:type];
-        return [self setCapacity:SGCapacityAdd(capacity, additional) type:type];
+        return [self setCapacity:SGCapacityAdd([frameOutput capacityWithType:type], additional) type:type];
     });
 }
 

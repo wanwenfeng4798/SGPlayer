@@ -11,7 +11,38 @@
         A90200000000000200000004 /* SGPlayer products */ = {isa = PBXGroup; children = (); name = "SGPlayer products"; sourceTree = "<group>"; };
 
 
+
+        F6B27CC483A82496689061CE = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ../../tests/SGFeatureUITests.m; sourceTree = SOURCE_ROOT; };
+        DF70CD096708672EBBCBAE58 = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = SGFeatureUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+        2C9A722E128C7AB2DE3F67E2 = {isa = PBXBuildFile; fileRef = F6B27CC483A82496689061CE; };
+        B31416134B6CE7B3A2D48683 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (2C9A722E128C7AB2DE3F67E2,); runOnlyForDeploymentPostprocessing = 0; };
+        EC01E648040C771A2C90FD74 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        9D9347FFC6C6029C0FF53799 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        F4EC613802A13BA2A9216CB9 = {isa = PBXContainerItemProxy; containerPortal = 9CB9250C1E7942AC00DE6721; proxyType = 1; remoteGlobalIDString = 9CB925131E7942AC00DE6721; remoteInfo = "demo-macos"; };
+        92AD2ECCEB19DD45878E460D = {isa = PBXTargetDependency; target = 9CB925131E7942AC00DE6721; targetProxy = F4EC613802A13BA2A9216CB9; };
+        73CD3FB3F761EE4DEAA8929B = {isa = XCConfigurationList; buildConfigurations = (63FCCD43426D0457F3AD6799,EB587223755B359EFCD059DE,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        6E482FB2DAD6A539ED7F74F1 = {isa = PBXNativeTarget; buildConfigurationList = 73CD3FB3F761EE4DEAA8929B; buildPhases = (B31416134B6CE7B3A2D48683,EC01E648040C771A2C90FD74,9D9347FFC6C6029C0FF53799,); buildRules = (); dependencies = (92AD2ECCEB19DD45878E460D,); name = SGFeatureUITests; productName = SGFeatureUITests; productReference = DF70CD096708672EBBCBAE58; productType = "com.apple.product-type.bundle.ui-testing"; };
+        63FCCD43426D0457F3AD6799 = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_OBJC_ARC = YES; CLANG_ENABLE_MODULES = YES; CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = Z5TKWGS67N; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = "com.omnilink.fufucard.macos.uitests"; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = macosx; SUPPORTED_PLATFORMS = "macosx"; MACOSX_DEPLOYMENT_TARGET = 12.0; TARGETED_DEVICE_FAMILY = ""; TEST_TARGET_NAME = "demo-macos"; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)","@executable_path/Frameworks","@loader_path/Frameworks",); }; name = Debug; };
+        EB587223755B359EFCD059DE = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_OBJC_ARC = YES; CLANG_ENABLE_MODULES = YES; CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = Z5TKWGS67N; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = "com.omnilink.fufucard.macos.uitests"; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = macosx; SUPPORTED_PLATFORMS = "macosx"; MACOSX_DEPLOYMENT_TARGET = 12.0; TARGETED_DEVICE_FAMILY = ""; TEST_TARGET_NAME = "demo-macos"; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)","@executable_path/Frameworks","@loader_path/Frameworks",); }; name = Release; };
+
 /* Begin PBXBuildFile section */
+        A59FA3EB7873DF913F84AAFD = {isa = PBXBuildFile; fileRef = 2D5389DC8CFD4EDC72DE78E9; };
+        6D02B73363CFE92E209AF778 = {isa = PBXBuildFile; fileRef = 80ADF46114946D4C9E877C3B; };
+        88E31440086BC9FC9B5427AE = {isa = PBXBuildFile; fileRef = 8E0279A2AB4DDFC3353FD15C; };
+        63D0178D928D18F5FF52110B = {isa = PBXBuildFile; fileRef = C2404F04BA145FEEC2833448; };
+        84F5A26ED2B54130FF83EFB3 = {isa = PBXBuildFile; fileRef = 4209953E575F023424D76515; };
+        D375E1E7391E74D4649AF785 = {isa = PBXBuildFile; fileRef = CAB67E44C8B3F1C03F27689E; };
+        466EA8E2247D10268A79EFA9 = {isa = PBXBuildFile; fileRef = EAFA4546E230375EEB784533; };
+        8BADF84A498663F891142D19 = {isa = PBXBuildFile; fileRef = 7CD42EEF6C054BAEF0B26D01; };
+        71D3E272D0464B973D8F6487 = {isa = PBXBuildFile; fileRef = 4882DC245C79F5614BD8BBE0; };
+        D30CB2FC030CE26F6B8350EF = {isa = PBXBuildFile; fileRef = 0547F9BA918E7E50DDAC0D45; };
+        23AD237C068E7DE6640B37F0 = {isa = PBXBuildFile; fileRef = 18E1D6F461DB5128DBB3AC9E; };
+        D5535CBA3258C1093DD720DC = {isa = PBXBuildFile; fileRef = 74A83212943404C2D300B64A; };
+        E537BC4558C1CA8CC0B2BFA4 /* UniformTypeIdentifiers */ = {isa = PBXBuildFile; fileRef = DCAE992C1CCE2223F38B9353; };
+        EDC376F82546040339ABBF67 /* ImageIO */ = {isa = PBXBuildFile; fileRef = AC1ADB4EC70EE36631D7C66F; };
+        E56691DD7EFFA0ACF5295A8B /* CoreText */ = {isa = PBXBuildFile; fileRef = 03D151BB01F22BAC1268B8AB; };
+        59AD94591AAF5BF941393531 /* CoreImage */ = {isa = PBXBuildFile; fileRef = 99421DA6617B0C46C6018D1D; };
+        5ACC410B6DB521A5AB9E3785 /* AVKit */ = {isa = PBXBuildFile; fileRef = 5BD659BBA00AE6716BF2C45F; };
 		9C36DD421E79537500959FDA /* google-help-vr.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9C36DD401E79537500959FDA /* google-help-vr.mp4 */; };
 		9C36DD431E79537500959FDA /* i-see-fire.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9C36DD411E79537500959FDA /* i-see-fire.mp4 */; };
 		9C3DD1661E8FBD090003B17A /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB9253E1E79478C00DE6721 /* VideoToolbox.framework */; };
@@ -31,6 +62,24 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+        2D5389DC8CFD4EDC72DE78E9 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/orientation.mp4"; sourceTree = SOURCE_ROOT; };
+        80ADF46114946D4C9E877C3B = {isa = PBXFileReference; lastKnownFileType = file; path = "../../licenses/NotoSansCJK-OFL.txt"; sourceTree = SOURCE_ROOT; };
+        8E0279A2AB4DDFC3353FD15C = {isa = PBXFileReference; lastKnownFileType = file; path = "../../SGPlayer/Resources/Fonts/NotoSansCJKsc-Regular.otf"; sourceTree = SOURCE_ROOT; };
+        C2404F04BA145FEEC2833448 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/ffv1.mkv"; sourceTree = SOURCE_ROOT; };
+        4209953E575F023424D76515 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/mpeg2.ts"; sourceTree = SOURCE_ROOT; };
+        CAB67E44C8B3F1C03F27689E = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/animated.gif"; sourceTree = SOURCE_ROOT; };
+        EAFA4546E230375EEB784533 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/wmv2.asf"; sourceTree = SOURCE_ROOT; };
+        7CD42EEF6C054BAEF0B26D01 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/h264.mkv"; sourceTree = SOURCE_ROOT; };
+        4882DC245C79F5614BD8BBE0 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/mpeg4.nut"; sourceTree = SOURCE_ROOT; };
+        0547F9BA918E7E50DDAC0D45 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/huffyuv.avi"; sourceTree = SOURCE_ROOT; };
+        18E1D6F461DB5128DBB3AC9E = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/sorenson.flv"; sourceTree = SOURCE_ROOT; };
+        561A95967C7ED31828608DCA = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "../demo-common/SGFeatureDemo.h"; sourceTree = SOURCE_ROOT; };
+        74A83212943404C2D300B64A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "../demo-common/SGFeatureDemo.m"; sourceTree = SOURCE_ROOT; };
+        DCAE992C1CCE2223F38B9353 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+        AC1ADB4EC70EE36631D7C66F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+        03D151BB01F22BAC1268B8AB /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+        99421DA6617B0C46C6018D1D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+        5BD659BBA00AE6716BF2C45F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		9C0D004E200C784D0079D609 /* SGAVPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SGAVPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0EABCA21905574004D5604 /* SGPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SGPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C2167171E7F81E900272348 /* SGPlatform.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SGPlatform.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/demo-eihmyibiajxgvzgpltouukszknss/Build/Products/Debug-iphoneos/SGPlatform.framework"; sourceTree = "<group>"; };
@@ -73,6 +122,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                E537BC4558C1CA8CC0B2BFA4 /* UniformTypeIdentifiers */,
+                EDC376F82546040339ABBF67 /* ImageIO */,
+                E56691DD7EFFA0ACF5295A8B /* CoreText */,
+                59AD94591AAF5BF941393531 /* CoreImage */,
+                5ACC410B6DB521A5AB9E3785 /* AVKit */,
 				9CB6951821906D2F00196E54 /* SGPlayer.framework in Frameworks */,
 				9CD90236230BDF5F00A358AA /* AVFoundation.framework in Frameworks */,
 				9C3DD16A1E8FBD150003B17A /* AudioToolbox.framework in Frameworks */,
@@ -99,6 +153,20 @@
 		9CB9250B1E7942AC00DE6721 = {
 			isa = PBXGroup;
 			children = (
+                2D5389DC8CFD4EDC72DE78E9,
+                80ADF46114946D4C9E877C3B,
+                8E0279A2AB4DDFC3353FD15C,
+                F6B27CC483A82496689061CE,
+                C2404F04BA145FEEC2833448,
+                4209953E575F023424D76515,
+                CAB67E44C8B3F1C03F27689E,
+                EAFA4546E230375EEB784533,
+                7CD42EEF6C054BAEF0B26D01,
+                4882DC245C79F5614BD8BBE0,
+                0547F9BA918E7E50DDAC0D45,
+                18E1D6F461DB5128DBB3AC9E,
+                561A95967C7ED31828608DCA,
+                74A83212943404C2D300B64A,
 				9C49E5FC23053DBD00C5FB1F /* demo-common */,
 				9CB925161E7942AC00DE6721 /* demo-macos */,
 				9CB925151E7942AC00DE6721 /* Products */,
@@ -109,6 +177,7 @@
 		9CB925151E7942AC00DE6721 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+                DF70CD096708672EBBCBAE58,
 				9CB925141E7942AC00DE6721 /* SGPlayer.app */,
 			);
 			name = Products;
@@ -220,6 +289,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+                6E482FB2DAD6A539ED7F74F1,
 				9CB925131E7942AC00DE6721 /* demo-macos */,
 			);
 		};
@@ -230,6 +300,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                A59FA3EB7873DF913F84AAFD,
+                6D02B73363CFE92E209AF778,
+                88E31440086BC9FC9B5427AE,
+                63D0178D928D18F5FF52110B,
+                84F5A26ED2B54130FF83EFB3,
+                D375E1E7391E74D4649AF785,
+                466EA8E2247D10268A79EFA9,
+                8BADF84A498663F891142D19,
+                71D3E272D0464B973D8F6487,
+                D30CB2FC030CE26F6B8350EF,
+                23AD237C068E7DE6640B37F0,
 				9CB925211E7942AC00DE6721 /* Assets.xcassets in Resources */,
 				9C36DD421E79537500959FDA /* google-help-vr.mp4 in Resources */,
 				9CB925241E7942AC00DE6721 /* Main.storyboard in Resources */,
@@ -244,6 +325,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                D5535CBA3258C1093DD720DC,
 				9CB9251F1E7942AC00DE6721 /* SGListViewController.m in Sources */,
 				9CB925311E79469A00DE6721 /* SGPlayViewController.m in Sources */,
 				9C49E5FF23053DBD00C5FB1F /* SGVideoItem.m in Sources */,
@@ -375,7 +457,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				OTHER_LDFLAGS = ("$(inherited)", "-framework", Security, "-framework", CoreFoundation);
+				OTHER_LDFLAGS = ("-lc++", "-liconv", "$(inherited)", "-framework", Security, "-framework", CoreFoundation);
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z5TKWGS67N;
@@ -391,7 +473,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				OTHER_LDFLAGS = ("$(inherited)", "-framework", Security, "-framework", CoreFoundation);
+				OTHER_LDFLAGS = ("-lc++", "-liconv", "$(inherited)", "-framework", Security, "-framework", CoreFoundation);
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z5TKWGS67N;

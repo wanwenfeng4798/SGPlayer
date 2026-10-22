@@ -51,14 +51,12 @@
 
 - (void)dealloc
 {
-    SGLockCondEXE10(self->_lock, ^BOOL {
-        return self->_flags.state != SGPacketOutputStateClosed;
-    }, ^SGBlock {
-        [self setState:SGPacketOutputStateClosed];
-        [self->_operationQueue cancelAllOperations];
-        [self->_operationQueue waitUntilAllOperationsAreFinished];
-        return nil;
-    });
+    // Teardown must not create autoreleased blocks retaining a dying self.
+    self->_delegate = nil;
+    [self->_lock lock]; self->_flags.state = SGPacketOutputStateClosed; [self->_lock unlock];
+    [self->_wakeup lock]; [self->_wakeup broadcast]; [self->_wakeup unlock];
+    [self->_operationQueue cancelAllOperations];
+    if (NSOperationQueue.currentQueue != self->_operationQueue) [self->_operationQueue waitUntilAllOperationsAreFinished];
 }
 
 #pragma mark - Mapping

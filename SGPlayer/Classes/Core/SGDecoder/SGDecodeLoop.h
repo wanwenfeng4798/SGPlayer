@@ -47,6 +47,7 @@ typedef NS_ENUM(NSUInteger, SGDecodeLoopState) {
  *
  */
 - (SGDecodeLoopState)state;
+@property (nonatomic, readonly) SGCapacity capacity;
 
 /**
  *

@@ -4,6 +4,8 @@
 #import "SGPacket+Internal.h"
 #import "SGCodecContext.h"
 #import "SGAudioDecoder.h"
+#import "SGVideoDecoder.h"
+#import "SGError.h"
 #import "SGOptions.h"
 #import "SGURLDemuxer.h"
 #import "SGTrack+Internal.h"
@@ -308,12 +310,19 @@ static void TestHTTPS(const char *url)
     puts("PASS HTTPS/SecureTransport, untrusted certificate rejection, SGURLDemuxer User-Agent");
 }
 
+#include "ffmpeg-formats.inc"
+#include "media-features.inc"
+
 int main(int argc, const char *argv[])
 {
     @autoreleasepool {
         CHECK(argc >= 2);
         CHECK(LIBAVCODEC_VERSION_MAJOR == 63 && LIBAVUTIL_VERSION_MAJOR == 61);
         CHECK(strcmp(av_version_info(), "9.0.2") == 0);
+        BOOL formatsPassed = YES;
+        if (argc >= 6 && argv[5][0]) formatsPassed = TestAdditionalFormats([NSString stringWithUTF8String:argv[5]]);
+        if (argc >= 7 && argv[6][0]) MakeVideo(argv[1], "mpeg4");
+        if (argc >= 7 && argv[6][0]) TestMediaFeatures([NSString stringWithUTF8String:argv[6]], [NSString stringWithUTF8String:argv[1]]);
         TestRunningClockRate();
         TestLayoutAndBuffers();
         TestResample();
@@ -328,6 +337,8 @@ int main(int argc, const char *argv[])
             TestDecode(argv[1], "hevc_videotoolbox", NO);
         }
         [[SGObjectPool sharedPool] flush];
+        puts("PASS existing FFmpeg 9.0.2 migration regression checks");
+        if (!formatsPassed) { fprintf(stderr, "FAIL extended format acceptance; see formats/results.json\n"); return 2; }
         puts("PASS FFmpeg 9.0.2 migration regression suite");
     }
     return 0;

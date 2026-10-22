@@ -20,6 +20,8 @@ FOUNDATION_EXPORT const unsigned char SGPlayerVersionString[];
 #import <SGPlayer/SGError.h>
 #import <SGPlayer/SGDefines.h>
 
+#import <SGPlayer/SGMediaEffects.h>
+#import <SGPlayer/SGPlaybackController.h>
 #import <SGPlayer/SGOptions.h>
 #import <SGPlayer/SGDemuxerOptions.h>
 #import <SGPlayer/SGDecoderOptions.h>
@@ -83,6 +85,8 @@ FOUNDATION_EXPORT const unsigned char SGPlayerVersionString[];
 #import "SGError.h"
 #import "SGDefines.h"
 
+#import "SGMediaEffects.h"
+#import "SGPlaybackController.h"
 #import "SGOptions.h"
 #import "SGDemuxerOptions.h"
 #import "SGDecoderOptions.h"

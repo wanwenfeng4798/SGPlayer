@@ -8,9 +8,11 @@
 
 #import "ViewController.h"
 #import <SGPlayer/SGPlayer.h>
+#import "SGFeatureDemo.h"
 
 @interface ViewController ()
 
+@property (nonatomic, strong) SGFeatureDemo *features;
 @property (nonatomic, assign) BOOL seeking;
 @property (nonatomic, strong) SGPlayer *player;
 
@@ -26,15 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.player = [[SGPlayer alloc] init];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(infoChanged:) name:SGPlayerDidChangeInfosNotification object:self.player];
-    
-    NSURL *URL = [[NSBundle mainBundle] URLForResource:@"i-see-fire" withExtension:@"mp4"];
-    SGAsset *asset = [[SGURLAsset alloc] initWithURL:URL];
-    
-    self.player.videoRenderer.view = self.view;
-    [self.player replaceWithAsset:asset];
-    [self.player play];
+    self.features=[[SGFeatureDemo alloc]initWithView:self.view];
 }
 
 #pragma mark - SGPlayer Notifications

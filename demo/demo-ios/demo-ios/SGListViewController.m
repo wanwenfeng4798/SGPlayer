@@ -9,6 +9,15 @@
 #import "SGListViewController.h"
 #import "SGPlayViewController.h"
 #import "SGVideoItem.h"
+#import "SGFeatureDemo.h"
+
+@interface SGFeatureViewController : UIViewController
+@property (nonatomic, strong) SGFeatureDemo *features;
+@end
+@implementation SGFeatureViewController
+- (void)viewDidLoad { [super viewDidLoad]; self.view.backgroundColor=UIColor.blackColor; self.features=[[SGFeatureDemo alloc]initWithView:self.view]; }
+- (void)viewDidDisappear:(BOOL)animated { [super viewDidDisappear:animated]; [self.features close]; }
+@end
 
 @interface SGListViewController ()
 
@@ -43,18 +52,20 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.videoItems.count;
+    return self.videoItems.count+1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.textLabel.text = self.videoItems[indexPath.row].name;
+    cell.textLabel.text = indexPath.row == self.videoItems.count ? @"全部功能 / All features" : self.videoItems[indexPath.row].name;
+    cell.accessibilityIdentifier = indexPath.row == self.videoItems.count ? @"feature.open" : [NSString stringWithFormat:@"demo.%ld",(long)indexPath.row];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == self.videoItems.count) { [self.navigationController pushViewController:[[SGFeatureViewController alloc]init] animated:YES]; return; }
     SGPlayViewController *vc = [[SGPlayViewController alloc] init];
     vc.videoItem = self.videoItems[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];

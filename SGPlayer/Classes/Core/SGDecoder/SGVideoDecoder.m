@@ -24,6 +24,8 @@
     } _flags;
 }
 
+@property (nonatomic, strong) SGVideoFrame *pendingTimedFrame;
+@property (nonatomic) CMTime inferredDuration;
 @property (nonatomic, strong, readonly) SGSWScale *scaler;
 @property (nonatomic, strong, readonly) SGCodecContext *codecContext;
 @property (nonatomic, strong, readonly) SGVideoFrame *lastDecodeFrame;
@@ -63,6 +65,9 @@
 
 - (void)destroy
 {
+    [self.pendingTimedFrame unlock];
+    self.pendingTimedFrame = nil;
+    self.inferredDuration = kCMTimeInvalid;
     self->_flags.outputCount = 0;
     self->_flags.needsKeyFrame = YES;
     self->_flags.needsAlignment = YES;
@@ -79,6 +84,9 @@
 
 - (void)flush
 {
+    [self.pendingTimedFrame unlock];
+    self.pendingTimedFrame = nil;
+    self.inferredDuration = kCMTimeInvalid;
     self->_flags.outputCount = 0;
     self->_flags.needsKeyFrame = YES;
     self->_flags.needsAlignment = YES;
@@ -219,9 +227,51 @@
     for (SGVideoFrame *obj in frames) {
         [obj setCodecDescriptor:[self->_codecDescriptor copy]];
         [obj fill];
+        if (self.pendingTimedFrame) {
+            SGVideoFrame *previous = self.pendingTimedFrame;
+            CMTime delta = CMTimeSubtract(obj.timeStamp, previous.timeStamp);
+            if (!CMTIME_IS_NUMERIC(delta) || CMTimeCompare(delta, kCMTimeZero) <= 0) {
+                delta = [self fallbackVideoDuration];
+            }
+            [previous fillWithTimeStamp:previous.timeStamp decodeTimeStamp:previous.decodeTimeStamp duration:delta];
+            self.inferredDuration = delta;
+            [ret addObject:previous];
+            self.pendingTimedFrame = nil;
+        }
+        if (CMTIME_IS_NUMERIC(obj.duration) && CMTimeCompare(obj.duration, kCMTimeZero) > 0) {
+            self.inferredDuration = obj.duration;
+            [ret addObject:obj];
+        } else {
+            // Retain the existing pool ownership until the next PTS determines
+            // duration. This preserves VFR timing and the first frame at zero.
+            self.pendingTimedFrame = obj;
+        }
+    }
+    if (done && self.pendingTimedFrame) {
+        SGVideoFrame *obj = self.pendingTimedFrame;
+        CMTime duration = [self fallbackVideoDuration];
+        [obj fillWithTimeStamp:obj.timeStamp decodeTimeStamp:obj.decodeTimeStamp duration:duration];
         [ret addObject:obj];
+        self.pendingTimedFrame = nil;
     }
     return ret;
+}
+
+- (CMTime)fallbackVideoDuration
+{
+    if (CMTIME_IS_NUMERIC(self.inferredDuration) && CMTimeCompare(self.inferredDuration, kCMTimeZero) > 0) {
+        return self.inferredDuration;
+    }
+    AVRational rate = self->_codecDescriptor.codecpar->framerate;
+    if (rate.num > 0 && rate.den > 0) {
+        return [self->_codecDescriptor convertDuration:CMTimeMake(rate.den, rate.num)];
+    }
+    // An isolated frame without timing metadata needs an explicit fallback.
+    CMTime rateTime = self.options.preferredFrameRate;
+    if (CMTIME_IS_NUMERIC(rateTime) && CMTimeCompare(rateTime, kCMTimeZero) > 0) {
+        return [self->_codecDescriptor convertDuration:rateTime];
+    }
+    return CMTimeMake(1, 25);
 }
 
 - (NSArray<__kindof SGFrame *> *)clipKeyFrames:(NSArray<__kindof SGFrame *> *)frames

@@ -30,6 +30,10 @@
     SGCapacity _capacity;
 }
 
+@property (nonatomic, strong) CIContext *compositionContext;
+@property (nonatomic, strong) id<MTLCommandQueue> compositionQueue;
+@property (nonatomic, strong) id<MTLTexture> compositionTexture;
+@property (nonatomic, strong) id lastComposedBuffer;
 @property (nonatomic, strong, readonly) NSLock *lock;
 @property (nonatomic, strong, readonly) SGClock *clock;
 @property (nonatomic, strong, readonly) SGRenderTimer *fetchTimer;
@@ -95,11 +99,12 @@
 
 - (void)dealloc
 {
-    [self performSelectorOnMainThread:@selector(destoryDrawingLoop)
-                           withObject:nil
-                        waitUntilDone:YES];
+    [self->_fetchTimer stop];
+    self->_metalView.delegate = nil;
+    MTKView *view = self->_metalView;
+    if (NSThread.isMainThread) [view removeFromSuperview];
+    else dispatch_async(dispatch_get_main_queue(), ^{ [view removeFromSuperview]; });
     [self->_currentFrame unlock];
-    self->_currentFrame = nil;
 }
 
 #pragma mark - Setter & Getter
@@ -156,6 +161,19 @@
 
 - (SGPLFImage *)currentImage
 {
+    if (self.effects.active && self.lastComposedBuffer) {
+        CVPixelBufferRef buffer = (__bridge CVPixelBufferRef)self.lastComposedBuffer;
+        CIImage *image = [CIImage imageWithCVPixelBuffer:buffer];
+        CGImageRef cg = [self.compositionContext createCGImage:image fromRect:image.extent];
+        if (cg) {
+#if SGPLATFORM_TARGET_OS_MAC
+            SGPLFImage *result = [[NSImage alloc] initWithCGImage:cg size:NSZeroSize];
+#else
+            SGPLFImage *result = [UIImage imageWithCGImage:cg];
+#endif
+            CGImageRelease(cg); return result;
+        }
+    }
     __block SGPLFImage *ret = nil;
     SGLockCondEXE11(self->_lock, ^BOOL {
         return self->_currentFrame != nil;
@@ -252,6 +270,7 @@
     }, ^SGBlock {
         [self->_currentFrame unlock];
         self->_currentFrame = nil;
+        self.lastComposedBuffer = nil;
         self->_flags.hasNewFrame = NO;
         self->_flags.framesFetched = 0;
         self->_flags.framesDisplayed = 0;
@@ -366,6 +385,7 @@
 
 - (void)drawInMTKView:(MTKView *)view
 {
+    if (self.backgroundOutputEnabled) return;
     if (!view.superview ||
         (view.frame.size.width <= 1 &&
          view.frame.size.height <= 1)) {
@@ -381,7 +401,7 @@
         return;
     }
     BOOL shouldDraw = NO;
-    if (self->_flags.hasNewFrame ||
+    if (self.composedFrameOutput || self.effects.active || self->_flags.hasNewFrame ||
         self->_flags.framesDisplayed == 0 ||
         (self->_displayMode == SGDisplayModeVR ||
          self->_displayMode == SGDisplayModeVRBox)) {
@@ -473,14 +493,46 @@
             break;
     }
     if (projections.count) {
-        id<MTLCommandBuffer> commandBuffer = [self.renderer drawModel:model
-                                                            viewports:viewports
-                                                             pipeline:pipeline
-                                                          projections:projections
-                                                        inputTextures:textures
-                                                        outputTexture:drawable.texture];
-        [commandBuffer presentDrawable:drawable];
-        [commandBuffer commit];
+        BOOL compose = self.effects.active || self.composedFrameOutput != nil;
+        id<MTLTexture> target = drawable.texture;
+        if (compose) {
+            if (!self.compositionTexture || self.compositionTexture.width != target.width || self.compositionTexture.height != target.height) {
+                MTLTextureDescriptor *descriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatBGRA8Unorm width:target.width height:target.height mipmapped:NO];
+                descriptor.usage = MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
+                self.compositionTexture = [target.device newTextureWithDescriptor:descriptor];
+            }
+            target = self.compositionTexture;
+        }
+        if (!target) return;
+        id<MTLCommandBuffer> commandBuffer = [self.renderer drawModel:model viewports:viewports pipeline:pipeline projections:projections inputTextures:textures outputTexture:target];
+        if (compose) {
+            // Finish projection before importing its texture into Core Image.
+            // A bounded pixel-buffer pool provides backpressure to output sinks.
+            [commandBuffer commit];
+            [commandBuffer waitUntilCompleted];
+            if (commandBuffer.status != MTLCommandBufferStatusCompleted) return;
+            CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
+            CIImage *base = [CIImage imageWithMTLTexture:target options:@{kCIImageColorSpace:(__bridge id)space}];
+            // Metal textures use a top-left origin; normalize to Core Image's
+            // bottom-left canvas before applying overlays and exporting pixels.
+            base = [base imageByApplyingTransform:CGAffineTransformMake(1,0,0,-1,0,target.height)];
+            CMTime mediaTime = self.clock.currentTime;
+            CVPixelBufferRef output = [self.effects copyPixelBufferForImage:base atTime:mediaTime];
+            if (output) {
+                CIImage *composed = [CIImage imageWithCVPixelBuffer:output];
+                id<MTLCommandBuffer> display = [self.compositionQueue commandBuffer];
+                [self.compositionContext render:composed toMTLTexture:drawable.texture commandBuffer:display bounds:composed.extent colorSpace:space];
+                self.lastComposedBuffer = CFBridgingRelease(CVPixelBufferRetain(output));
+                if (self.composedFrameOutput) self.composedFrameOutput(output, mediaTime);
+                CVPixelBufferRetain(output);
+                [display addCompletedHandler:^(id<MTLCommandBuffer> completed) { CVPixelBufferRelease(output); }];
+                [display presentDrawable:drawable]; [display commit];
+                CVPixelBufferRelease(output);
+            }
+            CGColorSpaceRelease(space);
+        } else {
+            [commandBuffer presentDrawable:drawable]; [commandBuffer commit];
+        }
         [self->_lock lock];
         if (self->_flags.framesFetched == framesFetched) {
             self->_flags.framesDisplayed += 1;
@@ -522,6 +574,10 @@
     self->_metalView.preferredFramesPerSecond = self->_preferredFramesPerSecond;
     self->_metalView.translatesAutoresizingMaskIntoConstraints = NO;
     self->_metalView.colorPixelFormat = MTLPixelFormatBGRA8Unorm;
+    self->_metalView.framebufferOnly = NO;
+    self.effects = self.effects ?: [[SGMediaEffects alloc] init];
+    self.compositionContext = [CIContext contextWithMTLDevice:device options:@{kCIContextCacheIntermediates:@NO}];
+    self.compositionQueue = [device newCommandQueue];
     self->_metalView.delegate = self;
     SGWeakify(self)
     self->_fetchTimer = [[SGRenderTimer alloc] initWithHandler:^{
@@ -538,6 +594,8 @@
     self->_fetchTimer = nil;
     [self->_metalView removeFromSuperview];
     self->_metalView = nil;
+    self.compositionTexture = nil;
+    self.lastComposedBuffer = nil;
     self->_renderer = nil;
     self->_planeModel = nil;
     self->_sphereModel = nil;

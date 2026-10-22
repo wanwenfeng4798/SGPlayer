@@ -7,6 +7,57 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+        53D1DB6124223BD6DA7B542C = {isa = PBXBuildFile; fileRef = 885955573702498F67CECC9D; };
+        D0F1BFDE2D7812C80A35DCE3 = {isa = PBXBuildFile; fileRef = 885955573702498F67CECC9D; };
+        4748869FA1152D48A5862790 = {isa = PBXBuildFile; fileRef = 885955573702498F67CECC9D; };
+        E6D3227D3EFC1D92B0518A47 = {isa = PBXBuildFile; fileRef = DAA52FBD4EEDFAA36C36D38B; };
+        FC8E7AD124D5FF81CAE2391C = {isa = PBXBuildFile; fileRef = DAA52FBD4EEDFAA36C36D38B; };
+        BB5312BF5E960B875CFEFDCE = {isa = PBXBuildFile; fileRef = DAA52FBD4EEDFAA36C36D38B; };
+        9BB55A86147627A7AA6D09C6 = {isa = PBXBuildFile; fileRef = FE32B5407896952CBEE88D85; };
+        4ADF501AC02623C1883BE3BA = {isa = PBXBuildFile; fileRef = FE32B5407896952CBEE88D85; };
+        D13850D126AE103992449AE5 = {isa = PBXBuildFile; fileRef = FE32B5407896952CBEE88D85; };
+        59583D55F137CD082376A02C = {isa = PBXBuildFile; fileRef = B66A5CF222D509AF6CDD9D67; };
+        AD4C671369E7A35B1C3BB327 = {isa = PBXBuildFile; fileRef = B66A5CF222D509AF6CDD9D67; };
+        5326CB85BEA22B50C8849CB7 = {isa = PBXBuildFile; fileRef = B66A5CF222D509AF6CDD9D67; };
+        EA1BEF1289B016E5FE16F6C0 = {isa = PBXBuildFile; fileRef = F5C39E085BC22A94D0B157C1; };
+        9D0FE404D71DE2317566EDD8 = {isa = PBXBuildFile; fileRef = F5C39E085BC22A94D0B157C1; };
+        3569BF09B83F96A910654614 = {isa = PBXBuildFile; fileRef = F5C39E085BC22A94D0B157C1; };
+        9FCD08F5280849A3F733BB37 = {isa = PBXBuildFile; fileRef = 9F8340E104F465AC8CD7FB90; };
+        EDDAD8919025B94E88721020 = {isa = PBXBuildFile; fileRef = 9F8340E104F465AC8CD7FB90; };
+        80B53CD0756716D1A877D5FB = {isa = PBXBuildFile; fileRef = 9F8340E104F465AC8CD7FB90; };
+        FC0612010284749CB7479955 /* UniformTypeIdentifiers */ = {isa = PBXBuildFile; fileRef = 5ED9B001B3B0BF394B037FC7; };
+        42C79821E07C04E577DE1B2D /* UniformTypeIdentifiers */ = {isa = PBXBuildFile; fileRef = 5ED9B001B3B0BF394B037FC7; };
+        476BBE113907C4512D9CDF00 /* UniformTypeIdentifiers */ = {isa = PBXBuildFile; fileRef = 5ED9B001B3B0BF394B037FC7; };
+        1F9DCE3BB5605BA3E00CEEE8 /* ImageIO */ = {isa = PBXBuildFile; fileRef = 76C8FF767B6F980233DB16CE; };
+        84845BA252CA05C24D5966C1 /* ImageIO */ = {isa = PBXBuildFile; fileRef = 76C8FF767B6F980233DB16CE; };
+        404259CBAAAFE845C3191EAC /* ImageIO */ = {isa = PBXBuildFile; fileRef = 76C8FF767B6F980233DB16CE; };
+        9166B01C7D222C20CF361E7A /* CoreText */ = {isa = PBXBuildFile; fileRef = F7297FDED0D58E602C150E63; };
+        AADCA8B9BEEBBD10C77035F0 /* CoreText */ = {isa = PBXBuildFile; fileRef = F7297FDED0D58E602C150E63; };
+        488E929CDBC8A3206F210A8F /* CoreText */ = {isa = PBXBuildFile; fileRef = F7297FDED0D58E602C150E63; };
+        F48AB093A5BF056D3485F9C8 /* CoreImage */ = {isa = PBXBuildFile; fileRef = 706806830B07E3A92FC77681; };
+        B10ED39C3EA6DB74A6BFCD11 /* CoreImage */ = {isa = PBXBuildFile; fileRef = 706806830B07E3A92FC77681; };
+        9EB97D1A2090FBB5E1D4D605 /* CoreImage */ = {isa = PBXBuildFile; fileRef = 706806830B07E3A92FC77681; };
+        F694BB3116094447814B48AD /* AVKit */ = {isa = PBXBuildFile; fileRef = 28415DEA8C8145DEBBF24173; };
+        36168553F8D1880C259E2F13 /* AVKit */ = {isa = PBXBuildFile; fileRef = 28415DEA8C8145DEBBF24173; };
+        A764FDC95887DEB936C74AEF /* AVKit */ = {isa = PBXBuildFile; fileRef = 28415DEA8C8145DEBBF24173; };
+        CEA8676DF4AC91E618D06C58 /* SGPlaybackController.m */ = {isa = PBXBuildFile; fileRef = 6E3D4A446FFA38C116C8CD3E; };
+        5C5AED0D1BF37636D7F357C7 /* SGPlaybackController.m */ = {isa = PBXBuildFile; fileRef = 6E3D4A446FFA38C116C8CD3E; };
+        24BDE437A08F2BB97E8BEA8D /* SGPlaybackController.m */ = {isa = PBXBuildFile; fileRef = 6E3D4A446FFA38C116C8CD3E; };
+        5808AFAD889D4BEEC02BFD72 /* SGPlaybackController.h */ = {isa = PBXBuildFile; fileRef = E54D3E632C2F41DEF7378399; settings = {ATTRIBUTES = (Public, ); }; };
+        728B74DE554B141FB1D093C6 /* SGPlaybackController.h */ = {isa = PBXBuildFile; fileRef = E54D3E632C2F41DEF7378399; settings = {ATTRIBUTES = (Public, ); }; };
+        CF39A50C929E93DAF13094BD /* SGPlaybackController.h */ = {isa = PBXBuildFile; fileRef = E54D3E632C2F41DEF7378399; settings = {ATTRIBUTES = (Public, ); }; };
+        213B08CC809A711EB4EFF577 /* SGSubtitleReader.m */ = {isa = PBXBuildFile; fileRef = 78AF38646159441E1C95A3E8; };
+        A7F7344F7BAE5E41B9B4FF04 /* SGSubtitleReader.m */ = {isa = PBXBuildFile; fileRef = 78AF38646159441E1C95A3E8; };
+        1412DB10AEBAD246968CAF56 /* SGSubtitleReader.m */ = {isa = PBXBuildFile; fileRef = 78AF38646159441E1C95A3E8; };
+        1861B12815D2BBD3C452EB5C /* SGMediaEffects.m */ = {isa = PBXBuildFile; fileRef = 55BDCC8F6C4C3A187DEA2C97; };
+        B838CA6B5DAD9BE764E45A73 /* SGMediaEffects.m */ = {isa = PBXBuildFile; fileRef = 55BDCC8F6C4C3A187DEA2C97; };
+        B703DC59C7006D4449018156 /* SGMediaEffects.m */ = {isa = PBXBuildFile; fileRef = 55BDCC8F6C4C3A187DEA2C97; };
+        203DFF9ED5C0429251D9526D /* SGMediaEffects.h */ = {isa = PBXBuildFile; fileRef = F9BFB380ACCFD95D013DD63A; settings = {ATTRIBUTES = (Public, ); }; };
+        FE09AC6F19521DF6CC5F9079 /* SGMediaEffects.h */ = {isa = PBXBuildFile; fileRef = F9BFB380ACCFD95D013DD63A; settings = {ATTRIBUTES = (Public, ); }; };
+        F5A33FB60D5B7C68AFFFCE8E /* SGMediaEffects.h */ = {isa = PBXBuildFile; fileRef = F9BFB380ACCFD95D013DD63A; settings = {ATTRIBUTES = (Public, ); }; };
+        E36B1AA5012D3E2430283072 /* SGGIFExporter.m */ = {isa = PBXBuildFile; fileRef = 1BD82AC1B350DDBDE7F13F65; };
+        60B07D683665C2D98C192D1E /* SGGIFExporter.m */ = {isa = PBXBuildFile; fileRef = 1BD82AC1B350DDBDE7F13F65; };
+        39B74FD06A47245FE2FDCD7E /* SGGIFExporter.m */ = {isa = PBXBuildFile; fileRef = 1BD82AC1B350DDBDE7F13F65; };
 		4E274A3A2B9575820032C98B /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E274A2D2B95754C0032C98B /* libavcodec.a */; };
 		4E274A3B2B9575820032C98B /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E274A312B95754C0032C98B /* libavfilter.a */; };
 		4E274A3C2B9575820032C98B /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E274A2F2B95754C0032C98B /* libavformat.a */; };
@@ -570,6 +621,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+        885955573702498F67CECC9D = {isa = PBXFileReference; lastKnownFileType = file; path = "licenses/NotoSansCJK-OFL.txt"; sourceTree = SOURCE_ROOT; };
+        DAA52FBD4EEDFAA36C36D38B = {isa = PBXFileReference; lastKnownFileType = file; path = "SGPlayer/Resources/Fonts/NotoSansCJKsc-Regular.otf"; sourceTree = SOURCE_ROOT; };
+        FE32B5407896952CBEE88D85 = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfribidi.a; path = "$(SG_FFMPEG_LIBRARY_DIR)/libfribidi.a"; sourceTree = "<absolute>"; };
+        B66A5CF222D509AF6CDD9D67 = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = "$(SG_FFMPEG_LIBRARY_DIR)/libfreetype.a"; sourceTree = "<absolute>"; };
+        F5C39E085BC22A94D0B157C1 = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libharfbuzz.a; path = "$(SG_FFMPEG_LIBRARY_DIR)/libharfbuzz.a"; sourceTree = "<absolute>"; };
+        9F8340E104F465AC8CD7FB90 = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libass.a; path = "$(SG_FFMPEG_LIBRARY_DIR)/libass.a"; sourceTree = "<absolute>"; };
+        5ED9B001B3B0BF394B037FC7 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+        76C8FF767B6F980233DB16CE /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+        F7297FDED0D58E602C150E63 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+        706806830B07E3A92FC77681 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+        28415DEA8C8145DEBBF24173 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+        6E3D4A446FFA38C116C8CD3E /* SGPlaybackController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGPlaybackController.m"; sourceTree = SOURCE_ROOT; };
+        E54D3E632C2F41DEF7378399 /* SGPlaybackController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGPlaybackController.h"; sourceTree = SOURCE_ROOT; };
+        78AF38646159441E1C95A3E8 /* SGSubtitleReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGSubtitleReader.m"; sourceTree = SOURCE_ROOT; };
+        55BDCC8F6C4C3A187DEA2C97 /* SGMediaEffects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGMediaEffects.m"; sourceTree = SOURCE_ROOT; };
+        F9BFB380ACCFD95D013DD63A /* SGMediaEffects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGMediaEffects.h"; sourceTree = SOURCE_ROOT; };
+        1BD82AC1B350DDBDE7F13F65 /* SGGIFExporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGGIFExporter.m"; sourceTree = SOURCE_ROOT; };
 		4E274A212B94332D0032C98B /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = SOURCE_ROOT; };
 		4E274A2A2B95754C0032C98B /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = "$(SG_FFMPEG_LIBRARY_DIR)/libswscale.a"; sourceTree = "<absolute>"; };
 		4E274A2D2B95754C0032C98B /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = "$(SG_FFMPEG_LIBRARY_DIR)/libavcodec.a"; sourceTree = "<absolute>"; };
@@ -802,6 +870,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                D13850D126AE103992449AE5,
+                5326CB85BEA22B50C8849CB7,
+                3569BF09B83F96A910654614,
+                80B53CD0756716D1A877D5FB,
+                476BBE113907C4512D9CDF00 /* UniformTypeIdentifiers */,
+                404259CBAAAFE845C3191EAC /* ImageIO */,
+                488E929CDBC8A3206F210A8F /* CoreText */,
+                9EB97D1A2090FBB5E1D4D605 /* CoreImage */,
+                A764FDC95887DEB936C74AEF /* AVKit */,
 				4E274A4A2B9578DF0032C98B /* libavformat.a in Frameworks */,
 				4E274A4B2B9578DF0032C98B /* libavutil.a in Frameworks */,
 				4E274A4C2B9578DF0032C98B /* libavcodec.a in Frameworks */,
@@ -818,6 +895,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                9BB55A86147627A7AA6D09C6,
+                59583D55F137CD082376A02C,
+                EA1BEF1289B016E5FE16F6C0,
+                9FCD08F5280849A3F733BB37,
+                FC0612010284749CB7479955 /* UniformTypeIdentifiers */,
+                1F9DCE3BB5605BA3E00CEEE8 /* ImageIO */,
+                9166B01C7D222C20CF361E7A /* CoreText */,
+                F48AB093A5BF056D3485F9C8 /* CoreImage */,
+                F694BB3116094447814B48AD /* AVKit */,
 				4E274A5A2B957A940032C98B /* libavcodec.a in Frameworks */,
 				4E274A5B2B957A940032C98B /* libswresample.a in Frameworks */,
 				4E274A5C2B957A940032C98B /* libswscale.a in Frameworks */,
@@ -834,6 +920,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                4ADF501AC02623C1883BE3BA,
+                AD4C671369E7A35B1C3BB327,
+                9D0FE404D71DE2317566EDD8,
+                EDDAD8919025B94E88721020,
+                42C79821E07C04E577DE1B2D /* UniformTypeIdentifiers */,
+                84845BA252CA05C24D5966C1 /* ImageIO */,
+                AADCA8B9BEEBBD10C77035F0 /* CoreText */,
+                B10ED39C3EA6DB74A6BFCD11 /* CoreImage */,
+                36168553F8D1880C259E2F13 /* AVKit */,
 				4E274A3A2B9575820032C98B /* libavcodec.a in Frameworks */,
 				4E274A3B2B9575820032C98B /* libavfilter.a in Frameworks */,
 				4E274A3C2B9575820032C98B /* libavformat.a in Frameworks */,
@@ -1198,6 +1293,14 @@
 		9CEFA6CC1E7122BF00835CAB = {
 			isa = PBXGroup;
 			children = (
+                885955573702498F67CECC9D,
+                DAA52FBD4EEDFAA36C36D38B,
+                6E3D4A446FFA38C116C8CD3E /* SGPlaybackController.m */,
+                E54D3E632C2F41DEF7378399 /* SGPlaybackController.h */,
+                78AF38646159441E1C95A3E8 /* SGSubtitleReader.m */,
+                55BDCC8F6C4C3A187DEA2C97 /* SGMediaEffects.m */,
+                F9BFB380ACCFD95D013DD63A /* SGMediaEffects.h */,
+                1BD82AC1B350DDBDE7F13F65 /* SGGIFExporter.m */,
 				4E274A142B9433120032C98B /* scripts */,
 				9CEFA6D81E7122BF00835CAB /* SGPlayer */,
 				9CEFA6D71E7122BF00835CAB /* Products */,
@@ -1434,6 +1537,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                CF39A50C929E93DAF13094BD /* SGPlaybackController.h */,
+                F5A33FB60D5B7C68AFFFCE8E /* SGMediaEffects.h */,
 				9C22AE69237AC19E004D33DE /* SGFrameReader.h in Headers */,
 				9C20C5942333268100E183B2 /* SGPaddingSegment.h in Headers */,
 				9C82EEB221AE356D00E9D523 /* SGAudioProcessor.h in Headers */,
@@ -1540,6 +1645,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                728B74DE554B141FB1D093C6 /* SGPlaybackController.h */,
+                FE09AC6F19521DF6CC5F9079 /* SGMediaEffects.h */,
 				9C22AE6A237AC19E004D33DE /* SGFrameReader.h in Headers */,
 				9C20C5952333268100E183B2 /* SGPaddingSegment.h in Headers */,
 				9C82EEB321AE356D00E9D523 /* SGAudioProcessor.h in Headers */,
@@ -1646,6 +1753,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                5808AFAD889D4BEEC02BFD72 /* SGPlaybackController.h */,
+                203DFF9ED5C0429251D9526D /* SGMediaEffects.h */,
 				9C22AE68237AC19E004D33DE /* SGFrameReader.h in Headers */,
 				9C20C5932333268100E183B2 /* SGPaddingSegment.h in Headers */,
 				9CE6F54B2004D97D00D1F4C8 /* SGPLFScreen.h in Headers */,
@@ -1891,6 +2000,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                D0F1BFDE2D7812C80A35DCE3,
+                FC8E7AD124D5FF81CAE2391C,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1898,6 +2009,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                4748869FA1152D48A5862790,
+                BB5312BF5E960B875CFEFDCE,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1905,6 +2018,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                53D1DB6124223BD6DA7B542C,
+                E6D3227D3EFC1D92B0518A47,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1915,6 +2030,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                24BDE437A08F2BB97E8BEA8D /* SGPlaybackController.m */,
+                1412DB10AEBAD246968CAF56 /* SGSubtitleReader.m */,
+                B703DC59C7006D4449018156 /* SGMediaEffects.m */,
+                39B74FD06A47245FE2FDCD7E /* SGGIFExporter.m */,
 				9C4190F921AFF17700134099 /* SGAudioMixerUnit.m in Sources */,
 				9C8637F721904A0900D730EC /* SGPlayerItem.m in Sources */,
 				9C8637F821904A0900D730EC /* SGFrame.m in Sources */,
@@ -2000,6 +2119,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                5C5AED0D1BF37636D7F357C7 /* SGPlaybackController.m */,
+                A7F7344F7BAE5E41B9B4FF04 /* SGSubtitleReader.m */,
+                B838CA6B5DAD9BE764E45A73 /* SGMediaEffects.m */,
+                60B07D683665C2D98C192D1E /* SGGIFExporter.m */,
 				9C4190FA21AFF17700134099 /* SGAudioMixerUnit.m in Sources */,
 				9CD79E9E2190068E00E39A7D /* SGPlayerItem.m in Sources */,
 				9CD79E9F2190068E00E39A7D /* SGFrame.m in Sources */,
@@ -2085,6 +2208,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                CEA8676DF4AC91E618D06C58 /* SGPlaybackController.m */,
+                213B08CC809A711EB4EFF577 /* SGSubtitleReader.m */,
+                1861B12815D2BBD3C452EB5C /* SGMediaEffects.m */,
+                E36B1AA5012D3E2430283072 /* SGGIFExporter.m */,
 				9C262A3622B344D3006C8542 /* SGDemuxerOptions.m in Sources */,
 				9C8D4E4B200DFFC700ED8A58 /* SGPlayerItem.m in Sources */,
 				9CA3CDB420E1F74300B852D0 /* SGFrame.m in Sources */,
@@ -2194,7 +2321,7 @@
 				SG_FFMPEG_VARIANT = universal;
 				SG_FFMPEG_LIBRARY_DIR = "$(SG_FFMPEG_ROOT)/$(SG_FFMPEG_VARIANT)/lib";
 				HEADER_SEARCH_PATHS = ("$(SG_FFMPEG_ROOT)/$(SG_FFMPEG_VARIANT)/include", "$(DERIVED_FILE_DIR)");
-				OTHER_LDFLAGS = ("$(inherited)", "-framework", Security, "-framework", CoreFoundation);
+				OTHER_LDFLAGS = ("-lc++", "-liconv", "$(inherited)", "-framework", Security, "-framework", CoreFoundation);
 				INFOPLIST_FILE = SGPlayer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2236,7 +2363,7 @@
 				SG_FFMPEG_VARIANT = universal;
 				SG_FFMPEG_LIBRARY_DIR = "$(SG_FFMPEG_ROOT)/$(SG_FFMPEG_VARIANT)/lib";
 				HEADER_SEARCH_PATHS = ("$(SG_FFMPEG_ROOT)/$(SG_FFMPEG_VARIANT)/include", "$(DERIVED_FILE_DIR)");
-				OTHER_LDFLAGS = ("$(inherited)", "-framework", Security, "-framework", CoreFoundation);
+				OTHER_LDFLAGS = ("-lc++", "-liconv", "$(inherited)", "-framework", Security, "-framework", CoreFoundation);
 				INFOPLIST_FILE = SGPlayer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2279,7 +2406,7 @@
 				"SG_FFMPEG_VARIANT[sdk=appletvsimulator*]" = simulator;
 				SG_FFMPEG_LIBRARY_DIR = "$(SG_FFMPEG_ROOT)/$(SG_FFMPEG_VARIANT)/lib";
 				HEADER_SEARCH_PATHS = ("$(SG_FFMPEG_ROOT)/$(SG_FFMPEG_VARIANT)/include", "$(DERIVED_FILE_DIR)");
-				OTHER_LDFLAGS = ("$(inherited)", "-framework", Security, "-framework", CoreFoundation);
+				OTHER_LDFLAGS = ("-lc++", "-liconv", "$(inherited)", "-framework", Security, "-framework", CoreFoundation);
 				INFOPLIST_FILE = SGPlayer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2322,7 +2449,7 @@
 				"SG_FFMPEG_VARIANT[sdk=appletvsimulator*]" = simulator;
 				SG_FFMPEG_LIBRARY_DIR = "$(SG_FFMPEG_ROOT)/$(SG_FFMPEG_VARIANT)/lib";
 				HEADER_SEARCH_PATHS = ("$(SG_FFMPEG_ROOT)/$(SG_FFMPEG_VARIANT)/include", "$(DERIVED_FILE_DIR)");
-				OTHER_LDFLAGS = ("$(inherited)", "-framework", Security, "-framework", CoreFoundation);
+				OTHER_LDFLAGS = ("-lc++", "-liconv", "$(inherited)", "-framework", Security, "-framework", CoreFoundation);
 				INFOPLIST_FILE = SGPlayer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2475,7 +2602,7 @@
 				"SG_FFMPEG_VARIANT[sdk=iphonesimulator*]" = simulator;
 				SG_FFMPEG_LIBRARY_DIR = "$(SG_FFMPEG_ROOT)/$(SG_FFMPEG_VARIANT)/lib";
 				HEADER_SEARCH_PATHS = ("$(SG_FFMPEG_ROOT)/$(SG_FFMPEG_VARIANT)/include", "$(DERIVED_FILE_DIR)");
-				OTHER_LDFLAGS = ("$(inherited)", "-framework", Security, "-framework", CoreFoundation);
+				OTHER_LDFLAGS = ("-lc++", "-liconv", "$(inherited)", "-framework", Security, "-framework", CoreFoundation);
 				INFOPLIST_FILE = SGPlayer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2515,7 +2642,7 @@
 				"SG_FFMPEG_VARIANT[sdk=iphonesimulator*]" = simulator;
 				SG_FFMPEG_LIBRARY_DIR = "$(SG_FFMPEG_ROOT)/$(SG_FFMPEG_VARIANT)/lib";
 				HEADER_SEARCH_PATHS = ("$(SG_FFMPEG_ROOT)/$(SG_FFMPEG_VARIANT)/include", "$(DERIVED_FILE_DIR)");
-				OTHER_LDFLAGS = ("$(inherited)", "-framework", Security, "-framework", CoreFoundation);
+				OTHER_LDFLAGS = ("-lc++", "-liconv", "$(inherited)", "-framework", Security, "-framework", CoreFoundation);
 				INFOPLIST_FILE = SGPlayer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;

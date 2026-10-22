@@ -60,15 +60,11 @@
 
 - (void)dealloc
 {
-    SGLockCondEXE10(self->_lock, ^BOOL {
-        return self->_flags.state != SGFrameOutputStateClosed;
-    }, ^SGBlock {
-        [self setState:SGFrameOutputStateClosed];
-        [self->_packetOutput close];
-        [self->_audioDecoder close];
-        [self->_videoDecoder close];
-        return nil;
-    });
+    // Teardown must not create autoreleased blocks retaining a dying self.
+    self->_delegate = nil;
+    self->_packetOutput.delegate = nil; self->_audioDecoder.delegate = nil; self->_videoDecoder.delegate = nil;
+    [self->_lock lock]; self->_flags.state = SGFrameOutputStateClosed; [self->_lock unlock];
+    [self->_packetOutput close]; [self->_audioDecoder close]; [self->_videoDecoder close];
 }
 
 #pragma mark - Mapping
@@ -359,6 +355,7 @@ SGSet11Map(void, setDemuxerOptions, setOptions, SGDemuxerOptions *, self->_packe
 
 - (void)decodeLoop:(SGDecodeLoop *)decodeLoop didChangeCapacity:(SGCapacity)capacity
 {
+    __block SGCapacity currentCapacity = capacity;
     __block SGBlock finished = ^{};
     __block SGMediaType type = SGMediaTypeUnknown;
     SGLockCondEXE11(self->_lock, ^BOOL {
@@ -367,10 +364,14 @@ SGSet11Map(void, setDemuxerOptions, setOptions, SGDemuxerOptions *, self->_packe
         } else if (decodeLoop == self->_videoDecoder) {
             type = SGMediaTypeVideo;
         }
-        return !SGCapacityIsEqual(self->_capacities[type], capacity);
+        // Delegate blocks run outside the producer lock and can arrive out of
+        // order. Read current state so an older nonempty event cannot replace
+        // the final empty capacity and prevent EOF indefinitely.
+        currentCapacity = decodeLoop.capacity;
+        return !SGCapacityIsEqual(self->_capacities[type], currentCapacity);
     }, ^SGBlock {
         self->_capacityFlags[type] = YES;
-        self->_capacities[type] = capacity;
+        self->_capacities[type] = currentCapacity;
         SGCapacity ac = self->_capacities[SGMediaTypeAudio];
         SGCapacity vc = self->_capacities[SGMediaTypeVideo];
         int size = ac.size + vc.size;
@@ -393,7 +394,7 @@ SGSet11Map(void, setDemuxerOptions, setOptions, SGDemuxerOptions *, self->_packe
         };
     }, ^BOOL(SGBlock block) {
         block();
-        [self->_delegate frameOutput:self didChangeCapacity:capacity type:type];
+        [self->_delegate frameOutput:self didChangeCapacity:currentCapacity type:type];
         finished();
         return YES;
     });

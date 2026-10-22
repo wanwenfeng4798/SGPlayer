@@ -11,6 +11,7 @@
 #import "SGVRViewport.h"
 #import "SGPLFImage.h"
 #import "SGPLFView.h"
+#import "SGMediaEffects.h"
 
 typedef NS_ENUM(NSUInteger, SGDisplayMode) {
     SGDisplayModePlane = 0,
@@ -25,6 +26,13 @@ typedef NS_ENUM(NSUInteger, SGScalingMode) {
 };
 
 @interface SGVideoRenderer : NSObject
+
+@property (nonatomic, strong) SGMediaEffects *effects;
+@property (nonatomic) BOOL backgroundOutputEnabled;
+// Observes final composed pixels. The buffer is borrowed for the callback;
+// retain it explicitly when keeping it beyond the callback.
+@property (nonatomic, copy) void (^composedFrameOutput)(CVPixelBufferRef buffer, CMTime time);
+
 
 /*!
  @method supportedPixelFormats

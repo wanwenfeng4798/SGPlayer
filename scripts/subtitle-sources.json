@@ -1,0 +1,30 @@
+[
+  {
+    "name": "freetype",
+    "version": "2.14.3",
+    "url": "https://codeload.github.com/freetype/freetype/tar.gz/refs/tags/VER-2-14-3",
+    "filename": "freetype-2.14.3.tar.gz",
+    "sha256": "dc49de6b01a266eef4876a4dd34d9842c475d3e28ff2eff63bd2fb760ab56261"
+  },
+  {
+    "name": "fribidi",
+    "version": "1.0.16",
+    "url": "https://codeload.github.com/fribidi/fribidi/tar.gz/refs/tags/v1.0.16",
+    "filename": "fribidi-1.0.16.tar.gz",
+    "sha256": "5a1d187a33daa58fcee2ad77f0eb9d136dd6fa4096239199ba31e850d397e8a8"
+  },
+  {
+    "name": "harfbuzz",
+    "version": "14.4.0",
+    "url": "https://github.com/harfbuzz/harfbuzz/releases/download/14.4.0/harfbuzz-14.4.0.tar.xz",
+    "filename": "harfbuzz-14.4.0.tar.xz",
+    "sha256": "2357ed966c6ced7bfa720b0640c0231065af01158fbea215093ffa15aed44371"
+  },
+  {
+    "name": "libass",
+    "version": "0.17.5",
+    "url": "https://codeload.github.com/libass/libass/tar.gz/refs/tags/0.17.5",
+    "filename": "libass-0.17.5.tar.gz",
+    "sha256": "fa286fc9ee1ba3b932703a3df7b8474d01dc8abe29ec69b6fa68781dc4bf7acc"
+  }
+]
