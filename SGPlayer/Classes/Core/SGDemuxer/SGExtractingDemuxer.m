@@ -17,6 +17,7 @@
 {
     struct {
         BOOL finished;
+        BOOL hasBoundaryKeyFrame;
         BOOL inputting;
         BOOL outputting;
     } _flags;
@@ -111,6 +112,7 @@ SGGet0Map(NSError *, seekable, self->_demuxable)
     }
     [self->_packetQueue flush];
     self->_flags.finished = NO;
+    self->_flags.hasBoundaryKeyFrame = NO;
     self->_flags.inputting = NO;
     self->_flags.outputting = NO;
     self->_finishedTracks = nil;
@@ -204,9 +206,13 @@ SGGet0Map(NSError *, seekable, self->_demuxable)
             continue;
         }
         if (CMTimeCompare(pkt.timeStamp, CMTimeRangeGetEnd(self->_timeRange)) >= 0) {
-            if (pkt.core->flags & AV_PKT_FLAG_KEY) {
+            // The first keyframe beyond the cut can precede B packets whose
+            // presentation times are still inside it. Keep that reference GOP;
+            // stop at the next keyframe after its reordered packets were read.
+            if ((pkt.core->flags & AV_PKT_FLAG_KEY) && self->_flags.hasBoundaryKeyFrame) {
                 self->_flags.finished = YES;
             } else {
+                if (pkt.core->flags & AV_PKT_FLAG_KEY) self->_flags.hasBoundaryKeyFrame = YES;
                 [self->_packetQueue putObjectSync:pkt];
             }
             [pkt unlock];

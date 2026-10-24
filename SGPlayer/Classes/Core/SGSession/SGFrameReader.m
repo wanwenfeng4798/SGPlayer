@@ -134,7 +134,8 @@ SGSet11Map(void, setDemuxerOptions, setOptions, SGDemuxerOptions *, self->_demux
             continue;
         }
         SGPacket *packet = nil;
-        [self->_demuxer nextPacket:&packet];
+        NSError *readError=[self->_demuxer nextPacket:&packet];
+        if(readError&&readError.code!=SGErrorCodeDemuxerEndOfFile){[packet unlock];err=readError;break;}
         NSArray<__kindof SGFrame *> *objs = nil;
         if (packet) {
             if (![self->_selectedTracks containsObject:packet.track]) {
@@ -159,7 +160,7 @@ SGSet11Map(void, setDemuxerOptions, setOptions, SGDemuxerOptions *, self->_demux
         } else {
             NSMutableArray<__kindof SGFrame *> *mObjs = [NSMutableArray array];
             for (id<SGDecodable> decoder in self->_decoders.allValues) {
-                [mObjs addObjectsFromArray:[decoder finish]];
+                NSArray *tail=[decoder finish];if(tail.count)[mObjs addObjectsFromArray:tail];
             }
             objs = [mObjs copy];
             self->_flags.noMorePacket = YES;
@@ -183,7 +184,7 @@ SGSet11Map(void, setDemuxerOptions, setOptions, SGDemuxerOptions *, self->_demux
 
 - (BOOL)demuxableShouldAbortBlockingFunctions:(id<SGDemuxable>)demuxable
 {
-    if ([self->_delegate respondsToSelector:@selector(demuxableShouldAbortBlockingFunctions:)]) {
+    if ([self->_delegate respondsToSelector:@selector(frameReaderShouldAbortBlockingFunctions:)]) {
         return [self->_delegate frameReaderShouldAbortBlockingFunctions:self];
     }
     return NO;

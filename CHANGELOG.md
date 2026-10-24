@@ -2,6 +2,32 @@
 
 English | [简体中文](CHANGELOG.zh-CN.md)
 
+## Unreleased — 2026-10-24
+
+- Add audio-only AAC export in MP4/M4A, Matroska and MPEG-TS, reusing clipping, gain and atomic cancellation; expose export/playback in all three demos without creating a video encoder.
+- Extend idle controls hiding to Mac and tvOS, including hover/keyboard reveal, remote focus restoration and SwiftUI configuration; preserve active slider/pan interaction and handle non-touch progress value changes.
+- Add focus-scoped Mac keyboard controls for seeking, volume/mute, rate, lock and full-screen/Escape restoration; preserve text-field input and system modifiers, with demo/SwiftUI integration.
+- Isolate Mac UI outputs in a fresh temporary directory per case to avoid historical Desktop GIF replacement stalls; preserve failure stacks/logs and retain within-case overwrite checks.
+- Add finite-range video transcoding/effect burning and export entries in all three demos; six container/effects-kernel combinations and hardware H.264/HEVC pass decoded-output ASan regression.
+- Add isolated effect export snapshots; retain reordered boundary B frames during exact trimming and preserve offline audio delay while keeping playback padding enabled by default; fix non-square-pixel export letterboxing.
+- Add iPhone double-tap, seek, player-volume and screen-brightness gestures with locking, VoiceOver gesture preservation and conditional brightness restoration.
+- Add first-frame/failure covers with lifecycle cleanup and iPhone idle hiding/tap-to-reveal controls. Paused/loading/locked states retain controls; SwiftUI exposes cover/hiding configuration.
+- Allow SwiftUI reopening on the same mounted view after closing, replacing old controls/constraints; verify real frames and a single set of controls after reopening.
+- Add native bitrate/resolution/buffering/paused-network preferences with isolated snapshots and source persistence; preferences do not guarantee HLS variant selection.
+- Export real numerical AVPlayer access-log metrics, leaving unavailable data empty; FFmpeg throughput/decode-drop metrics remain pending.
+
+## Unreleased — 2026-10-23
+
+- Add Swift 6 / SwiftUI wrappers and a five-SDK local SPM binary package with bundled fonts/licenses.
+- Preserve media extensions in cache files and bookmark system HLS packages; fix foreground deadlines, video-only resume, FrameReader abort delegation and non-EOF error propagation.
+- Add a tvOS mini-player focus guide and model the framework archive as a demo build input for incremental relinking.
+- Add playlists, resume, rendition switching, A–B/item/list loops, bounded kernel fallback, private diagnostic export and exclusive playback groups.
+- Preserve current play/pause intent across asynchronous kernel changes and reject superseded session completions.
+- Add authenticated complete-file downloads with quota/pinning, independent timeline previews, WebVTT sprite indexes, shared controls and mini-player/container-full-screen presentation.
+- Add audio track selection, volume, original-source AirPlay routing, dual subtitles, .cube 3D LUT and Bloom through the selected kernel.
+- Add atomic packet recording/remux into Matroska/MP4/MPEG-TS, native HLS asset downloads on macOS/iPhone, capability-gated AV1 VideoToolbox selection and a runtime capability inventory.
+- Expansion acceptance is in progress. The [implementation ledger](documents/feature-expansion.en.md) distinguishes completed implementation, pending validation and remaining work. Physical iPhone acceptance is deferred to 2026-10-26 by request.
+
 ## Unreleased — 2026-10-22
 
 These changes are present in the working tree. This entry does not indicate a published release or Git tag.

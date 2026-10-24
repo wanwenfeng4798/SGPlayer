@@ -120,6 +120,14 @@ static void TestMediaFeatures(NSString *directory, NSString *videoPath)
         float curve[17*3];for(int j=0;j<17;j++)for(int channel=0;channel<3;channel++)curve[j*3+channel]=1.0-j/16.0;
         config=[[SGFilterConfiguration alloc]init];config.colorCurves=[NSData dataWithBytes:curve length:sizeof(curve)];effects.filter=config;
         CHECK(![FeaturePixels(effects,image,0) isEqual:baseline]);
+        // A constant cube is a strong oracle: every input color must become red in both backends.
+        NSString *cube=@"TITLE \"constant red\"\nLUT_3D_SIZE 2\nDOMAIN_MIN 0 0 0\nDOMAIN_MAX 1 1 1\n1 0 0\n1 0 0\n1 0 0\n1 0 0\n1 0 0\n1 0 0\n1 0 0\n1 0 0\n";
+        NSError *cubeError=nil;config=[SGFilterConfiguration configurationWithCubeText:cube error:&cubeError];CHECK(config&&!cubeError);effects.filter=config;
+        NSData *red=FeaturePixels(effects,image,0);const uint8_t *redBytes=red.bytes;
+        for(int pixel=0;pixel<320*180;pixel++){CHECK(redBytes[pixel*4]<8);CHECK(redBytes[pixel*4+1]<8);CHECK(redBytes[pixel*4+2]>245);}
+        CHECK(![SGFilterConfiguration configurationWithCubeText:@"LUT_3D_SIZE 64\n1 0 0\n" error:&cubeError]);
+        config=[SGFilterConfiguration new];config.bloomIntensity=.5;config.bloomRadius=3;effects.filter=config;
+        CHECK(![FeaturePixels(effects,image,0) isEqual:baseline]);
         config.brightness=NAN;effects.filter=config;CHECK([effects composeImage:image atTime:kCMTimeZero]==nil);CHECK(effects.lastError!=nil);
         effects.filter=[[SGFilterConfiguration alloc] init];CHECK([FeaturePixels(effects,image,0) isEqual:baseline]);
         [checks addObject:kernel==SGPlaybackKernelFFmpeg?@"FFmpeg filter graph pixels, flips, grayscale, combined controls and invalid-parameter errors":@"Native Core Image filter pixels and validation"];
@@ -138,6 +146,14 @@ static void TestMediaFeatures(NSString *directory, NSString *videoPath)
     effects.subtitlesEnabled=YES;effects.subtitleOffset=1;CHECK([before isEqual:FeaturePixels(effects,image,1.5)]);
     CHECK(![before isEqual:FeaturePixels(effects,image,2.5)]);
     effects.subtitles=@[];
+    SGSubtitleTrack *second=[SGSubtitleTrack new];SGSubtitleCue *secondCue=[SGSubtitleCue new];secondCue.start=CMTimeMake(1,1);secondCue.duration=CMTimeMake(2,1);secondCue.text=@"Second track";second.cues=@[secondCue];
+    effects.secondarySubtitleTrack=second;
+    NSData *secondaryOnly=FeaturePixels(effects,image,2);CHECK(![before isEqual:secondaryOnly]);
+    effects.subtitles=track.cues;effects.subtitleOffset=0;
+    NSData *dual=FeaturePixels(effects,image,2);CHECK(![dual isEqual:secondaryOnly]&&![dual isEqual:active]);
+    effects.secondarySubtitleOffset=2;CHECK([FeaturePixels(effects,image,2) isEqual:active]);
+    effects.secondarySubtitleTrack=nil;effects.subtitles=@[];effects.secondarySubtitleOffset=0;
+    [checks addObject:@"Dual independent subtitle timing/position; true 3D cube red-pixel oracle and Bloom in both kernels"];
     SGDanmakuItem *event=[[SGDanmakuItem alloc] init];event.start=kCMTimeZero;event.text=@"Danmaku 弹幕";event.duration=5;
     effects.danmaku=@[event];
     NSData *position1=FeaturePixels(effects,image,1),*position2=FeaturePixels(effects,image,2);
@@ -193,8 +209,11 @@ static void TestMediaFeatures(NSString *directory, NSString *videoPath)
     [checks addObject:@"Real libass font rendering, ASS position/outline/color overrides and cue timing"];
     NSURL *gif=[NSURL fileURLWithPath:[directory stringByAppendingPathComponent:@"export.gif"]];
     effects.watermarks=@[mark];mark.opacity=1;
+    NSData *oldGIF=[@"previous-complete-file" dataUsingEncoding:NSUTF8StringEncoding];CHECK([oldGIF writeToURL:gif atomically:YES]);
+    NSFileHandle *previousReader=[NSFileHandle fileHandleForReadingFromURL:gif error:&error];CHECK(previousReader);
     SGGIFExporter *exporter=[[SGGIFExporter alloc] init];
     CHECK([exporter exportURL:[NSURL fileURLWithPath:videoPath] toURL:gif range:CMTimeRangeMake(kCMTimeZero,CMTimeMake(1,1)) framesPerSecond:10 maximumDimension:128 effects:effects error:&error]);
+    CHECK([[previousReader readDataToEndOfFile]isEqual:oldGIF]);[previousReader closeFile];
     CGImageSourceRef source=CGImageSourceCreateWithURL((__bridge CFURLRef)gif,NULL);CHECK(source && CGImageSourceGetCount(source)==10);CFRelease(source);
     SGAnimatedImage *animation=[SGAnimatedImage imageWithURL:gif maxDecodedBytes:8*1024*1024 error:&error];CHECK(animation && animation.frameCount==10);CHECK(fabs(animation.duration-1)<0.05);CHECK([animation imageAtTime:0.1]!=nil);
     CHECK([SGAnimatedImage imageWithURL:gif maxDecodedBytes:1 error:&error]==nil);

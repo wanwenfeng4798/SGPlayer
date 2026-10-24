@@ -5,10 +5,19 @@
 	};
 	objectVersion = 46;
 	objects = {
+        CB5C080D98FA469058CCF192 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/transcode-av.mp4"; sourceTree = SOURCE_ROOT; };
+        9C59B2B43AA23120A3140D71 = {isa = PBXBuildFile; fileRef = CB5C080D98FA469058CCF192; };
+        F643FF0B598BB0FF197BECE4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SGDemoFrameworkRevision.c; sourceTree = DERIVED_FILE_DIR; };
+        34AF06C90A2CD6EDE242247F = {isa = PBXBuildFile; fileRef = F643FF0B598BB0FF197BECE4; };
+        5979E6C2908A1D31FC741C41 = {isa = PBXShellScriptBuildPhase; alwaysOutOfDate = 1; buildActionMask = 2147483647; files = (); inputPaths = ("$(SRCROOT)/../../scripts/stamp-demo-framework.py", "$(BUILT_PRODUCTS_DIR)/SGPlayer.framework/SGPlayer",); outputPaths = ("$(DERIVED_FILE_DIR)/SGDemoFrameworkRevision.c",); name = "Stamp linked SGPlayer archive"; runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = "/usr/bin/python3 \"${SRCROOT}/../../scripts/stamp-demo-framework.py\" \"${BUILT_PRODUCTS_DIR}/SGPlayer.framework/SGPlayer\" \"${DERIVED_FILE_DIR}/SGDemoFrameworkRevision.c\"\n"; };
+
+        A834C62AFAD9B594AD749D1A = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "SGPlayer core archive"; path = SGPlayer.framework/SGPlayer; sourceTree = BUILT_PRODUCTS_DIR; };
+        532807221349ACFF89B6C4E7 = {isa = PBXBuildFile; fileRef = A834C62AFAD9B594AD749D1A; };
+        A90200000000000200000005 = {isa = PBXContainerItemProxy; containerPortal = A90200000000000200000001; proxyType = 2; remoteGlobalIDString = 9C8638A521904A0900D730EC; remoteInfo = "SGPlayer"; };
         A90200000000000200000001 /* SGPlayer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ../../SGPlayer.xcodeproj; sourceTree = "<group>"; };
         A90200000000000200000002 /* SGPlayer target proxy */ = {isa = PBXContainerItemProxy; containerPortal = A90200000000000200000001; proxyType = 1; remoteGlobalIDString = 9C8637F521904A0900D730EC; remoteInfo = "SGPlayer macOS"; };
         A90200000000000200000003 /* SGPlayer target dependency */ = {isa = PBXTargetDependency; name = "SGPlayer macOS"; targetProxy = A90200000000000200000002; };
-        A90200000000000200000004 /* SGPlayer products */ = {isa = PBXGroup; children = (); name = "SGPlayer products"; sourceTree = "<group>"; };
+        A90200000000000200000004 /* SGPlayer products */ = {isa = PBXGroup; children = (9C0EABCA21905574004D5604,9CB6951721906D2F00196E54,); name = "SGPlayer products"; sourceTree = "<group>"; };
 
 
 
@@ -81,7 +90,7 @@
         99421DA6617B0C46C6018D1D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
         5BD659BBA00AE6716BF2C45F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		9C0D004E200C784D0079D609 /* SGAVPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SGAVPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9C0EABCA21905574004D5604 /* SGPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SGPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0EABCA21905574004D5604 /* SGPlayer.framework */ = {isa = PBXReferenceProxy; fileType = wrapper.framework; path = SGPlayer.framework; remoteRef = A90200000000000200000005; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C2167171E7F81E900272348 /* SGPlatform.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SGPlatform.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/demo-eihmyibiajxgvzgpltouukszknss/Build/Products/Debug-iphoneos/SGPlatform.framework"; sourceTree = "<group>"; };
 		9C36DD401E79537500959FDA /* google-help-vr.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "google-help-vr.mp4"; path = "../../demo-assset/google-help-vr.mp4"; sourceTree = "<group>"; };
 		9C36DD411E79537500959FDA /* i-see-fire.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "i-see-fire.mp4"; path = "../../demo-assset/i-see-fire.mp4"; sourceTree = "<group>"; };
@@ -93,7 +102,7 @@
 		9CA86E831E87571800E4A8B1 /* SGPlatform.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SGPlatform.framework; path = ../../Vendors/SGPlatform/build/Debug/SGPlatform.framework; sourceTree = "<group>"; };
 		9CA86E871E8757A700E4A8B1 /* SGPlatform.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SGPlatform.framework; path = ../../Vendors/SGPlatform/build/Debug/SGPlatform.framework; sourceTree = "<group>"; };
 		9CB694E42190599300196E54 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
-		9CB6951721906D2F00196E54 /* SGPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SGPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CB6951721906D2F00196E54 /* SGPlayer.framework */ = {isa = PBXReferenceProxy; fileType = wrapper.framework; path = SGPlayer.framework; remoteRef = A90200000000000200000005; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CB925141E7942AC00DE6721 /* SGPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SGPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CB925171E7942AC00DE6721 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9CB925181E7942AC00DE6721 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -122,12 +131,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                532807221349ACFF89B6C4E7,
                 E537BC4558C1CA8CC0B2BFA4 /* UniformTypeIdentifiers */,
                 EDC376F82546040339ABBF67 /* ImageIO */,
                 E56691DD7EFFA0ACF5295A8B /* CoreText */,
                 59AD94591AAF5BF941393531 /* CoreImage */,
                 5ACC410B6DB521A5AB9E3785 /* AVKit */,
-				9CB6951821906D2F00196E54 /* SGPlayer.framework in Frameworks */,
 				9CD90236230BDF5F00A358AA /* AVFoundation.framework in Frameworks */,
 				9C3DD16A1E8FBD150003B17A /* AudioToolbox.framework in Frameworks */,
 				9C3DD1661E8FBD090003B17A /* VideoToolbox.framework in Frameworks */,
@@ -214,9 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				9CD90235230BDF5F00A358AA /* AVFoundation.framework */,
-				9CB6951721906D2F00196E54 /* SGPlayer.framework */,
 				9CB694E42190599300196E54 /* AudioUnit.framework */,
-				9C0EABCA21905574004D5604 /* SGPlayer.framework */,
 				9C0D004E200C784D0079D609 /* SGAVPlayer.framework */,
 				9C3DD1691E8FBD150003B17A /* AudioToolbox.framework */,
 				9C3DD1671E8FBD100003B17A /* CoreMedia.framework */,
@@ -244,6 +251,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9CB925281E7942AC00DE6721 /* Build configuration list for PBXNativeTarget "demo-macos" */;
 			buildPhases = (
+                5979E6C2908A1D31FC741C41,
 				9CB925101E7942AC00DE6721 /* Sources */,
 				9CB925111E7942AC00DE6721 /* Frameworks */,
 				9CB925121E7942AC00DE6721 /* Resources */,
@@ -300,6 +308,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                9C59B2B43AA23120A3140D71,
                 A59FA3EB7873DF913F84AAFD,
                 6D02B73363CFE92E209AF778,
                 88E31440086BC9FC9B5427AE,
@@ -325,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                34AF06C90A2CD6EDE242247F,
                 D5535CBA3258C1093DD720DC,
 				9CB9251F1E7942AC00DE6721 /* SGListViewController.m in Sources */,
 				9CB925311E79469A00DE6721 /* SGPlayViewController.m in Sources */,

@@ -64,7 +64,11 @@ def main():
     def compile_source(source):
         obj = build / (source.name + '.o')
         stamp = obj.with_suffix('.inputs')
-        digest = hashlib.sha256(header_hash.digest() + source.read_bytes() + (ROOT / 'tests/ffmpeg-formats.inc').read_bytes() + (ROOT / 'tests/media-features.inc').read_bytes() + repr(flags).encode()).hexdigest()
+        test_inputs = b''
+        if source == ROOT / 'tests/ffmpeg-migration.m':
+            test_inputs = b''.join((ROOT / 'tests' / name).read_bytes() for name in
+                                   ['ffmpeg-formats.inc', 'media-features.inc', 'playback-session.inc', 'transcode.inc'])
+        digest = hashlib.sha256(header_hash.digest() + source.read_bytes() + test_inputs + repr(flags).encode()).hexdigest()
         if obj.exists() and stamp.exists() and stamp.read_text() == digest:
             return str(obj)
         command = ['xcrun', 'clang', *flags]

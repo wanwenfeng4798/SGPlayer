@@ -66,6 +66,12 @@ typedef NS_ENUM(NSInteger, SGDanmakuMode) {
 // Interleaved float RGB samples (2...64 entries), each component in [0,1].
 @property (nonatomic, copy, nullable) NSData *colorCurves;
 @property (nonatomic) double blurRadius; // 0 ... 20 pixels
+// A true 3D LUT: red changes fastest, RGBA floats, alpha must be 1, dimension 2...64.
+@property (nonatomic, copy, nullable) NSData *colorCube;
+@property (nonatomic) NSUInteger colorCubeDimension;
+@property (nonatomic) double bloomRadius; // 0...20 pixels
+@property (nonatomic) double bloomIntensity; // 0...1, default 0
++ (nullable instancetype)configurationWithCubeText:(NSString *)text error:(NSError **)error;
 @property (nonatomic, readonly) BOOL active;
 - (nullable NSError *)validationError;
 @end
@@ -85,8 +91,13 @@ typedef NS_ENUM(NSInteger, SGDanmakuMode) {
 @property (atomic, copy) SGFilterConfiguration *filter;
 @property (atomic, copy) NSArray<SGSubtitleCue *> *subtitles;
 @property (atomic, strong, nullable) SGSubtitleTrack *subtitleTrack;
+// Independent ASS renderer for the second track; authored ASS positioning is preserved.
+@property (atomic, strong, nullable) SGSubtitleTrack *secondarySubtitleTrack;
 @property (atomic) BOOL subtitlesEnabled;
 @property (atomic) NSTimeInterval subtitleOffset;
+@property (atomic) NSTimeInterval secondarySubtitleOffset;
+@property (atomic) CGFloat subtitleVerticalPosition; // plain text, fraction from bottom, default .06
+@property (atomic) CGFloat secondarySubtitleVerticalPosition; // plain text, default .80
 // Defaults to the bundled Noto CJK font; set a readable font URL to override.
 @property (atomic, copy, nullable) NSURL *subtitleFallbackFontURL;
 @property (atomic, copy) NSArray<SGDanmakuItem *> *danmaku;
@@ -104,6 +115,9 @@ typedef NS_ENUM(NSInteger, SGDanmakuMode) {
 - (nullable CIImage *)composeImage:(CIImage *)image atTime:(CMTime)time;
 - (nullable CVPixelBufferRef)copyPixelBufferForImage:(CIImage *)image atTime:(CMTime)time CF_RETURNS_RETAINED;
 - (nullable CGImageRef)copyImageAtTime:(CMTime)time source:(CIImage *)image CF_RETURNS_RETAINED;
+/// Copy configuration and mutable cue/event/mark values into independent render state.
+/// Take the snapshot on the queue that owns configuration changes.
+- (SGMediaEffects *)snapshot;
 - (void)flush;
 @end
 

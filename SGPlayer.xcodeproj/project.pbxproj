@@ -618,6 +618,78 @@
 		9CFA2354230BCFFC00061AAC /* imgutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CFA234D230BCFFC00061AAC /* imgutils.h */; };
 		9CFA2361230BD00400061AAC /* imgutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CFA235A230BD00400061AAC /* imgutils.h */; };
 		9CFA236E230BD00C00061AAC /* imgutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CFA2367230BD00C00061AAC /* imgutils.h */; };
+        18E0F41390F36756A93D2686 /* SGPlaybackSession.h */ = {isa = PBXBuildFile; fileRef = A5443A329E986EAAA08A38A0; settings = {ATTRIBUTES = (Public, ); }; };
+        F771619517B0F2C671ACFC9C /* SGPlaybackSession.h */ = {isa = PBXBuildFile; fileRef = A5443A329E986EAAA08A38A0; settings = {ATTRIBUTES = (Public, ); }; };
+        CE1DF2CAC31E5A1EF6CFA040 /* SGPlaybackSession.h */ = {isa = PBXBuildFile; fileRef = A5443A329E986EAAA08A38A0; settings = {ATTRIBUTES = (Public, ); }; };
+        4E774E2FA479A2516681E75F /* SGPlaybackSession.m */ = {isa = PBXBuildFile; fileRef = B6A4A4742358A2D91231BF43; };
+        9EF13EE28E0ADE0C90707B2F /* SGPlaybackSession.m */ = {isa = PBXBuildFile; fileRef = B6A4A4742358A2D91231BF43; };
+        ECC8B1D5481C8037C735EB5A /* SGPlaybackSession.m */ = {isa = PBXBuildFile; fileRef = B6A4A4742358A2D91231BF43; };
+        85A0407062C157F45F5286BE /* SGMediaCache.h */ = {isa = PBXBuildFile; fileRef = 51DF81132120690ACBABAF21; settings = {ATTRIBUTES = (Public, ); }; };
+        14BF6292CFEB0C65D74E0AA0 /* SGMediaCache.h */ = {isa = PBXBuildFile; fileRef = 51DF81132120690ACBABAF21; settings = {ATTRIBUTES = (Public, ); }; };
+        CB77E7B70E92C29EF3B860C6 /* SGMediaCache.h */ = {isa = PBXBuildFile; fileRef = 51DF81132120690ACBABAF21; settings = {ATTRIBUTES = (Public, ); }; };
+        7AD0851FC8C5F373498179DE /* SGMediaCache.m */ = {isa = PBXBuildFile; fileRef = 4D8262E26E607CEC1FF4AD5C; };
+        BD2FF7E3A7B01E899AEB64F7 /* SGMediaCache.m */ = {isa = PBXBuildFile; fileRef = 4D8262E26E607CEC1FF4AD5C; };
+        21BB961CA351D7B4A1607894 /* SGMediaCache.m */ = {isa = PBXBuildFile; fileRef = 4D8262E26E607CEC1FF4AD5C; };
+        4E95B5F4504E32D67EB66639 /* SGTimelinePreview.h */ = {isa = PBXBuildFile; fileRef = 249B8B13B856AC3392AC0B77; settings = {ATTRIBUTES = (Public, ); }; };
+        8FD17F7BF56B93414C1FBDC6 /* SGTimelinePreview.h */ = {isa = PBXBuildFile; fileRef = 249B8B13B856AC3392AC0B77; settings = {ATTRIBUTES = (Public, ); }; };
+        EBD09FCF964293187882DAFB /* SGTimelinePreview.h */ = {isa = PBXBuildFile; fileRef = 249B8B13B856AC3392AC0B77; settings = {ATTRIBUTES = (Public, ); }; };
+        4CF14D882E768044F74C81FA /* SGTimelinePreview.m */ = {isa = PBXBuildFile; fileRef = 53D044E4007BF50C090C41C9; };
+        14203842AB4F519685E292E9 /* SGTimelinePreview.m */ = {isa = PBXBuildFile; fileRef = 53D044E4007BF50C090C41C9; };
+        FE07481604FA8DEA74BB4BFB /* SGTimelinePreview.m */ = {isa = PBXBuildFile; fileRef = 53D044E4007BF50C090C41C9; };
+        505332085BE52DC3D89AAA6C /* SGPlaybackControls.h */ = {isa = PBXBuildFile; fileRef = 782BF4DC21483AD8BCA4795F; settings = {ATTRIBUTES = (Public, ); }; };
+        50C141F930C2BA87CC57D083 /* SGPlaybackControls.h */ = {isa = PBXBuildFile; fileRef = 782BF4DC21483AD8BCA4795F; settings = {ATTRIBUTES = (Public, ); }; };
+        EF74AD4088F9CB740066B1D1 /* SGPlaybackControls.h */ = {isa = PBXBuildFile; fileRef = 782BF4DC21483AD8BCA4795F; settings = {ATTRIBUTES = (Public, ); }; };
+        AA432EBCD9E7FD138504B8FE /* SGPlaybackControls.m */ = {isa = PBXBuildFile; fileRef = CA45307CC045823CCBE43ECC; };
+        9B5F0AC2D1F592D4A10F41B4 /* SGPlaybackControls.m */ = {isa = PBXBuildFile; fileRef = CA45307CC045823CCBE43ECC; };
+        5801FA4C8DE7E91837227DA4 /* SGPlaybackControls.m */ = {isa = PBXBuildFile; fileRef = CA45307CC045823CCBE43ECC; };
+        C0D2563CAEAA6D1CCBED3EC4 /* SGPlaybackPresentation.h */ = {isa = PBXBuildFile; fileRef = 09C0FA6999F0F648784D83AF; settings = {ATTRIBUTES = (Public, ); }; };
+        88B91172D7AA58EE2D90E9B6 /* SGPlaybackPresentation.h */ = {isa = PBXBuildFile; fileRef = 09C0FA6999F0F648784D83AF; settings = {ATTRIBUTES = (Public, ); }; };
+        9FFCBACAB1313A86B3666298 /* SGPlaybackPresentation.h */ = {isa = PBXBuildFile; fileRef = 09C0FA6999F0F648784D83AF; settings = {ATTRIBUTES = (Public, ); }; };
+        060A0267B9079485C76EFDBC /* SGPlaybackPresentation.m */ = {isa = PBXBuildFile; fileRef = 8A5CD111AA7D2438C8EC9E9D; };
+        4A52E1699343D67664A0250B /* SGPlaybackPresentation.m */ = {isa = PBXBuildFile; fileRef = 8A5CD111AA7D2438C8EC9E9D; };
+        435C165493449B764B60F98B /* SGPlaybackPresentation.m */ = {isa = PBXBuildFile; fileRef = 8A5CD111AA7D2438C8EC9E9D; };
+        10F11D54A89D7D660B8B318D /* SGMediaRemuxer.h */ = {isa = PBXBuildFile; fileRef = 816B30C8310F52C43353C815; settings = {ATTRIBUTES = (Public, ); }; };
+        72E6B554A25D316B099E1890 /* SGMediaRemuxer.h */ = {isa = PBXBuildFile; fileRef = 816B30C8310F52C43353C815; settings = {ATTRIBUTES = (Public, ); }; };
+        571174756B1B8778D27F5C84 /* SGMediaRemuxer.h */ = {isa = PBXBuildFile; fileRef = 816B30C8310F52C43353C815; settings = {ATTRIBUTES = (Public, ); }; };
+        DD1AC9A6470AC793A0D9B782 /* SGMediaRemuxer.m */ = {isa = PBXBuildFile; fileRef = C55F0F75FE90253027187C53; };
+        C7F1C8380474477AD652DD79 /* SGMediaRemuxer.m */ = {isa = PBXBuildFile; fileRef = C55F0F75FE90253027187C53; };
+        659E51BE1DDA43DE8649CE8E /* SGMediaRemuxer.m */ = {isa = PBXBuildFile; fileRef = C55F0F75FE90253027187C53; };
+        6FDC6F2B7DB62F4C205918CB /* SGPlaybackCapabilities.h */ = {isa = PBXBuildFile; fileRef = BF9829AD7D30FA907E0F25E0; settings = {ATTRIBUTES = (Public, ); }; };
+        BE840ADBE9A8439DF3DF72BF /* SGPlaybackCapabilities.h */ = {isa = PBXBuildFile; fileRef = BF9829AD7D30FA907E0F25E0; settings = {ATTRIBUTES = (Public, ); }; };
+        F4402639CC46659CF9831888 /* SGPlaybackCapabilities.h */ = {isa = PBXBuildFile; fileRef = BF9829AD7D30FA907E0F25E0; settings = {ATTRIBUTES = (Public, ); }; };
+        85EF367F9403191169D4D5A0 /* SGPlaybackCapabilities.m */ = {isa = PBXBuildFile; fileRef = 7BCD6A080ABA7088AB007F34; };
+        0459195A10C6BEA99C14597E /* SGPlaybackCapabilities.m */ = {isa = PBXBuildFile; fileRef = 7BCD6A080ABA7088AB007F34; };
+        3CBE286B6BD524C81DD93C92 /* SGPlaybackCapabilities.m */ = {isa = PBXBuildFile; fileRef = 7BCD6A080ABA7088AB007F34; };
+        35711D17658700A5BF7F711B /* SGHLSAssetStore.h */ = {isa = PBXBuildFile; fileRef = 50AE4DD4593BE2230C38B30A; settings = {ATTRIBUTES = (Public, ); }; };
+        9FA91161C635E991F8978F3E /* SGHLSAssetStore.h */ = {isa = PBXBuildFile; fileRef = 50AE4DD4593BE2230C38B30A; settings = {ATTRIBUTES = (Public, ); }; };
+        40BCCE1DC7E1B40354B82595 /* SGHLSAssetStore.h */ = {isa = PBXBuildFile; fileRef = 50AE4DD4593BE2230C38B30A; settings = {ATTRIBUTES = (Public, ); }; };
+        E138912913CC87EDA57B1744 /* SGHLSAssetStore.m */ = {isa = PBXBuildFile; fileRef = AC0411BC8A12F62760757B24; };
+        3BF55A7B3EA90C1276682EAE /* SGHLSAssetStore.m */ = {isa = PBXBuildFile; fileRef = AC0411BC8A12F62760757B24; };
+        28034C352918C6127AB5E86C /* SGHLSAssetStore.m */ = {isa = PBXBuildFile; fileRef = AC0411BC8A12F62760757B24; };
+        02761B0425BE048C84F471E5 /* SGNativePlaybackPolicy.h */ = {isa = PBXBuildFile; fileRef = 7F56BE126E9966D21B9D1777; settings = {ATTRIBUTES = (Public, ); }; };
+        42D746E344609A6DC30D7796 /* SGNativePlaybackPolicy.h */ = {isa = PBXBuildFile; fileRef = 7F56BE126E9966D21B9D1777; settings = {ATTRIBUTES = (Public, ); }; };
+        5D6163E5CD74C9AB4AE185F7 /* SGNativePlaybackPolicy.h */ = {isa = PBXBuildFile; fileRef = 7F56BE126E9966D21B9D1777; settings = {ATTRIBUTES = (Public, ); }; };
+        83DCBCEF64D912382848FCE1 /* SGNativePlaybackPolicy.m */ = {isa = PBXBuildFile; fileRef = 8D7C9298D82B9284B4DE37E5; };
+        BA42B4777385A8436902CB8A /* SGNativePlaybackPolicy.m */ = {isa = PBXBuildFile; fileRef = 8D7C9298D82B9284B4DE37E5; };
+        51E7DF43BA309C5CC3197B37 /* SGNativePlaybackPolicy.m */ = {isa = PBXBuildFile; fileRef = 8D7C9298D82B9284B4DE37E5; };
+        E8B87EB410A7960E3F5A61D5 /* SGPlaybackGestures.h */ = {isa = PBXBuildFile; fileRef = AC4445DD308878FDC8F06E01; settings = {ATTRIBUTES = (Public, ); }; };
+        63E79390002746AEB77F2B63 /* SGPlaybackGestures.h */ = {isa = PBXBuildFile; fileRef = AC4445DD308878FDC8F06E01; settings = {ATTRIBUTES = (Public, ); }; };
+        3BBEA639475D05172EE1875D /* SGPlaybackGestures.h */ = {isa = PBXBuildFile; fileRef = AC4445DD308878FDC8F06E01; settings = {ATTRIBUTES = (Public, ); }; };
+        E47BCC4584EDBA98E9A3FDF4 /* SGPlaybackGestures.m */ = {isa = PBXBuildFile; fileRef = 4EDB774169699217F620BA2E; };
+        D13A9C557ED3E4CED4D0D367 /* SGPlaybackGestures.m */ = {isa = PBXBuildFile; fileRef = 4EDB774169699217F620BA2E; };
+        B1DBF14346A4121B17B59B30 /* SGPlaybackGestures.m */ = {isa = PBXBuildFile; fileRef = 4EDB774169699217F620BA2E; };
+        2DF8D53652782DB5B9361831 /* SGPlaybackCover.h */ = {isa = PBXBuildFile; fileRef = BCCAAEB51DEA0F9A3A6D9CFB; settings = {ATTRIBUTES = (Public, ); }; };
+        49ADFD43B96248A24F44A7B4 /* SGPlaybackCover.h */ = {isa = PBXBuildFile; fileRef = BCCAAEB51DEA0F9A3A6D9CFB; settings = {ATTRIBUTES = (Public, ); }; };
+        19B258DACDE7B91DC94B5EE4 /* SGPlaybackCover.h */ = {isa = PBXBuildFile; fileRef = BCCAAEB51DEA0F9A3A6D9CFB; settings = {ATTRIBUTES = (Public, ); }; };
+        4B2381FA79855C627F24DFEE /* SGPlaybackCover.m */ = {isa = PBXBuildFile; fileRef = 6B8246F4BA0E9878AF65305D; };
+        CF8FAADFA3FCED00CA3811B2 /* SGPlaybackCover.m */ = {isa = PBXBuildFile; fileRef = 6B8246F4BA0E9878AF65305D; };
+        2B1FF79C0F6A78F2056AB7DC /* SGPlaybackCover.m */ = {isa = PBXBuildFile; fileRef = 6B8246F4BA0E9878AF65305D; };
+        879F5091025191AEC7B64C86 /* SGMediaTranscoder.h */ = {isa = PBXBuildFile; fileRef = 26BFFFD6B358695E73B84FAB; settings = {ATTRIBUTES = (Public, ); }; };
+        ADE6A3A006EA9386E5E070C3 /* SGMediaTranscoder.h */ = {isa = PBXBuildFile; fileRef = 26BFFFD6B358695E73B84FAB; settings = {ATTRIBUTES = (Public, ); }; };
+        0DB04F578F673E0DC1703B66 /* SGMediaTranscoder.h */ = {isa = PBXBuildFile; fileRef = 26BFFFD6B358695E73B84FAB; settings = {ATTRIBUTES = (Public, ); }; };
+        6F3838D5A9F2F83597D6DCAE /* SGMediaTranscoder.m */ = {isa = PBXBuildFile; fileRef = 9357E085C9DA1F2BC4BFC098; };
+        C4F8BC5C9C1AABE2DCB0A763 /* SGMediaTranscoder.m */ = {isa = PBXBuildFile; fileRef = 9357E085C9DA1F2BC4BFC098; };
+        48532A3B59A90CD87173E9C4 /* SGMediaTranscoder.m */ = {isa = PBXBuildFile; fileRef = 9357E085C9DA1F2BC4BFC098; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -863,6 +935,30 @@
 		9CFA2369230BD00C00061AAC /* avformat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avformat.h; sourceTree = "<group>"; };
 		9CFA236B230BD00C00061AAC /* swscale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swscale.h; sourceTree = "<group>"; };
 		9CFA236D230BD00C00061AAC /* swresample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swresample.h; sourceTree = "<group>"; };
+        A5443A329E986EAAA08A38A0 /* SGPlaybackSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGPlaybackSession.h"; sourceTree = SOURCE_ROOT; };
+        B6A4A4742358A2D91231BF43 /* SGPlaybackSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGPlaybackSession.m"; sourceTree = SOURCE_ROOT; };
+        51DF81132120690ACBABAF21 /* SGMediaCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGMediaCache.h"; sourceTree = SOURCE_ROOT; };
+        4D8262E26E607CEC1FF4AD5C /* SGMediaCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGMediaCache.m"; sourceTree = SOURCE_ROOT; };
+        249B8B13B856AC3392AC0B77 /* SGTimelinePreview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGTimelinePreview.h"; sourceTree = SOURCE_ROOT; };
+        53D044E4007BF50C090C41C9 /* SGTimelinePreview.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGTimelinePreview.m"; sourceTree = SOURCE_ROOT; };
+        782BF4DC21483AD8BCA4795F /* SGPlaybackControls.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGPlaybackControls.h"; sourceTree = SOURCE_ROOT; };
+        CA45307CC045823CCBE43ECC /* SGPlaybackControls.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGPlaybackControls.m"; sourceTree = SOURCE_ROOT; };
+        09C0FA6999F0F648784D83AF /* SGPlaybackPresentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGPlaybackPresentation.h"; sourceTree = SOURCE_ROOT; };
+        8A5CD111AA7D2438C8EC9E9D /* SGPlaybackPresentation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGPlaybackPresentation.m"; sourceTree = SOURCE_ROOT; };
+        816B30C8310F52C43353C815 /* SGMediaRemuxer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGMediaRemuxer.h"; sourceTree = SOURCE_ROOT; };
+        C55F0F75FE90253027187C53 /* SGMediaRemuxer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGMediaRemuxer.m"; sourceTree = SOURCE_ROOT; };
+        BF9829AD7D30FA907E0F25E0 /* SGPlaybackCapabilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGPlaybackCapabilities.h"; sourceTree = SOURCE_ROOT; };
+        7BCD6A080ABA7088AB007F34 /* SGPlaybackCapabilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGPlaybackCapabilities.m"; sourceTree = SOURCE_ROOT; };
+        50AE4DD4593BE2230C38B30A /* SGHLSAssetStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGHLSAssetStore.h"; sourceTree = SOURCE_ROOT; };
+        AC0411BC8A12F62760757B24 /* SGHLSAssetStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGHLSAssetStore.m"; sourceTree = SOURCE_ROOT; };
+        7F56BE126E9966D21B9D1777 /* SGNativePlaybackPolicy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGNativePlaybackPolicy.h"; sourceTree = SOURCE_ROOT; };
+        8D7C9298D82B9284B4DE37E5 /* SGNativePlaybackPolicy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGNativePlaybackPolicy.m"; sourceTree = SOURCE_ROOT; };
+        AC4445DD308878FDC8F06E01 /* SGPlaybackGestures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGPlaybackGestures.h"; sourceTree = SOURCE_ROOT; };
+        4EDB774169699217F620BA2E /* SGPlaybackGestures.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGPlaybackGestures.m"; sourceTree = SOURCE_ROOT; };
+        BCCAAEB51DEA0F9A3A6D9CFB /* SGPlaybackCover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGPlaybackCover.h"; sourceTree = SOURCE_ROOT; };
+        6B8246F4BA0E9878AF65305D /* SGPlaybackCover.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGPlaybackCover.m"; sourceTree = SOURCE_ROOT; };
+        26BFFFD6B358695E73B84FAB /* SGMediaTranscoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGPlayer/Classes/Features/SGMediaTranscoder.h"; sourceTree = SOURCE_ROOT; };
+        9357E085C9DA1F2BC4BFC098 /* SGMediaTranscoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SGPlayer/Classes/Features/SGMediaTranscoder.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1293,6 +1389,30 @@
 		9CEFA6CC1E7122BF00835CAB = {
 			isa = PBXGroup;
 			children = (
+                9357E085C9DA1F2BC4BFC098 /* SGMediaTranscoder.m */,
+                26BFFFD6B358695E73B84FAB /* SGMediaTranscoder.h */,
+                6B8246F4BA0E9878AF65305D /* SGPlaybackCover.m */,
+                BCCAAEB51DEA0F9A3A6D9CFB /* SGPlaybackCover.h */,
+                4EDB774169699217F620BA2E /* SGPlaybackGestures.m */,
+                AC4445DD308878FDC8F06E01 /* SGPlaybackGestures.h */,
+                8D7C9298D82B9284B4DE37E5 /* SGNativePlaybackPolicy.m */,
+                7F56BE126E9966D21B9D1777 /* SGNativePlaybackPolicy.h */,
+                AC0411BC8A12F62760757B24 /* SGHLSAssetStore.m */,
+                50AE4DD4593BE2230C38B30A /* SGHLSAssetStore.h */,
+                7BCD6A080ABA7088AB007F34 /* SGPlaybackCapabilities.m */,
+                BF9829AD7D30FA907E0F25E0 /* SGPlaybackCapabilities.h */,
+                C55F0F75FE90253027187C53 /* SGMediaRemuxer.m */,
+                816B30C8310F52C43353C815 /* SGMediaRemuxer.h */,
+                8A5CD111AA7D2438C8EC9E9D /* SGPlaybackPresentation.m */,
+                09C0FA6999F0F648784D83AF /* SGPlaybackPresentation.h */,
+                CA45307CC045823CCBE43ECC /* SGPlaybackControls.m */,
+                782BF4DC21483AD8BCA4795F /* SGPlaybackControls.h */,
+                53D044E4007BF50C090C41C9 /* SGTimelinePreview.m */,
+                249B8B13B856AC3392AC0B77 /* SGTimelinePreview.h */,
+                4D8262E26E607CEC1FF4AD5C /* SGMediaCache.m */,
+                51DF81132120690ACBABAF21 /* SGMediaCache.h */,
+                B6A4A4742358A2D91231BF43 /* SGPlaybackSession.m */,
+                A5443A329E986EAAA08A38A0 /* SGPlaybackSession.h */,
                 885955573702498F67CECC9D,
                 DAA52FBD4EEDFAA36C36D38B,
                 6E3D4A446FFA38C116C8CD3E /* SGPlaybackController.m */,
@@ -1537,6 +1657,18 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                879F5091025191AEC7B64C86 /* SGMediaTranscoder.h */,
+                2DF8D53652782DB5B9361831 /* SGPlaybackCover.h */,
+                E8B87EB410A7960E3F5A61D5 /* SGPlaybackGestures.h */,
+                02761B0425BE048C84F471E5 /* SGNativePlaybackPolicy.h */,
+                35711D17658700A5BF7F711B /* SGHLSAssetStore.h */,
+                6FDC6F2B7DB62F4C205918CB /* SGPlaybackCapabilities.h */,
+                10F11D54A89D7D660B8B318D /* SGMediaRemuxer.h */,
+                C0D2563CAEAA6D1CCBED3EC4 /* SGPlaybackPresentation.h */,
+                505332085BE52DC3D89AAA6C /* SGPlaybackControls.h */,
+                4E95B5F4504E32D67EB66639 /* SGTimelinePreview.h */,
+                85A0407062C157F45F5286BE /* SGMediaCache.h */,
+                18E0F41390F36756A93D2686 /* SGPlaybackSession.h */,
                 CF39A50C929E93DAF13094BD /* SGPlaybackController.h */,
                 F5A33FB60D5B7C68AFFFCE8E /* SGMediaEffects.h */,
 				9C22AE69237AC19E004D33DE /* SGFrameReader.h in Headers */,
@@ -1645,6 +1777,18 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                ADE6A3A006EA9386E5E070C3 /* SGMediaTranscoder.h */,
+                49ADFD43B96248A24F44A7B4 /* SGPlaybackCover.h */,
+                63E79390002746AEB77F2B63 /* SGPlaybackGestures.h */,
+                42D746E344609A6DC30D7796 /* SGNativePlaybackPolicy.h */,
+                9FA91161C635E991F8978F3E /* SGHLSAssetStore.h */,
+                BE840ADBE9A8439DF3DF72BF /* SGPlaybackCapabilities.h */,
+                72E6B554A25D316B099E1890 /* SGMediaRemuxer.h */,
+                88B91172D7AA58EE2D90E9B6 /* SGPlaybackPresentation.h */,
+                50C141F930C2BA87CC57D083 /* SGPlaybackControls.h */,
+                8FD17F7BF56B93414C1FBDC6 /* SGTimelinePreview.h */,
+                14BF6292CFEB0C65D74E0AA0 /* SGMediaCache.h */,
+                F771619517B0F2C671ACFC9C /* SGPlaybackSession.h */,
                 728B74DE554B141FB1D093C6 /* SGPlaybackController.h */,
                 FE09AC6F19521DF6CC5F9079 /* SGMediaEffects.h */,
 				9C22AE6A237AC19E004D33DE /* SGFrameReader.h in Headers */,
@@ -1753,6 +1897,18 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                0DB04F578F673E0DC1703B66 /* SGMediaTranscoder.h */,
+                19B258DACDE7B91DC94B5EE4 /* SGPlaybackCover.h */,
+                3BBEA639475D05172EE1875D /* SGPlaybackGestures.h */,
+                5D6163E5CD74C9AB4AE185F7 /* SGNativePlaybackPolicy.h */,
+                40BCCE1DC7E1B40354B82595 /* SGHLSAssetStore.h */,
+                F4402639CC46659CF9831888 /* SGPlaybackCapabilities.h */,
+                571174756B1B8778D27F5C84 /* SGMediaRemuxer.h */,
+                9FFCBACAB1313A86B3666298 /* SGPlaybackPresentation.h */,
+                EF74AD4088F9CB740066B1D1 /* SGPlaybackControls.h */,
+                EBD09FCF964293187882DAFB /* SGTimelinePreview.h */,
+                CB77E7B70E92C29EF3B860C6 /* SGMediaCache.h */,
+                CE1DF2CAC31E5A1EF6CFA040 /* SGPlaybackSession.h */,
                 5808AFAD889D4BEEC02BFD72 /* SGPlaybackController.h */,
                 203DFF9ED5C0429251D9526D /* SGMediaEffects.h */,
 				9C22AE68237AC19E004D33DE /* SGFrameReader.h in Headers */,
@@ -2030,6 +2186,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                6F3838D5A9F2F83597D6DCAE /* SGMediaTranscoder.m */,
+                4B2381FA79855C627F24DFEE /* SGPlaybackCover.m */,
+                E47BCC4584EDBA98E9A3FDF4 /* SGPlaybackGestures.m */,
+                83DCBCEF64D912382848FCE1 /* SGNativePlaybackPolicy.m */,
+                E138912913CC87EDA57B1744 /* SGHLSAssetStore.m */,
+                85EF367F9403191169D4D5A0 /* SGPlaybackCapabilities.m */,
+                DD1AC9A6470AC793A0D9B782 /* SGMediaRemuxer.m */,
+                060A0267B9079485C76EFDBC /* SGPlaybackPresentation.m */,
+                AA432EBCD9E7FD138504B8FE /* SGPlaybackControls.m */,
+                4CF14D882E768044F74C81FA /* SGTimelinePreview.m */,
+                7AD0851FC8C5F373498179DE /* SGMediaCache.m */,
+                4E774E2FA479A2516681E75F /* SGPlaybackSession.m */,
                 24BDE437A08F2BB97E8BEA8D /* SGPlaybackController.m */,
                 1412DB10AEBAD246968CAF56 /* SGSubtitleReader.m */,
                 B703DC59C7006D4449018156 /* SGMediaEffects.m */,
@@ -2119,6 +2287,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                C4F8BC5C9C1AABE2DCB0A763 /* SGMediaTranscoder.m */,
+                CF8FAADFA3FCED00CA3811B2 /* SGPlaybackCover.m */,
+                D13A9C557ED3E4CED4D0D367 /* SGPlaybackGestures.m */,
+                BA42B4777385A8436902CB8A /* SGNativePlaybackPolicy.m */,
+                3BF55A7B3EA90C1276682EAE /* SGHLSAssetStore.m */,
+                0459195A10C6BEA99C14597E /* SGPlaybackCapabilities.m */,
+                C7F1C8380474477AD652DD79 /* SGMediaRemuxer.m */,
+                4A52E1699343D67664A0250B /* SGPlaybackPresentation.m */,
+                9B5F0AC2D1F592D4A10F41B4 /* SGPlaybackControls.m */,
+                14203842AB4F519685E292E9 /* SGTimelinePreview.m */,
+                BD2FF7E3A7B01E899AEB64F7 /* SGMediaCache.m */,
+                9EF13EE28E0ADE0C90707B2F /* SGPlaybackSession.m */,
                 5C5AED0D1BF37636D7F357C7 /* SGPlaybackController.m */,
                 A7F7344F7BAE5E41B9B4FF04 /* SGSubtitleReader.m */,
                 B838CA6B5DAD9BE764E45A73 /* SGMediaEffects.m */,
@@ -2208,6 +2388,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                48532A3B59A90CD87173E9C4 /* SGMediaTranscoder.m */,
+                2B1FF79C0F6A78F2056AB7DC /* SGPlaybackCover.m */,
+                B1DBF14346A4121B17B59B30 /* SGPlaybackGestures.m */,
+                51E7DF43BA309C5CC3197B37 /* SGNativePlaybackPolicy.m */,
+                28034C352918C6127AB5E86C /* SGHLSAssetStore.m */,
+                3CBE286B6BD524C81DD93C92 /* SGPlaybackCapabilities.m */,
+                659E51BE1DDA43DE8649CE8E /* SGMediaRemuxer.m */,
+                435C165493449B764B60F98B /* SGPlaybackPresentation.m */,
+                5801FA4C8DE7E91837227DA4 /* SGPlaybackControls.m */,
+                FE07481604FA8DEA74BB4BFB /* SGTimelinePreview.m */,
+                21BB961CA351D7B4A1607894 /* SGMediaCache.m */,
+                ECC8B1D5481C8037C735EB5A /* SGPlaybackSession.m */,
                 CEA8676DF4AC91E618D06C58 /* SGPlaybackController.m */,
                 213B08CC809A711EB4EFF577 /* SGSubtitleReader.m */,
                 1861B12815D2BBD3C452EB5C /* SGMediaEffects.m */,
@@ -2327,6 +2519,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SG_FFMPEG_LIBRARY_DIR)";
+				DEFINES_MODULE = YES;
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = "$(PROJECT_DIR)/SGPlayer/module.modulemap";
@@ -2369,6 +2562,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SG_FFMPEG_LIBRARY_DIR)";
+				DEFINES_MODULE = YES;
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = "$(PROJECT_DIR)/SGPlayer/module.modulemap";
@@ -2412,6 +2606,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SG_FFMPEG_LIBRARY_DIR)";
+				DEFINES_MODULE = YES;
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "$(PROJECT_DIR)/SGPlayer/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.libobjc.SGPlayer.tvOS;
@@ -2455,6 +2650,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SG_FFMPEG_LIBRARY_DIR)";
+				DEFINES_MODULE = YES;
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "$(PROJECT_DIR)/SGPlayer/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.libobjc.SGPlayer.tvOS;
@@ -2608,6 +2804,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SG_FFMPEG_LIBRARY_DIR)";
+				DEFINES_MODULE = YES;
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "$(PROJECT_DIR)/SGPlayer/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.libobjc.SGPlayer.iOS;
@@ -2648,6 +2845,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SG_FFMPEG_LIBRARY_DIR)";
+				DEFINES_MODULE = YES;
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "$(PROJECT_DIR)/SGPlayer/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.libobjc.SGPlayer.iOS;

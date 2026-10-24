@@ -14,6 +14,7 @@ SGPlayer 是面向 iOS、macOS 和 tvOS 的媒体播放框架。
 - 播放状态通知与线程安全。
 - 显式 FFmpeg/原生内核选择，共用字幕、弹幕、水印、GIF 贴纸、画中画合成。
 - FFmpeg libavfilter / 原生 Core Image 滤镜、ASS 样式、截图与独立 GIF 片段导出。
+- 有限片段视频/效果导出与纯音频双声道 AAC 导出，支持 MP4/M4A、Matroska、MPEG-TS。
 
 以上为框架功能清单，实际验证范围见下方测试记录。
 
@@ -103,5 +104,6 @@ Debug 自动化逐项运行 7 个示例，检查播放、暂停恢复、0.5/2 �
 ## 播放效果与第三方依赖
 
 - 使用与内核路由：[中文](documents/media-features.zh-CN.md) / [English](documents/media-features.en.md)。
+- 能力扩展实施与验收台账：[中文](documents/feature-expansion.zh-CN.md) / [English](documents/feature-expansion.en.md)。
 - 当前功能验收：[中文](documents/media-features-testing.zh-CN.md) / [English](documents/media-features-testing.en.md)。
 - [第三方许可证](licenses/README.md)。Portions of this software are copyright © The FreeType Project (www.freetype.org). All rights reserved.

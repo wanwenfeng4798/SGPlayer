@@ -1,0 +1,2664 @@
+{
+  "client_date": "2026-10-24",
+  "timezone": "Asia/Shanghai",
+  "overall_scope": "incomplete-see-bilingual-implementation-ledger",
+  "physical_iphone": {
+    "status": "pending",
+    "planned_connection_date": "2026-10-26"
+  },
+  "logs": {
+    "macos_complete_with_transcode": "build/feature-expansion-artifacts/macos_complete_with_transcode.log",
+    "macos_ui_build": "build/feature-expansion-artifacts/macos_ui_build.log",
+    "macos_ui": "build/feature-expansion-artifacts/macos_ui.log",
+    "ios_ui": "build/feature-expansion-artifacts/ios_ui.log",
+    "tvos_ui": "build/feature-expansion-artifacts/tvos_ui.log",
+    "ios_touch": "build/feature-expansion-artifacts/ios_touch.log",
+    "ios_cover_and_touch": "build/feature-expansion-artifacts/ios_cover_and_touch.log",
+    "tvos_cover": "build/feature-expansion-artifacts/tvos_cover.log",
+    "ios_transcode": "build/feature-expansion-artifacts/ios_transcode.log",
+    "tvos_transcode": "build/feature-expansion-artifacts/tvos_transcode.log",
+    "ios_complete_with_transcode": "build/feature-expansion-artifacts/ios_complete_with_transcode.log",
+    "tvos_complete_with_transcode": "build/feature-expansion-artifacts/tvos_complete_with_transcode.log",
+    "data_asan": "build/feature-expansion-artifacts/data_asan.log",
+    "cache": "build/feature-expansion-artifacts/cache.log",
+    "hls": "build/feature-expansion-artifacts/hls.log",
+    "swift_app": "build/feature-expansion-artifacts/swift_app.log",
+    "swift_tests": "build/feature-expansion-artifacts/swift_tests.log",
+    "swift_ios_build": "build/feature-expansion-artifacts/swift_ios_build.log",
+    "build_matrix": "build/feature-expansion-artifacts/build_matrix.log",
+    "demo_linkage": "build/feature-expansion-artifacts/demo_linkage.log",
+    "package": "build/feature-expansion-artifacts/package.log",
+    "macos_audio_export": "build/feature-expansion-artifacts/macos_audio_export.log",
+    "ios_audio_export": "build/feature-expansion-artifacts/ios_audio_export.log",
+    "tvos_audio_export": "build/feature-expansion-artifacts/tvos_audio_export.log",
+    "ios_progress_position": "build/feature-expansion-artifacts/ios_progress_position.log",
+    "historical_macos_progress_best_effort": "build/feature-expansion-artifacts/historical_macos_progress_best_effort.log",
+    "macos_tracking": "build/feature-expansion-artifacts/macos_tracking.log",
+    "ios_tracking_held": "build/feature-expansion-artifacts/ios_tracking_held.log",
+    "ios_tracking": "build/feature-expansion-artifacts/ios_tracking.log",
+    "historical_ios_tracking_initial": "build/feature-expansion-artifacts/historical_ios_tracking_initial.log",
+    "historical_ios_progress_diagnostic": "build/feature-expansion-artifacts/historical_ios_progress_diagnostic.log",
+    "historical_ios_progress_ready": "build/feature-expansion-artifacts/historical_ios_progress_ready.log",
+    "historical_macos_tracking_locked": "build/feature-expansion-artifacts/historical_macos_tracking_locked.log",
+    "macos_controls_complete": "build/feature-expansion-artifacts/macos_controls_complete.log",
+    "ios_controls_complete": "build/feature-expansion-artifacts/ios_controls_complete.log",
+    "tvos_controls_complete": "build/feature-expansion-artifacts/tvos_controls_complete.log",
+    "original_demos_macos": "build/feature-expansion-artifacts/original_demos_macos.log",
+    "original_demos_ios": "build/feature-expansion-artifacts/original_demos_ios.log",
+    "original_demos_tvos": "build/feature-expansion-artifacts/original_demos_tvos.log",
+    "swift_tvos_build": "build/feature-expansion-artifacts/swift_tvos_build.log",
+    "macos_keyboard": "build/feature-expansion-artifacts/macos_keyboard.log",
+    "historical_macos_keyboard_ime": "build/feature-expansion-artifacts/historical_macos_keyboard_ime.log",
+    "macos_gif_isolated": "build/feature-expansion-artifacts/macos_gif_isolated.log",
+    "historical_macos_gif_stack": "build/feature-expansion-artifacts/historical_macos_gif_stack.log",
+    "historical_macos_gif_repro": "build/feature-expansion-artifacts/historical_macos_gif_repro.log",
+    "historical_macos_publication_attempt": "build/feature-expansion-artifacts/historical_macos_publication_attempt.log",
+    "historical_macos_gif_timeout": "build/feature-expansion-artifacts/historical_macos_gif_timeout.log",
+    "historical_ios_mpeg4_native_rejection": "build/feature-expansion-artifacts/historical_ios_mpeg4_native_rejection.log",
+    "historical_tvos_mpeg4_native_rejection": "build/feature-expansion-artifacts/historical_tvos_mpeg4_native_rejection.log",
+    "historical_sar_pixel_failure": "build/feature-expansion-artifacts/historical_sar_pixel_failure.log",
+    "incremental_changed": "build/feature-expansion-artifacts/incremental_changed.log",
+    "incremental_unchanged": "build/feature-expansion-artifacts/incremental_unchanged.log"
+  },
+  "ui": {
+    "macos_complete_with_transcode": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAllBundledFormats",
+          "status": "passed"
+        },
+        {
+          "case": "testControlsAndKernelSwitch",
+          "status": "passed"
+        },
+        {
+          "case": "testCoverLifecycle",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsAndGIF",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsWhilePaused",
+          "status": "passed"
+        },
+        {
+          "case": "testInvalidSourceRecovery",
+          "status": "passed"
+        },
+        {
+          "case": "testPictureInPicture",
+          "status": "passed"
+        },
+        {
+          "case": "testProjectionOrientation",
+          "status": "passed"
+        },
+        {
+          "case": "testSessionControlsAndPresentation",
+          "status": "passed"
+        },
+        {
+          "case": "testVideoTranscoding",
+          "status": "passed"
+        },
+        {
+          "case": "testVRAndStop",
+          "status": "passed"
+        }
+      ],
+      "passed": 11,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIMac/Logs/Test/Test-features-ui-macos-2026.10.24_05-31-05-+0800.xcresult"
+    },
+    "macos_ui": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAllBundledFormats",
+          "status": "passed"
+        },
+        {
+          "case": "testControlsAndKernelSwitch",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsAndGIF",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsWhilePaused",
+          "status": "passed"
+        },
+        {
+          "case": "testInvalidSourceRecovery",
+          "status": "passed"
+        },
+        {
+          "case": "testPictureInPicture",
+          "status": "passed"
+        },
+        {
+          "case": "testProjectionOrientation",
+          "status": "passed"
+        },
+        {
+          "case": "testSessionControlsAndPresentation",
+          "status": "passed"
+        },
+        {
+          "case": "testVRAndStop",
+          "status": "passed"
+        }
+      ],
+      "passed": 9,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIMac/Logs/Test/Test-features-ui-macos-2026.10.24_01-59-28-+0800.xcresult"
+    },
+    "ios_ui": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAllBundledFormats",
+          "status": "passed"
+        },
+        {
+          "case": "testControlsAndKernelSwitch",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsAndGIF",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsWhilePaused",
+          "status": "passed"
+        },
+        {
+          "case": "testInvalidSourceRecovery",
+          "status": "passed"
+        },
+        {
+          "case": "testPictureInPicture",
+          "status": "skipped"
+        },
+        {
+          "case": "testProjectionOrientation",
+          "status": "passed"
+        },
+        {
+          "case": "testSessionBackgroundLifecycle",
+          "status": "passed"
+        },
+        {
+          "case": "testSessionControlsAndPresentation",
+          "status": "passed"
+        },
+        {
+          "case": "testVRAndStop",
+          "status": "passed"
+        }
+      ],
+      "passed": 9,
+      "skipped": 1,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIIOS/Logs/Test/Test-features-ui-ios-2026.10.24_02-01-36-+0800.xcresult"
+    },
+    "tvos_ui": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAllBundledFormats",
+          "status": "passed"
+        },
+        {
+          "case": "testControlsAndKernelSwitch",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsAndGIF",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsWhilePaused",
+          "status": "passed"
+        },
+        {
+          "case": "testInvalidSourceRecovery",
+          "status": "passed"
+        },
+        {
+          "case": "testPictureInPicture",
+          "status": "skipped"
+        },
+        {
+          "case": "testProjectionOrientation",
+          "status": "passed"
+        },
+        {
+          "case": "testSessionControlsAndPresentation",
+          "status": "passed"
+        },
+        {
+          "case": "testVRAndStop",
+          "status": "passed"
+        }
+      ],
+      "passed": 8,
+      "skipped": 1,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUITV/Logs/Test/Test-features-ui-tvos-2026.10.24_02-01-36-+0800.xcresult"
+    },
+    "ios_touch": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testTouchSessionGestures",
+          "status": "passed"
+        }
+      ],
+      "passed": 1,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIIOS/Logs/Test/Test-features-ui-ios-2026.10.24_02-18-31-+0800.xcresult"
+    },
+    "ios_cover_and_touch": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testCoverAndAutomaticControls",
+          "status": "passed"
+        },
+        {
+          "case": "testTouchSessionGestures",
+          "status": "passed"
+        }
+      ],
+      "passed": 2,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIIOS/Logs/Test/Test-features-ui-ios-2026.10.24_02-29-03-+0800.xcresult"
+    },
+    "tvos_cover": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testCoverLifecycle",
+          "status": "passed"
+        }
+      ],
+      "passed": 1,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUITV/Logs/Test/Test-features-ui-tvos-2026.10.24_02-46-06-+0800.xcresult"
+    },
+    "ios_transcode": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testVideoTranscoding",
+          "status": "passed"
+        }
+      ],
+      "passed": 1,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIIOS/Logs/Test/Test-features-ui-ios-2026.10.24_03-44-02-+0800.xcresult"
+    },
+    "tvos_transcode": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testVideoTranscoding",
+          "status": "passed"
+        }
+      ],
+      "passed": 1,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUITV/Logs/Test/Test-features-ui-tvos-2026.10.24_03-44-59-+0800.xcresult"
+    },
+    "ios_complete_with_transcode": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAllBundledFormats",
+          "status": "passed"
+        },
+        {
+          "case": "testControlsAndKernelSwitch",
+          "status": "passed"
+        },
+        {
+          "case": "testCoverAndAutomaticControls",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsAndGIF",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsWhilePaused",
+          "status": "passed"
+        },
+        {
+          "case": "testInvalidSourceRecovery",
+          "status": "passed"
+        },
+        {
+          "case": "testPictureInPicture",
+          "status": "skipped"
+        },
+        {
+          "case": "testProjectionOrientation",
+          "status": "passed"
+        },
+        {
+          "case": "testSessionBackgroundLifecycle",
+          "status": "passed"
+        },
+        {
+          "case": "testSessionControlsAndPresentation",
+          "status": "passed"
+        },
+        {
+          "case": "testTouchSessionGestures",
+          "status": "passed"
+        },
+        {
+          "case": "testVideoTranscoding",
+          "status": "passed"
+        },
+        {
+          "case": "testVRAndStop",
+          "status": "passed"
+        }
+      ],
+      "passed": 12,
+      "skipped": 1,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIIOS/Logs/Test/Test-features-ui-ios-2026.10.24_03-46-24-+0800.xcresult"
+    },
+    "tvos_complete_with_transcode": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAllBundledFormats",
+          "status": "passed"
+        },
+        {
+          "case": "testControlsAndKernelSwitch",
+          "status": "passed"
+        },
+        {
+          "case": "testCoverLifecycle",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsAndGIF",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsWhilePaused",
+          "status": "passed"
+        },
+        {
+          "case": "testInvalidSourceRecovery",
+          "status": "passed"
+        },
+        {
+          "case": "testPictureInPicture",
+          "status": "skipped"
+        },
+        {
+          "case": "testProjectionOrientation",
+          "status": "passed"
+        },
+        {
+          "case": "testSessionControlsAndPresentation",
+          "status": "passed"
+        },
+        {
+          "case": "testVideoTranscoding",
+          "status": "passed"
+        },
+        {
+          "case": "testVRAndStop",
+          "status": "passed"
+        }
+      ],
+      "passed": 10,
+      "skipped": 1,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUITV/Logs/Test/Test-features-ui-tvos-2026.10.24_03-46-28-+0800.xcresult"
+    },
+    "macos_audio_export": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAudioOnlyTranscoding",
+          "status": "passed"
+        },
+        {
+          "case": "testVideoTranscoding",
+          "status": "passed"
+        }
+      ],
+      "passed": 2,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIMac/Logs/Test/Test-features-ui-macos-2026.10.24_09-27-08-+0800.xcresult"
+    },
+    "ios_audio_export": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAudioOnlyTranscoding",
+          "status": "passed"
+        },
+        {
+          "case": "testVideoTranscoding",
+          "status": "passed"
+        }
+      ],
+      "passed": 2,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIIOS/Logs/Test/Test-features-ui-ios-2026.10.24_09-27-17-+0800.xcresult"
+    },
+    "tvos_audio_export": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAudioOnlyTranscoding",
+          "status": "passed"
+        },
+        {
+          "case": "testVideoTranscoding",
+          "status": "passed"
+        }
+      ],
+      "passed": 2,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUITV/Logs/Test/Test-features-ui-tvos-2026.10.24_09-27-23-+0800.xcresult"
+    },
+    "ios_progress_position": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAccessibleProgressAdjustment",
+          "status": "passed"
+        }
+      ],
+      "passed": 1,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIIOS/Logs/Test/Test-features-ui-ios-2026.10.24_09-22-37-+0800.xcresult"
+    },
+    "macos_tracking": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAccessibleProgressAdjustment",
+          "status": "passed"
+        },
+        {
+          "case": "testLongSliderTracking",
+          "status": "passed"
+        }
+      ],
+      "passed": 2,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIMac/Logs/Test/Test-features-ui-macos-2026.10.24_09-22-32-+0800.xcresult"
+    },
+    "ios_tracking_held": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testLongSliderTracking",
+          "status": "passed"
+        }
+      ],
+      "passed": 1,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIIOS/Logs/Test/Test-features-ui-ios-2026.10.24_08-39-08-+0800.xcresult"
+    },
+    "ios_tracking": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAccessibleProgressAdjustment",
+          "status": "passed"
+        },
+        {
+          "case": "testLongSliderTracking",
+          "status": "passed"
+        }
+      ],
+      "passed": 2,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIIOS/Logs/Test/Test-features-ui-ios-2026.10.24_08-36-41-+0800.xcresult"
+    },
+    "macos_controls_complete": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAllBundledFormats",
+          "status": "passed"
+        },
+        {
+          "case": "testAutomaticSessionControls",
+          "status": "passed"
+        },
+        {
+          "case": "testControlsAndKernelSwitch",
+          "status": "passed"
+        },
+        {
+          "case": "testCoverLifecycle",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsAndGIF",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsWhilePaused",
+          "status": "passed"
+        },
+        {
+          "case": "testInvalidSourceRecovery",
+          "status": "passed"
+        },
+        {
+          "case": "testKeyboardSessionControls",
+          "status": "passed"
+        },
+        {
+          "case": "testPictureInPicture",
+          "status": "passed"
+        },
+        {
+          "case": "testProjectionOrientation",
+          "status": "passed"
+        },
+        {
+          "case": "testSessionControlsAndPresentation",
+          "status": "passed"
+        },
+        {
+          "case": "testVideoTranscoding",
+          "status": "passed"
+        },
+        {
+          "case": "testVRAndStop",
+          "status": "passed"
+        }
+      ],
+      "passed": 13,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIMac/Logs/Test/Test-features-ui-macos-2026.10.24_07-54-01-+0800.xcresult"
+    },
+    "ios_controls_complete": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAllBundledFormats",
+          "status": "passed"
+        },
+        {
+          "case": "testControlsAndKernelSwitch",
+          "status": "passed"
+        },
+        {
+          "case": "testCoverAndAutomaticControls",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsAndGIF",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsWhilePaused",
+          "status": "passed"
+        },
+        {
+          "case": "testInvalidSourceRecovery",
+          "status": "passed"
+        },
+        {
+          "case": "testPictureInPicture",
+          "status": "skipped"
+        },
+        {
+          "case": "testProjectionOrientation",
+          "status": "passed"
+        },
+        {
+          "case": "testSessionBackgroundLifecycle",
+          "status": "passed"
+        },
+        {
+          "case": "testSessionControlsAndPresentation",
+          "status": "passed"
+        },
+        {
+          "case": "testTouchSessionGestures",
+          "status": "passed"
+        },
+        {
+          "case": "testVideoTranscoding",
+          "status": "passed"
+        },
+        {
+          "case": "testVRAndStop",
+          "status": "passed"
+        }
+      ],
+      "passed": 12,
+      "skipped": 1,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIIOS/Logs/Test/Test-features-ui-ios-2026.10.24_07-54-01-+0800.xcresult"
+    },
+    "tvos_controls_complete": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testAllBundledFormats",
+          "status": "passed"
+        },
+        {
+          "case": "testAutomaticSessionControls",
+          "status": "passed"
+        },
+        {
+          "case": "testControlsAndKernelSwitch",
+          "status": "passed"
+        },
+        {
+          "case": "testCoverLifecycle",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsAndGIF",
+          "status": "passed"
+        },
+        {
+          "case": "testEffectsWhilePaused",
+          "status": "passed"
+        },
+        {
+          "case": "testInvalidSourceRecovery",
+          "status": "passed"
+        },
+        {
+          "case": "testPictureInPicture",
+          "status": "skipped"
+        },
+        {
+          "case": "testProjectionOrientation",
+          "status": "passed"
+        },
+        {
+          "case": "testSessionControlsAndPresentation",
+          "status": "passed"
+        },
+        {
+          "case": "testVideoTranscoding",
+          "status": "passed"
+        },
+        {
+          "case": "testVRAndStop",
+          "status": "passed"
+        }
+      ],
+      "passed": 11,
+      "skipped": 1,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUITV/Logs/Test/Test-features-ui-tvos-2026.10.24_07-54-01-+0800.xcresult"
+    },
+    "macos_keyboard": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testKeyboardSessionControls",
+          "status": "passed"
+        }
+      ],
+      "passed": 1,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIMac/Logs/Test/Test-features-ui-macos-2026.10.24_07-33-36-+0800.xcresult"
+    },
+    "macos_gif_isolated": {
+      "suite_succeeded": true,
+      "cases": [
+        {
+          "case": "testEffectsAndGIF",
+          "status": "passed"
+        }
+      ],
+      "passed": 1,
+      "skipped": 0,
+      "failed": 0,
+      "xcresult": "/Users/mdw/Desktop/SGPlayer/build/ExpansionUIMac/Logs/Test/Test-features-ui-macos-2026.10.24_05-27-59-+0800.xcresult"
+    }
+  },
+  "original_demos_macos": {
+    "passed": true,
+    "ffmpegVersion": "9.0.2",
+    "renderedFrames": 1849,
+    "cases": [
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9856924971468648,
+          "rate0.5": 0.5115420314478105,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 311,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire",
+        "hardwareFrames": 311
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9882263004017169,
+          "rate0.5": 0.5022935925279127,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 323,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire, Video Track",
+        "hardwareFrames": 323
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9947542543222463,
+          "rate0.5": 0.5114238398378083,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 0,
+        "phase": 6,
+        "screenshot": false,
+        "error": "",
+        "name": "I See Fire, Audio Track",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9775396378510177,
+          "rate0.5": 0.514525820062852,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 238,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire, Range: 30s-40s",
+        "hardwareFrames": 238
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9954089352241078,
+          "rate0.5": 0.511146832418082,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 315,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire, Range: 30s-50s, Scale: 0.5",
+        "hardwareFrames": 315
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "endOfFile": true,
+          "rate2": 1.995469456419894,
+          "rate0.5": 0.5115570762829172,
+          "seek": true,
+          "pause": true,
+          "segmentBoundary": true,
+          "play": true
+        },
+        "renderedFrames": 348,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire + Google Help",
+        "hardwareFrames": 348
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9847650940252783,
+          "rate0.5": 0.5158042645051581,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 314,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "Google Help VR",
+        "hardwareFrames": 314
+      }
+    ],
+    "osVersion": "Version 27.0.1 (Build 26A434)",
+    "runID": "260f3fbc-0270-43a5-97ae-97a29ba55487",
+    "bundleIdentifier": "com.libobjc.SGPlayer.demo-macos",
+    "hardwareFrames": 1849,
+    "artifactValidation": {
+      "framework_sha256": "69e677f70fbdf591d0f246f06a52f47c7c884e08e3ca79f77ad3eb76ef9a31a4",
+      "executable_sha256": "2d69ff314b333fb6f35eac5df97a1dcc1871e8cf9107c056029aa4eaa34d1fef",
+      "embedded_framework_matches": true
+    }
+  },
+  "original_demos_ios": {
+    "passed": true,
+    "ffmpegVersion": "9.0.2",
+    "renderedFrames": 1874,
+    "cases": [
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9777266171232428,
+          "rate0.5": 0.5111422888570244,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 312,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9603742656447285,
+          "rate0.5": 0.5142913906043552,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 324,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire, Video Track",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9774498375165377,
+          "rate0.5": 0.5244142684707738,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 0,
+        "phase": 6,
+        "screenshot": false,
+        "error": "",
+        "name": "I See Fire, Audio Track",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9855838691656837,
+          "rate0.5": 0.5161422193060592,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 247,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire, Range: 30s-40s",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9952993294531307,
+          "rate0.5": 0.5113461785473762,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 315,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire, Range: 30s-50s, Scale: 0.5",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "endOfFile": true,
+          "rate2": 2.0000061833436917,
+          "rate0.5": 0.5156672796976199,
+          "seek": true,
+          "pause": true,
+          "segmentBoundary": true,
+          "play": true
+        },
+        "renderedFrames": 363,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire + Google Help",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.984832386429531,
+          "rate0.5": 0.5117450293235059,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 313,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "Google Help VR",
+        "hardwareFrames": 0
+      }
+    ],
+    "osVersion": "Version 27.0 (Build 24A434)",
+    "runID": "961847e4-6497-4385-951c-1bc57e5759f4",
+    "bundleIdentifier": "com.omnilink.fufucard",
+    "hardwareFrames": 0,
+    "artifactValidation": {
+      "framework_sha256": "cf9fe4da373fbadcfa12db88565163f9faba1eb1b283ccdd8ae02f581bae264d",
+      "executable_sha256": "7fe01e9e6f8acbe6e13421ac488e1c8cfe07305b18b722875319f28262e90ec9",
+      "embedded_framework_matches": true
+    }
+  },
+  "original_demos_tvos": {
+    "passed": true,
+    "ffmpegVersion": "9.0.2",
+    "renderedFrames": 1864,
+    "cases": [
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9848039925260574,
+          "rate0.5": 0.5038116554117396,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 320,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9864119665730786,
+          "rate0.5": 0.4995783963653873,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 312,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire, Video Track",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9949773897031846,
+          "rate0.5": 0.5130265903380274,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 0,
+        "phase": 6,
+        "screenshot": false,
+        "error": "",
+        "name": "I See Fire, Audio Track",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9774771010522483,
+          "rate0.5": 0.5157767913673292,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 236,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire, Range: 30s-40s",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9997461710989775,
+          "rate0.5": 0.5113236773186952,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 328,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire, Range: 30s-50s, Scale: 0.5",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "endOfFile": true,
+          "rate2": 1.995506128376938,
+          "rate0.5": 0.5131937432687449,
+          "seek": true,
+          "pause": true,
+          "segmentBoundary": true,
+          "play": true
+        },
+        "renderedFrames": 351,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "I See Fire + Google Help",
+        "hardwareFrames": 0
+      },
+      {
+        "passed": true,
+        "checks": {
+          "resume": true,
+          "play": true,
+          "rate2": 1.9886976841915802,
+          "rate0.5": 0.5110316436638749,
+          "seek": true,
+          "pause": true,
+          "endOfFile": true
+        },
+        "renderedFrames": 317,
+        "phase": 6,
+        "screenshot": true,
+        "error": "",
+        "name": "Google Help VR",
+        "hardwareFrames": 0
+      }
+    ],
+    "osVersion": "Version 27.0 (Build 24J360)",
+    "runID": "489e51b8-d86d-4ee3-a0dc-72157b676432",
+    "bundleIdentifier": "com.libobjc.SGPlayer.demo-tvos",
+    "hardwareFrames": 0,
+    "artifactValidation": {
+      "framework_sha256": "cfc3c182a843b18dda955828ce9d6a500bb22c00679e9c1fc7b93c31a2c3b5eb",
+      "executable_sha256": "0959e06536e744cbd272c50a610b2922de3f400d521b7798f1f3f14eea38777e",
+      "embedded_framework_matches": true
+    }
+  },
+  "original_status_macos": {
+    "passed": true,
+    "status": "complete",
+    "runID": "260f3fbc-0270-43a5-97ae-97a29ba55487"
+  },
+  "original_status_ios": {
+    "passed": true,
+    "status": "complete",
+    "runID": "961847e4-6497-4385-951c-1bc57e5759f4"
+  },
+  "original_status_tvos": {
+    "passed": true,
+    "status": "complete",
+    "runID": "489e51b8-d86d-4ee3-a0dc-72157b676432"
+  },
+  "simulator_exports": {
+    "ios": [
+      {
+        "passed": true,
+        "kernel": 0,
+        "videoCodec": 1,
+        "audioSamples": 37024,
+        "errorCode": null,
+        "includeVideo": true,
+        "videoFrames": 30,
+        "report_file": "/Users/mdw/Library/Developer/CoreSimulator/Devices/3EDFA2F7-F489-410C-9E50-CB11CBA47BEE/data/Containers/Data/Application/10729387-2460-46DD-BE1D-52443E99718C/Documents/transcode-demo-0.json",
+        "report_sha256": "c564ab1c066b2dc1dbccb9fa1af6cac6219696bd8cbf811e2c1b8bae5cf3fbd0"
+      },
+      {
+        "passed": true,
+        "kernel": 1,
+        "videoCodec": 1,
+        "audioSamples": 37024,
+        "errorCode": null,
+        "includeVideo": true,
+        "videoFrames": 30,
+        "report_file": "/Users/mdw/Library/Developer/CoreSimulator/Devices/3EDFA2F7-F489-410C-9E50-CB11CBA47BEE/data/Containers/Data/Application/10729387-2460-46DD-BE1D-52443E99718C/Documents/transcode-demo-1.json",
+        "report_sha256": "9e20b086c396f939c8c39bebc2eb764f828cfc34922034c4b07f32de7b5c2169"
+      }
+    ],
+    "tvos": [
+      {
+        "passed": true,
+        "kernel": 0,
+        "videoCodec": 1,
+        "audioSamples": 37024,
+        "errorCode": null,
+        "includeVideo": true,
+        "videoFrames": 30,
+        "report_file": "/Users/mdw/Library/Developer/CoreSimulator/Devices/65423172-CDAB-451E-A862-4E790EE7AA05/data/Containers/Data/Application/8C819D18-1FBD-4758-A29F-57B5D5D82818/Documents/transcode-demo-0.json",
+        "report_sha256": "c564ab1c066b2dc1dbccb9fa1af6cac6219696bd8cbf811e2c1b8bae5cf3fbd0"
+      },
+      {
+        "passed": true,
+        "kernel": 1,
+        "videoCodec": 1,
+        "audioSamples": 37024,
+        "errorCode": null,
+        "includeVideo": true,
+        "videoFrames": 30,
+        "report_file": "/Users/mdw/Library/Developer/CoreSimulator/Devices/65423172-CDAB-451E-A862-4E790EE7AA05/data/Containers/Data/Application/8C819D18-1FBD-4758-A29F-57B5D5D82818/Documents/transcode-demo-1.json",
+        "report_sha256": "9e20b086c396f939c8c39bebc2eb764f828cfc34922034c4b07f32de7b5c2169"
+      }
+    ]
+  },
+  "simulator_audio": {
+    "ios": [
+      {
+        "passed": true,
+        "kernel": 0,
+        "videoCodec": 1,
+        "audioSamples": 37024,
+        "errorCode": null,
+        "includeVideo": false,
+        "videoFrames": 0,
+        "report_file": "/Users/mdw/Library/Developer/CoreSimulator/Devices/3EDFA2F7-F489-410C-9E50-CB11CBA47BEE/data/Containers/Data/Application/10729387-2460-46DD-BE1D-52443E99718C/Documents/audio-demo-0.json",
+        "report_sha256": "9a47bfef1227b9daa67a1599d14be495195fbbc116e791e66f66180453f79f77"
+      },
+      {
+        "passed": true,
+        "kernel": 1,
+        "videoCodec": 1,
+        "audioSamples": 37024,
+        "errorCode": null,
+        "includeVideo": false,
+        "videoFrames": 0,
+        "report_file": "/Users/mdw/Library/Developer/CoreSimulator/Devices/3EDFA2F7-F489-410C-9E50-CB11CBA47BEE/data/Containers/Data/Application/10729387-2460-46DD-BE1D-52443E99718C/Documents/audio-demo-1.json",
+        "report_sha256": "c875ac2a3bcca30f5a53ce8043b233cc6b6f36b84be1084388b428e0006e506c"
+      }
+    ],
+    "tvos": [
+      {
+        "passed": true,
+        "kernel": 0,
+        "videoCodec": 1,
+        "audioSamples": 37024,
+        "errorCode": null,
+        "includeVideo": false,
+        "videoFrames": 0,
+        "report_file": "/Users/mdw/Library/Developer/CoreSimulator/Devices/65423172-CDAB-451E-A862-4E790EE7AA05/data/Containers/Data/Application/8C819D18-1FBD-4758-A29F-57B5D5D82818/Documents/audio-demo-0.json",
+        "report_sha256": "9a47bfef1227b9daa67a1599d14be495195fbbc116e791e66f66180453f79f77"
+      },
+      {
+        "passed": true,
+        "kernel": 1,
+        "videoCodec": 1,
+        "audioSamples": 37024,
+        "errorCode": null,
+        "includeVideo": false,
+        "videoFrames": 0,
+        "report_file": "/Users/mdw/Library/Developer/CoreSimulator/Devices/65423172-CDAB-451E-A862-4E790EE7AA05/data/Containers/Data/Application/8C819D18-1FBD-4758-A29F-57B5D5D82818/Documents/audio-demo-1.json",
+        "report_sha256": "c875ac2a3bcca30f5a53ce8043b233cc6b6f36b84be1084388b428e0006e506c"
+      }
+    ]
+  },
+  "audio_only": {
+    "cases": [
+      {
+        "samples": 35984,
+        "decodedAudioFrames": 37,
+        "container": 0,
+        "videoFrames": 0
+      },
+      {
+        "samples": 35984,
+        "decodedAudioFrames": 37,
+        "container": 1,
+        "videoFrames": 0
+      },
+      {
+        "samples": 35984,
+        "decodedAudioFrames": 37,
+        "container": 2,
+        "videoFrames": 0
+      }
+    ],
+    "passed": true
+  },
+  "ios_held_progress": {
+    "action": "drag then hold 6 seconds",
+    "capture_delay_from_action_log_seconds": 4,
+    "log": "/tmp/sgplayer-tracking-held-ui-ios.log",
+    "captured_unix_time": 1792802375.68275
+  },
+  "transcode": {
+    "cases": [
+      {
+        "kernel": 0,
+        "watermarkPixels": 66,
+        "neutralPixels": 688,
+        "container": "mkv",
+        "sourceSignalOnsetSeconds": 0.25,
+        "audioFrames": 60,
+        "signalOnsetSeconds": 0.25,
+        "videoFrames": 23
+      },
+      {
+        "kernel": 0,
+        "watermarkPixels": 66,
+        "neutralPixels": 688,
+        "container": "mp4",
+        "sourceSignalOnsetSeconds": 0.25,
+        "audioFrames": 61,
+        "signalOnsetSeconds": 0.24997916666666667,
+        "videoFrames": 23
+      },
+      {
+        "kernel": 0,
+        "watermarkPixels": 66,
+        "neutralPixels": 688,
+        "container": "ts",
+        "sourceSignalOnsetSeconds": 0.25,
+        "audioFrames": 61,
+        "signalOnsetSeconds": 0.24997916666666667,
+        "videoFrames": 23
+      },
+      {
+        "kernel": 1,
+        "watermarkPixels": 66,
+        "neutralPixels": 688,
+        "container": "mkv",
+        "sourceSignalOnsetSeconds": 0.25,
+        "audioFrames": 60,
+        "signalOnsetSeconds": 0.25,
+        "videoFrames": 23
+      },
+      {
+        "kernel": 1,
+        "watermarkPixels": 66,
+        "neutralPixels": 688,
+        "container": "mp4",
+        "sourceSignalOnsetSeconds": 0.25,
+        "audioFrames": 61,
+        "signalOnsetSeconds": 0.24997916666666667,
+        "videoFrames": 23
+      },
+      {
+        "kernel": 1,
+        "watermarkPixels": 66,
+        "neutralPixels": 688,
+        "container": "ts",
+        "sourceSignalOnsetSeconds": 0.25,
+        "audioFrames": 61,
+        "signalOnsetSeconds": 0.24997916666666667,
+        "videoFrames": 23
+      }
+    ],
+    "passed": true
+  },
+  "build_matrix": [
+    {
+      "kind": "framework",
+      "platform": "macOS",
+      "sdk": "macosx",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer macOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "macosx",
+        "-destination",
+        "generic/platform=macOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/macosx",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-macosx-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "macOS",
+      "sdk": "macosx",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer macOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "macosx",
+        "-destination",
+        "generic/platform=macOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/macosx",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-macosx-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "macOS",
+      "sdk": "macosx",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-macos",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "macosx",
+        "-destination",
+        "generic/platform=macOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/macosx",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-macosx-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "macOS",
+      "sdk": "macosx",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-macos",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "macosx",
+        "-destination",
+        "generic/platform=macOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/macosx",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-macosx-Release.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "iOS",
+      "sdk": "iphoneos",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer iOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/iphoneos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-iphoneos-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "iOS",
+      "sdk": "iphoneos",
+      "configuration": "Release",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer iOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/iphoneos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-iphoneos-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "iOS",
+      "sdk": "iphoneos",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-ios",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/iphoneos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-iphoneos-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "iOS",
+      "sdk": "iphoneos",
+      "configuration": "Release",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-ios",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/iphoneos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-iphoneos-Release.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "iOS",
+      "sdk": "iphonesimulator",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer iOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphonesimulator",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/iphonesimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-iphonesimulator-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "iOS",
+      "sdk": "iphonesimulator",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer iOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "iphonesimulator",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/iphonesimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-iphonesimulator-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "iOS",
+      "sdk": "iphonesimulator",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-ios",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphonesimulator",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/iphonesimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-iphonesimulator-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "iOS",
+      "sdk": "iphonesimulator",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-ios",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "iphonesimulator",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/iphonesimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-iphonesimulator-Release.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "tvOS",
+      "sdk": "appletvos",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer tvOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "appletvos",
+        "-destination",
+        "generic/platform=tvOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/appletvos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-appletvos-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "tvOS",
+      "sdk": "appletvos",
+      "configuration": "Release",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer tvOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "appletvos",
+        "-destination",
+        "generic/platform=tvOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/appletvos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-appletvos-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "tvOS",
+      "sdk": "appletvos",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-tvos",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "appletvos",
+        "-destination",
+        "generic/platform=tvOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/appletvos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-appletvos-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "tvOS",
+      "sdk": "appletvos",
+      "configuration": "Release",
+      "architectures": [
+        "arm64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-tvos",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "appletvos",
+        "-destination",
+        "generic/platform=tvOS",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/appletvos",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-appletvos-Release.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "tvOS",
+      "sdk": "appletvsimulator",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer tvOS",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "appletvsimulator",
+        "-destination",
+        "generic/platform=tvOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/appletvsimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-appletvsimulator-Debug.log"
+    },
+    {
+      "kind": "framework",
+      "platform": "tvOS",
+      "sdk": "appletvsimulator",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-project",
+        "SGPlayer.xcodeproj",
+        "-scheme",
+        "SGPlayer tvOS",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "appletvsimulator",
+        "-destination",
+        "generic/platform=tvOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/framework/appletvsimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/framework-appletvsimulator-Release.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "tvOS",
+      "sdk": "appletvsimulator",
+      "configuration": "Debug",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-tvos",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "appletvsimulator",
+        "-destination",
+        "generic/platform=tvOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/appletvsimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-appletvsimulator-Debug.log"
+    },
+    {
+      "kind": "demo",
+      "platform": "tvOS",
+      "sdk": "appletvsimulator",
+      "configuration": "Release",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "exit_code": 0,
+      "command": [
+        "xcodebuild",
+        "-workspace",
+        "demo/demo.xcworkspace",
+        "-scheme",
+        "demo-tvos",
+        "-configuration",
+        "Release",
+        "-sdk",
+        "appletvsimulator",
+        "-destination",
+        "generic/platform=tvOS Simulator",
+        "-derivedDataPath",
+        "/Users/mdw/Desktop/SGPlayer/build/VerificationDerivedData/demo/appletvsimulator",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ONLY_ACTIVE_ARCH=NO",
+        "ARCHS=arm64 x86_64",
+        "build"
+      ],
+      "log": "build/verification/xcode-27.1/demo-appletvsimulator-Release.log"
+    }
+  ],
+  "demo_linkage": {
+    "passed": true,
+    "checks": [
+      {
+        "sdk": "appletvos",
+        "configuration": "Debug-appletvos",
+        "archive_sha256": "c1878ab8f97cb250ace4e3073fe55129033d9ce86bff3e3787cb3c9e2743b418",
+        "passed": true
+      },
+      {
+        "sdk": "appletvos",
+        "configuration": "Release-appletvos",
+        "archive_sha256": "4af9da50b51170f305754b4e62debbbaff169e6043763b068831529c7197bb4e",
+        "passed": true
+      },
+      {
+        "sdk": "appletvsimulator",
+        "configuration": "Debug-appletvsimulator",
+        "archive_sha256": "0d00118e97e05c06853d8438b6696b9984730f5538fe85cabdb09dea076496f4",
+        "passed": true
+      },
+      {
+        "sdk": "appletvsimulator",
+        "configuration": "Release-appletvsimulator",
+        "archive_sha256": "cbfc5a025ffc746176c9c332de4dbc96abb36808f44926aef08ed552992c3637",
+        "passed": true
+      },
+      {
+        "sdk": "iphoneos",
+        "configuration": "Debug-iphoneos",
+        "archive_sha256": "ca59e8b6f87a1de42832ead995b1bb2076b2dd6518af81ddc97a45c54e1c3a0c",
+        "passed": true
+      },
+      {
+        "sdk": "iphoneos",
+        "configuration": "Release-iphoneos",
+        "archive_sha256": "465f232c4f6a17b946934a996826084a6ac7f2de36c31a7aba1440d4e84ab9d9",
+        "passed": true
+      },
+      {
+        "sdk": "iphonesimulator",
+        "configuration": "Debug-iphonesimulator",
+        "archive_sha256": "4c149b12debdda7e3f67462949ccc8092d0864aed854c22d4dc509ff2be3bc95",
+        "passed": true
+      },
+      {
+        "sdk": "iphonesimulator",
+        "configuration": "Release-iphonesimulator",
+        "archive_sha256": "d684ce4822d28debb712ae470cd9953cbbaa9abe6f72f958fceca927046d472f",
+        "passed": true
+      },
+      {
+        "sdk": "macosx",
+        "configuration": "Debug",
+        "archive_sha256": "1c5e632287988f58216463c2b300e45297b471e36b5b88ddbfd7f85c1a489158",
+        "passed": true
+      },
+      {
+        "sdk": "macosx",
+        "configuration": "Release",
+        "archive_sha256": "ca42e00e86825322c7f69f439b2c0fd2584bcf4de8fff8da44f873d60cecaa08",
+        "passed": true
+      }
+    ]
+  },
+  "package": {
+    "xcode": "Xcode 27.1",
+    "framework_sha256": {
+      "macosx": "cbc9a29189612bc52e3bda50bdce5dc638a8c5a9e731a3ccef6e2596634bf103",
+      "iphoneos": "3083c62a9425164b783508962f91199ac691cf07e8a32fe727209d1047b0998a",
+      "iphonesimulator": "7f4c95d33404bff500720134993b9f49c88e94f857a0e8491fa1bbaafb6033a7",
+      "appletvos": "137cb17763ed892b3c6d80b11808e9dd9ac227d673ef03a260bf065337af185b",
+      "appletvsimulator": "491ccf8db338161524c62214e0d5333ac950e154d45844851ee87a4e6a88b34f"
+    },
+    "sdks": [
+      "macosx",
+      "iphoneos",
+      "iphonesimulator",
+      "appletvos",
+      "appletvsimulator"
+    ],
+    "swift_source_sha256": "42881fe3e75729589c3b0716f8bd3a209bc0a4951782ef8ea13dbf95aef5c671"
+  },
+  "swift_real_app": {
+    "checks": [
+      {
+        "case": "swiftui-ffmpeg",
+        "frames": 7,
+        "passed": true
+      },
+      {
+        "case": "reopened-same-view",
+        "frames": 6,
+        "passed": true
+      },
+      {
+        "case": "cached-ffmpeg",
+        "frames": 6,
+        "passed": true
+      },
+      {
+        "case": "cached-native",
+        "frames": 6,
+        "passed": true
+      }
+    ],
+    "displayLoop": "NSApplication.run; automatic Metal rendering",
+    "passed": true,
+    "package_framework_sha256": "cbc9a29189612bc52e3bda50bdce5dc638a8c5a9e731a3ccef6e2596634bf103",
+    "swift_ui_source_sha256": "42881fe3e75729589c3b0716f8bd3a209bc0a4951782ef8ea13dbf95aef5c671",
+    "smoke_source_sha256": "3604350120ede0806bdce733e254ac7b62ad022c6785e38b9c4331890265836e",
+    "executable_sha256": "c87c1089863fff1271e95a2249b0999e808491b47c14f7e4679508eceb232b70"
+  },
+  "swift_last_preserved_pass": {
+    "checks": [
+      {
+        "case": "swiftui-ffmpeg",
+        "frames": 7,
+        "passed": true
+      },
+      {
+        "case": "reopened-same-view",
+        "frames": 6,
+        "passed": true
+      },
+      {
+        "case": "cached-ffmpeg",
+        "frames": 6,
+        "passed": true
+      },
+      {
+        "case": "cached-native",
+        "frames": 6,
+        "passed": true
+      }
+    ],
+    "displayLoop": "NSApplication.run; automatic Metal rendering",
+    "passed": true,
+    "package_framework_sha256": "cbc9a29189612bc52e3bda50bdce5dc638a8c5a9e731a3ccef6e2596634bf103",
+    "swift_ui_source_sha256": "42881fe3e75729589c3b0716f8bd3a209bc0a4951782ef8ea13dbf95aef5c671",
+    "smoke_source_sha256": "3604350120ede0806bdce733e254ac7b62ad022c6785e38b9c4331890265836e",
+    "executable_sha256": "c87c1089863fff1271e95a2249b0999e808491b47c14f7e4679508eceb232b70"
+  },
+  "hls_real_app": {
+    "passed": true,
+    "checks": [
+      {
+        "phase": "downloaded",
+        "passed": true,
+        "kernel": "native",
+        "frames": 10,
+        "scenario": "download",
+        "networkRequests": 33
+      },
+      {
+        "phase": "restored",
+        "passed": true,
+        "kernel": "native",
+        "frames": 5,
+        "scenario": "offline-restoration",
+        "networkRequests": 0
+      }
+    ]
+  },
+  "baseline_artifact_hashes": {
+    "macos": {
+      "framework_sha256": "d265bae7c13d1f61c9b00fcbfac99fbcddd78de38bb9f8813d4d367302c42098",
+      "demo_sha256": "27a177b4f8e31da01cb76150262a3cb4861abeac46525f5b29687d79696ab9d9",
+      "embedded_framework_digest_matches": true
+    },
+    "ios": {
+      "framework_sha256": "dec49cf1c04e5e4b69e494921d577f05d8394577656584a9ae2b8f39917961fe",
+      "demo_sha256": "9552a7847b298f588a7764c7f6f112cf5a9b7ae2a7f0d6d0750b743565474a15",
+      "embedded_framework_digest_matches": true
+    },
+    "tvos": {
+      "framework_sha256": "76ba437acc4bd418f758c4b344b4b9b3c064cfc38157b496b60513be75a252cc",
+      "demo_sha256": "8c13a83e2342352206e63952efb6923e196d250286858ec6a9960de15cd313dc",
+      "embedded_framework_digest_matches": true
+    }
+  },
+  "checks": {
+    "simulator_audio": true,
+    "simulator_exports": true,
+    "macos_latest_full_ui": true,
+    "macos_ui_build": true,
+    "transcode": true,
+    "data_asan": true,
+    "cache": true,
+    "hls": true,
+    "swift_real_app": true,
+    "swift_package_tests": true,
+    "swift_tvos_cross_build": true,
+    "swift_ios_cross_build": true,
+    "build_matrix": true,
+    "demo_linkage": true,
+    "package": true,
+    "macos_tracking_foreground": true,
+    "audio_only": true,
+    "ios_tracking_targeted": true,
+    "incremental_relink": true,
+    "original_demos_macos": true,
+    "original_demos_ios": true,
+    "original_demos_tvos": true
+  },
+  "batch_validation_passed": true,
+  "macos_ui_outputs": [
+    "build/feature-expansion-artifacts/macos-ui-outputs/SGPlayerUI-0C8EE9C7-1201-4955-9E16-DD6922D91211",
+    "build/feature-expansion-artifacts/macos-ui-outputs/SGPlayerUI-142A7874-1135-448E-91E3-B294A0B956DB",
+    "build/feature-expansion-artifacts/macos-ui-outputs/SGPlayerUI-428155FF-884E-48B4-831A-24CEE73951A4",
+    "build/feature-expansion-artifacts/macos-ui-outputs/SGPlayerUI-478164BA-5D1A-4351-B516-A76C1BA58CD6",
+    "build/feature-expansion-artifacts/macos-ui-outputs/SGPlayerUI-A5A468A2-18EF-449C-9AE0-115BA90B200E",
+    "build/feature-expansion-artifacts/macos-ui-outputs/SGPlayerUI-B24CBCE9-87AE-4177-BBD4-852174A30BD0"
+  ],
+  "macos_transcode_reports": [
+    {
+      "passed": true,
+      "kernel": 0,
+      "videoCodec": 1,
+      "audioSamples": 37024,
+      "errorCode": null,
+      "includeVideo": true,
+      "videoFrames": 30
+    },
+    {
+      "passed": true,
+      "kernel": 1,
+      "videoCodec": 1,
+      "audioSamples": 37024,
+      "errorCode": null,
+      "includeVideo": true,
+      "videoFrames": 30
+    },
+    {
+      "kernel": 0,
+      "passed": true,
+      "videoFrames": 30,
+      "audioSamples": 37024,
+      "errorCode": null,
+      "videoCodec": 1
+    },
+    {
+      "kernel": 1,
+      "passed": true,
+      "videoFrames": 30,
+      "audioSamples": 37024,
+      "errorCode": null,
+      "videoCodec": 1
+    }
+  ],
+  "macos_audio_reports": [
+    {
+      "passed": true,
+      "kernel": 0,
+      "videoCodec": 1,
+      "audioSamples": 37024,
+      "errorCode": null,
+      "includeVideo": false,
+      "videoFrames": 0
+    },
+    {
+      "passed": true,
+      "kernel": 1,
+      "videoCodec": 1,
+      "audioSamples": 37024,
+      "errorCode": null,
+      "includeVideo": false,
+      "videoFrames": 0
+    }
+  ],
+  "transcode_artifacts": {
+    "build/tests-asan/features/atomic-transcode.mp4": {
+      "bytes": 25,
+      "sha256": "97acc2875eb40b9c0100854da691fbb73d1a766d6be3300627a18aec68f30f68"
+    },
+    "build/tests-asan/features/audio-only-transcode.mkv": {
+      "bytes": 13077,
+      "sha256": "4f1b4e2fbfa13541ba6ceabf6d077eb0d71e6c1b16cb5790139e336a08e6af5f"
+    },
+    "build/tests-asan/features/audio-only-transcode.ts": {
+      "bytes": 21620,
+      "sha256": "d159d59463944fa8581f9f3a8c2b7da834a4c2d3e96897e8abb820055328b044"
+    },
+    "build/tests-asan/features/hardware-transcode-1.mkv": {
+      "bytes": 15583,
+      "sha256": "cb5098106cde55fcdd087555eb802eea277ff476a980622ee8bfcd0cc0cd92a5"
+    },
+    "build/tests-asan/features/hardware-transcode-1.mp4": {
+      "bytes": 16713,
+      "sha256": "8348cd558c4ef14af7ea6b78ae7ef1f6813b0bc517a8c89a06d98420e91a9593"
+    },
+    "build/tests-asan/features/hardware-transcode-1.ts": {
+      "bytes": 27448,
+      "sha256": "f17dff38bdd161bb6b6fd609beb0c05c9152067c4b5a27fdf63fcea7407e6294"
+    },
+    "build/tests-asan/features/hardware-transcode-2.mkv": {
+      "bytes": 15005,
+      "sha256": "a5b95b31c0789c066fb7b309e2a7ed5a4bf6590a3a087313513e6583ef13d9af"
+    },
+    "build/tests-asan/features/hardware-transcode-2.mp4": {
+      "bytes": 16130,
+      "sha256": "00ee43dd8ee45123a912406337f928f3a5e0b1dbd5441c33dc9d6d84177d372c"
+    },
+    "build/tests-asan/features/hardware-transcode-2.ts": {
+      "bytes": 27448,
+      "sha256": "65c0df707f55e1e7e03d6db5f26cdc655c28b182537db90ba0fbf0538a8d69ef"
+    },
+    "build/tests-asan/features/transcoded-0-0.mkv": {
+      "bytes": 23330,
+      "sha256": "8b8c547d457b70769f9f02fd4ed3fdb3d3449939aa9159a38d5a84b4a5e2c624"
+    },
+    "build/tests-asan/features/transcoded-0-1.mp4": {
+      "bytes": 24088,
+      "sha256": "d052c046046b985f0d100cd92a5a87988571169dbefdd513559ea56c1af64d99"
+    },
+    "build/tests-asan/features/transcoded-0-2.ts": {
+      "bytes": 38916,
+      "sha256": "254e613015d7488dc518fec2320fade590c2a413d1fd379edb4725c1eae25fe6"
+    },
+    "build/tests-asan/features/transcoded-1-0.mkv": {
+      "bytes": 23396,
+      "sha256": "c6fd965429bc21abdcf5c72a357e26b6dbdb1215e1e954c02560719216fec7d4"
+    },
+    "build/tests-asan/features/transcoded-1-1.mp4": {
+      "bytes": 24154,
+      "sha256": "03e5f893314486680300fe00987dd99fce6406559adabfc23e6fcce903739af1"
+    },
+    "build/tests-asan/features/transcoded-1-2.ts": {
+      "bytes": 39292,
+      "sha256": "b15943a5ad561f61dfea1e00218ba203e814b5795d5ea5fc663e65c8a3e29ca8"
+    },
+    "build/tests-asan/features/trimmed-transcode.mp4": {
+      "bytes": 10539,
+      "sha256": "f09207b10bda1279893dcd3822f6d343bb0b3ee0c7540b48ad1fb6259047e616"
+    }
+  },
+  "macos_foreground_prerequisite": "desktop-unlocked",
+  "current_ui_artifact_hashes": {
+    "macos": {
+      "archive_sha256": "1c0cf221367e581060abd9c81306be0ceb922b9422f019e3d56e5499654c694d",
+      "executable_sha256": "f458c33ef854321d4638c8fb5b2d801b497cd01c3ad9c29a539e058144cb9dce",
+      "embedded_framework_matches": true
+    },
+    "ios": {
+      "archive_sha256": "04ca839198501e2a63de324578f470b1fab53fc91b01a3b215bd15dd8a9f5882",
+      "executable_sha256": "3e2db41813977e9d57c8f1ad106baa85119f95dfe0c7ad74b9692249b818347f",
+      "embedded_framework_matches": true
+    },
+    "tvos": {
+      "archive_sha256": "9d4f04c08c43e225dc5321469122e70060ae88e792b5c889886016baf776b34a",
+      "executable_sha256": "4031c8a3c2e32a4b287cb759c026092bf4db0502d7c996f87a00010884110477",
+      "embedded_framework_matches": true
+    }
+  },
+  "source_snapshot_sha256": {
+    "SGPlayer.xcodeproj/project.pbxproj": "170409b4f42edc4ec39211de37d2514722abc2e2a888fc6941fdae391dc0e0d6",
+    "SGPlayer/Classes/Core/SGAsset/SGAsset+Internal.h": "43aab1c1cdc12d6244b72a1716be6ef131350a96b1b1a95797442a2930359739",
+    "SGPlayer/Classes/Core/SGAsset/SGAsset.h": "ed7ce0c784f2669f49eb95b3d6da0b901a7390ca73080b196780fabacb62a523",
+    "SGPlayer/Classes/Core/SGAsset/SGAsset.m": "3e3cf9660539448b0e30227c052d3652f454d57520c62ee1878b4a1c2e6289b3",
+    "SGPlayer/Classes/Core/SGAsset/SGMutableAsset.h": "b7ede08a54200a7b586a41fa09008597d95e7fca1c8fc28577b0cf10f898785e",
+    "SGPlayer/Classes/Core/SGAsset/SGMutableAsset.m": "77e8475ac86afa2ec90e9634025876adf68eaa06500d2de8604ddad70f148067",
+    "SGPlayer/Classes/Core/SGAsset/SGMutableTrack.h": "e7088335ac6707f72822a99af3b25f161671a047a207ee710292bd12eb84c903",
+    "SGPlayer/Classes/Core/SGAsset/SGMutableTrack.m": "6c7004461461b8b0d36429079879370aeb85b044e9476b01726ea17b39545764",
+    "SGPlayer/Classes/Core/SGAsset/SGPaddingSegment.h": "91d0df7de0d24fe514c9e205a3c41535d7987f35b59079a89e7a8f2deb4760ca",
+    "SGPlayer/Classes/Core/SGAsset/SGPaddingSegment.m": "1a7d4bd4b47044a18040cbf4c784e9f621774ddc11b5b72a69ee5087343f793a",
+    "SGPlayer/Classes/Core/SGAsset/SGSegment+Internal.h": "b8be583a5d1ce956c928c3a95501747fbfaebacdeee594384dd61593799adf19",
+    "SGPlayer/Classes/Core/SGAsset/SGSegment.h": "e5e3277569df7328274447e25fdc8536da9347fdf43af3d898e565c98ad7cfb0",
+    "SGPlayer/Classes/Core/SGAsset/SGSegment.m": "bb8a61b87e966771bc1f28c45287ad987613a1da31b27388ad16615d3596d6ab",
+    "SGPlayer/Classes/Core/SGAsset/SGTrack+Internal.h": "b11431e1d3cec093df2ceede30bb5edf213d024d29eb082a8b5550df977e6adb",
+    "SGPlayer/Classes/Core/SGAsset/SGTrack.h": "9b7723e65ff8c55a58cc982a2543ef6a5f46f03d47af2839baebf043ed83d8a0",
+    "SGPlayer/Classes/Core/SGAsset/SGTrack.m": "cd1798c440c1cbb2d80f14258eb0af2f12e4f27d4dc9a9b9634138c6cd2e144d",
+    "SGPlayer/Classes/Core/SGAsset/SGTrackSelection.h": "ed1063fde3a47309d466a3ea51a91012a649a9525f449be90ceed13737a7b8f3",
+    "SGPlayer/Classes/Core/SGAsset/SGTrackSelection.m": "70426d19b1d454290256f776040ebe02912305014d5c77f3949731ac951f8311",
+    "SGPlayer/Classes/Core/SGAsset/SGURLAsset.h": "3a93a5d13cd4e90598f9631535b6c41d81de08634e2422a50b41ed6ce9a3c6ab",
+    "SGPlayer/Classes/Core/SGAsset/SGURLAsset.m": "b42753643acd36f68eaf9aef61ec94d7c40e55bdc677be0c83371dbc7580c945",
+    "SGPlayer/Classes/Core/SGAsset/SGURLSegment.h": "4eff19695a0c23113f2abbab905d7fcbab0b41b2c729b69bfdbac04b32c8611e",
+    "SGPlayer/Classes/Core/SGAsset/SGURLSegment.m": "50dfba8950aa5837a562ea84943cb795e3a77f0e158191458e20961f58e09902",
+    "SGPlayer/Classes/Core/SGAudio/SGAudioPlayer.h": "1a0031df259f84dc83f01e4ec09556a0a5d78db09a93e9de130814450723447d",
+    "SGPlayer/Classes/Core/SGAudio/SGAudioPlayer.m": "333f4c85e8caf0e0b688ce823c0212a2db7aac31c741542f88829329e2a43693",
+    "SGPlayer/Classes/Core/SGCommon/SGActivity.h": "78077615628b1c6189277b3bf50e2efa4e3ec17e17c11fff7f86c803bb3ef6d0",
+    "SGPlayer/Classes/Core/SGCommon/SGActivity.m": "e026720f45a5faff83cbca8d7b5d0b7148499a8dd2c71c848990b78848d05d02",
+    "SGPlayer/Classes/Core/SGCommon/SGDefines.h": "705f65abe535e4639de6ddeb15a80cdc3e7b071f52cc48fe8d459ecfe617f9a3",
+    "SGPlayer/Classes/Core/SGCommon/SGError.h": "7c20d92d1efb2d2782a4c186566413680a4884a34c42bee6a448f762ed979d5e",
+    "SGPlayer/Classes/Core/SGCommon/SGError.m": "a738c8dcfb15d8dcc80c225aa9a9c58fc646c8c69dac1f120e880235b72bd380",
+    "SGPlayer/Classes/Core/SGCommon/SGLock.h": "8fa3fd8960b3a8b166467f3612dc590a42e096614c9b6ab9a06d97ab3f324ae1",
+    "SGPlayer/Classes/Core/SGCommon/SGLock.m": "ea791b13fd2de550f0d3dc16611529dbccbdcec4c1288df1e5f4e39c2fa6801b",
+    "SGPlayer/Classes/Core/SGCommon/SGTime.h": "ec05091a73edc13ce6fa01f9464a3e39b803f6f1c2f0009cf8fa18f32650a054",
+    "SGPlayer/Classes/Core/SGCommon/SGTime.m": "487d4d50062f7279992893f9f7aabe3ba548ac669b59b5b288cdc0fa1fe930bc",
+    "SGPlayer/Classes/Core/SGContainer/SGObjectPool.h": "f77bde4f5322481af20062bbd4707a97c7ca85276600fcb0bea1b301740084ed",
+    "SGPlayer/Classes/Core/SGContainer/SGObjectPool.m": "219a7c251d3ddf691e9b87108a69f245b72f52c02c203d521e7fb18d29284bbe",
+    "SGPlayer/Classes/Core/SGContainer/SGObjectQueue.h": "8f16dc6dd5db75b863f42c211404c3e1b78ba216fa8d746fedbd4761c3144d8b",
+    "SGPlayer/Classes/Core/SGContainer/SGObjectQueue.m": "4d872f89971c8c0583613cff2f42d527a114f6e1a6e28827f4e0772ab64a64e2",
+    "SGPlayer/Classes/Core/SGData/SGAudioFrame.h": "64b74cadd2fbdf154051582c78745916a6471c1acf3df0d84b8c08dd07ded485",
+    "SGPlayer/Classes/Core/SGData/SGAudioFrame.m": "9776b3fb6ae2f2d6a8d01ad809f26e2389128dd2aa2f6270bfc32e9471dccda7",
+    "SGPlayer/Classes/Core/SGData/SGCapacity.h": "85e4e9aa4b0033978b066056ec20c7b6c4ea5aeafb4fde1ba446209014a99581",
+    "SGPlayer/Classes/Core/SGData/SGCapacity.m": "bbeca084c7beba17112d1f6891a7c932125b12199311bdffd3ff8033589dee6a",
+    "SGPlayer/Classes/Core/SGData/SGData.h": "ef25c5db015bedcb1bd90d9b0ef73157ea717c96675be0dd99767adfe70a0c63",
+    "SGPlayer/Classes/Core/SGData/SGFrame+Internal.h": "0651c0c7bd7280a60abba94d87714406319a554fa9994291a7445a68faaa5770",
+    "SGPlayer/Classes/Core/SGData/SGFrame.h": "923ab6eae9f60a482d95f5b1ccf49e580f58f2a6c56253ef18ba66590e1a179f",
+    "SGPlayer/Classes/Core/SGData/SGFrame.m": "9b4328bdaf5745aa26f52c17c3f943ff3af55cf9c3d172cf7e7f1b25e4628805",
+    "SGPlayer/Classes/Core/SGData/SGPacket+Internal.h": "a031858dbe41b377d90ae59fb675bafeaf207534381187fb9b5c923883830b9d",
+    "SGPlayer/Classes/Core/SGData/SGPacket.h": "a7336b38ad2dd2a8314ea763aee9d9d10a6a6f93459d5111ad9f8d1652bd4ae7",
+    "SGPlayer/Classes/Core/SGData/SGPacket.m": "46778fcd92e0ee8d669001997c49c6e8132d033fb42e711d0b56f99f6cfa3916",
+    "SGPlayer/Classes/Core/SGData/SGTimeLayout.h": "7f6b1a843daf87bdd00e573eb2e7135942c3db852fd69f78773658d262a03365",
+    "SGPlayer/Classes/Core/SGData/SGTimeLayout.m": "7c20458ea17793876b581a1ef0ba9998f040ff55b8db04170547356cd9696003",
+    "SGPlayer/Classes/Core/SGData/SGVideoFrame.h": "e7545d7d1fc8d9b6530b402c44a85f5b951fa3502e37f657a5f1af34c2559380",
+    "SGPlayer/Classes/Core/SGData/SGVideoFrame.m": "70a3320560ce97bcc26767bbb6ac432d0ca2eba8d04f4d59dd0be7a2aca93db2",
+    "SGPlayer/Classes/Core/SGDecoder/SGAudioDecoder.h": "f754f8b768080f16e7f97f4889d7b7431b015745b476a771de187ac6001a35f2",
+    "SGPlayer/Classes/Core/SGDecoder/SGAudioDecoder.m": "cd125af821cd4d33dd7247b5e699ad934698fb910a0df803d9ba81478c0dd976",
+    "SGPlayer/Classes/Core/SGDecoder/SGCodecContext.h": "fd316e7b19f358af6e875f59591756640e5ccbec1358ccba35f5eb2c1ec9c94e",
+    "SGPlayer/Classes/Core/SGDecoder/SGCodecContext.m": "30426fba0f4009838c76fd25de6be2bbea1a372204bc65438bee40539b84c07c",
+    "SGPlayer/Classes/Core/SGDecoder/SGDecodable.h": "b73622d3d3af407c08f91b15d5664bfc171c75e814d0a0ef984e18405a6c206c",
+    "SGPlayer/Classes/Core/SGDecoder/SGDecodeContext.h": "b391602f67f60b2943b88b03f392ce09aab031b655e410e576ad5d3b4d18018d",
+    "SGPlayer/Classes/Core/SGDecoder/SGDecodeContext.m": "ae20ec5eb183c4339301a72c4f31d8f5dc50bf348ee063e85f45003008325e1b",
+    "SGPlayer/Classes/Core/SGDecoder/SGDecodeLoop.h": "4969451e9ac19247804d86f1ebcf975dbb8908e0a0a86685cf7515cf64c83a28",
+    "SGPlayer/Classes/Core/SGDecoder/SGDecodeLoop.m": "0e6bbc9232764b4829a7e2f4c100cbb3e8da7f43b46cb1e688596767903a7638",
+    "SGPlayer/Classes/Core/SGDecoder/SGVideoDecoder.h": "1b10af31a63f19fa0db7f9e57d702fe3158034ecb565a9783963908f32cb26c0",
+    "SGPlayer/Classes/Core/SGDecoder/SGVideoDecoder.m": "6e86dec31a4a2ab7f8ddcfb478a8d101ec8b2da11a6b41feb90e6fdb010e1492",
+    "SGPlayer/Classes/Core/SGDefine/SGMacro.h": "4955e42330e615e899fc5a5e2c1d1ae53253a7f978cfee01899c58cdc4b084f8",
+    "SGPlayer/Classes/Core/SGDefine/SGMapping.h": "5eb11568adf54daa3e6727c5456366785e622af644940086430fbc733d120877",
+    "SGPlayer/Classes/Core/SGDefine/SGMapping.m": "0cb99328cbaad3996cc3f4cc9d1d14a8edf03fa176813f8a54f3508a52cf78eb",
+    "SGPlayer/Classes/Core/SGDemuxer/SGDemuxable.h": "bc6a3d1c1a0c660648af21ed65b47585c35acae358f1e9f5829ea0a4c89b0500",
+    "SGPlayer/Classes/Core/SGDemuxer/SGExtractingDemuxer.h": "e3475a9d23786a079584cb3beac5dc68df651c2166bd4e38a06b00c323057ab7",
+    "SGPlayer/Classes/Core/SGDemuxer/SGExtractingDemuxer.m": "6f7d75942346db9ff30b5b3889923c4d819ac07700e86c5692f4c399ccaaabc0",
+    "SGPlayer/Classes/Core/SGDemuxer/SGMutilDemuxer.h": "9b4c30db4ccb202e30bf60dd66537ec66f39354e4d0266a86cd77872d7e0b7e8",
+    "SGPlayer/Classes/Core/SGDemuxer/SGMutilDemuxer.m": "e63363d13fe791e07f9ff7d2ff72110a3e1117fbf9b9f799e6867b4713f639d9",
+    "SGPlayer/Classes/Core/SGDemuxer/SGPaddingDemuxer.h": "1501b52d090181fa724d526e40ebdf4f9daf0e1b15b51d99550ee95c70004820",
+    "SGPlayer/Classes/Core/SGDemuxer/SGPaddingDemuxer.m": "f57f52551bcda4342da8e4e7f085a493fe98720c322b21f3f4b813ee485ff7ac",
+    "SGPlayer/Classes/Core/SGDemuxer/SGTrackDemuxer.h": "592985df511caab9d99dfc88ad732478bd45e512ca7ee5f1da092b5d3f726fac",
+    "SGPlayer/Classes/Core/SGDemuxer/SGTrackDemuxer.m": "fb2361b1d4c11c2024fb0c1b381405c684f8b275f460cbf05f44b9e510f6a5c8",
+    "SGPlayer/Classes/Core/SGDemuxer/SGURLDemuxer.h": "2f2cd1feca029ef903e15c52e960ec1ee6aa827e01f07e596898536951d2b81e",
+    "SGPlayer/Classes/Core/SGDemuxer/SGURLDemuxer.m": "3dffb6185c11133cef2a6ffb44c6f96c4bc15cee4ee195da512c203d1dde769c",
+    "SGPlayer/Classes/Core/SGDescription/SGAudioDescriptor.h": "cc663d93f370f60b0df00e957bf60bc804abba021331a5cbf60649c42dc86b67",
+    "SGPlayer/Classes/Core/SGDescription/SGAudioDescriptor.m": "da38443f0a75434ad8006e90837ac7da2af2c30359228e0ed54bc5503cbaa22d",
+    "SGPlayer/Classes/Core/SGDescription/SGCodecDescriptor.h": "ebd077d5bbdc8029816ef66a9d302f134ced40e9a34e623fefa2bb217c073793",
+    "SGPlayer/Classes/Core/SGDescription/SGCodecDescriptor.m": "3106ddbe992bd6e7f5bad3d5d1e57630de58bda1610610850c7c6bbff1e3b975",
+    "SGPlayer/Classes/Core/SGDescription/SGDescriptor+Internal.h": "dbb3335ee770e3248c043dca2c84279da56d0eac28c656aa77c657aab9557cde",
+    "SGPlayer/Classes/Core/SGDescription/SGVideoDescriptor.h": "434b013cfd0d3a24c24721120f242b3e13fd068c09c0dfe08216cb1939e78628",
+    "SGPlayer/Classes/Core/SGDescription/SGVideoDescriptor.m": "59a2c6b62368f868750fda438b82ff9f0e62861d83d3f6eafcce21403196c7b2",
+    "SGPlayer/Classes/Core/SGFFmpeg/SGFFmpeg.h": "a78c105a9fc4d17c34ed58720d8d859ff4d95ec2407092b0a36755d959557b0e",
+    "SGPlayer/Classes/Core/SGFFmpeg/SGFFmpeg.m": "6f25391e8079b60c32f1b809d68076edaa77fec343c19a4faa51e55ce55d2d21",
+    "SGPlayer/Classes/Core/SGMetal/SGMetal.h": "86b18e1bb92f62b4db6db270c7f50c82e1cfa02b7c3d343064054b56293f0cd1",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalBGRARenderPipeline.h": "f69d3e54920ccd9bc9d7304fd6d900b4c79db6ac0d8f9e151202f7ca0678726c",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalBGRARenderPipeline.m": "dc8ea6ade0e16b0b060096fb661207c6c6ffb909747dca5dcf8a3d91bde212b7",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalModel.h": "e77ed5b0ee5fa188f5e62c6b3beadc4692d367bc957b197480b5e2fa82b10b08",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalModel.m": "751614e84b8be7c5f1576212ca2a3ead53057690c7251c353fb3c0d77b6f8026",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalNV12RenderPipeline.h": "0b43f8318b7fe59715175e2f29db1fd885914b1b0fd1312540053b95151e7b2b",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalNV12RenderPipeline.m": "8520d9fe4f1e8f1ca7508d66e5e0a44ea476e04fb8c930916e9cfbd2a4230d0a",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalPlaneModel.h": "4323f567fc74a92a529931dd49fe4a7b6322743dbb98c3ece6ef0f1100a09ec5",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalPlaneModel.m": "02f698ff0b0fd42f0e6b0bd72f1aea97b29fe10957dc16e04022515641c48566",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalProjection.h": "43a96ed9fb1ecfae1e67fd4a300f532739e53f912cadbb3006a992f2684416a4",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalProjection.m": "99b15041be58c4f844f55b416822618daa80ecdfccfa4a98f0e421c4eeeceabf",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalRenderPipeline.h": "6fc971a1dbe37eb8135f5d6cfc8abf72076cd55d8181ee248011d7c33bdbbe25",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalRenderPipeline.m": "ee1e85721766086de2ee5217f595c56957881b62016cb1cb91e5587c7b184195",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalRenderPipelinePool.h": "e1e6262b6348a8bd33bc6ac374e2661d6896c7389a37e98158dcdbb9033c9102",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalRenderPipelinePool.m": "7dea687eeaa112eebff685d79ce1b69114e4e2155d1e41cf8f88082475253c86",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalRenderer.h": "eeaa47d11307e019d0fdb01dc9330864ef57abcd2fba43896712e19221e5118a",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalRenderer.m": "472ec80780ca688637366de7a1f9fa03b572a7e1f689d04ed6ce351baa114681",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalSphereModel.h": "5bf15507468106a65b0231f3b8685f504c2c835c1b13ce8b078f420be20ca61f",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalSphereModel.m": "6a213187b2a3b82b85a0a8941ae41677afe8220835322ab777eae7613035c2b1",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalTextureLoader.h": "2aee4b74c1656619784086f08935b0f2475f45b9c96d51ac7f6c0e8d0dfd0c5b",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalTextureLoader.m": "155e8c320adb2fc7c364a796126db4bd72476232ba7ba15708f90b856085554c",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalTypes.h": "b5c053227bfaca9e56c4cf2191cc9fe63a7d42b89bcda274f4bbe2004d152b92",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalViewport.h": "891fb95f4b0532856ede37535ee874bca39662b19ffd63564f050e74a4f48675",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalViewport.m": "910c71792c53c8706b87749c0ba90dc3e6598eb2b6e13597847ac822672aea9c",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalYUVRenderPipeline.h": "f43419bf53ddd3ac3fed7071031a9504505262a15a58f2b0a981488a9c9379f0",
+    "SGPlayer/Classes/Core/SGMetal/SGMetalYUVRenderPipeline.m": "f45da1d32224592fedfef3348802dd63beaf319e28d3a1d313e11abf667255b0",
+    "SGPlayer/Classes/Core/SGOption/SGDecoderOptions.h": "9b603bc5b4b34214179b890615009a0ec1a1bd96fe5c3a6832e4a1af3f1105b5",
+    "SGPlayer/Classes/Core/SGOption/SGDecoderOptions.m": "e5834e7b6f17231bd0431ffb50f4dfd35a7c7d0cb8ff84de60aef60ec7e8231c",
+    "SGPlayer/Classes/Core/SGOption/SGDemuxerOptions.h": "0182cf32acb586e98694de25612fe407b487d3aab59a9e05c424e91b19a5a939",
+    "SGPlayer/Classes/Core/SGOption/SGDemuxerOptions.m": "76cc3b5f837bc9c781706da3b37c35c4c8a931116d284bdb52ac52cf9a59dfdd",
+    "SGPlayer/Classes/Core/SGOption/SGOptions.h": "3ad0140a73c3808d1140837cd1751eb74947d65babbda94eb2d0ede7afd00d40",
+    "SGPlayer/Classes/Core/SGOption/SGOptions.m": "f47b3ad542cf5c2523aac4d6a7a151a84e8cb08c6e4bd339833ffd3f86fc3b3f",
+    "SGPlayer/Classes/Core/SGOption/SGProcessorOptions.h": "79ed62a2cde1e121080c00fef6ee4c289cf0a3aea9c02c0e07ecae7f2ef0762d",
+    "SGPlayer/Classes/Core/SGOption/SGProcessorOptions.m": "fe6fc1771dfb1423128d9b65b3d727be0ae1740dbfb205fc308ac72bfe27f1c3",
+    "SGPlayer/Classes/Core/SGPlatform/SGPLFColor.h": "5442b47237f13429f9c73870dce3b71314cd69d91c9d2560759da75366229fa7",
+    "SGPlayer/Classes/Core/SGPlatform/SGPLFColor.m": "5c1483ea64aa17aac128969d8a0ce986fed87f895b48abb5f66d9d3c09a310fd",
+    "SGPlayer/Classes/Core/SGPlatform/SGPLFImage.h": "c487b243301e10923c2147fa4cdaa0a525729a0282919b2beabfd43dc8e9256f",
+    "SGPlayer/Classes/Core/SGPlatform/SGPLFImage.m": "29c3050845051c6fa0e753d222861ab66e3ec72ce9d0cf4013cb1938be797396",
+    "SGPlayer/Classes/Core/SGPlatform/SGPLFObject.h": "00510ece1cfd28753a50b65e719e3f391bc085bf5857f581405939b917e0b05a",
+    "SGPlayer/Classes/Core/SGPlatform/SGPLFScreen.h": "c3c6764ff060d3c59974b8c430a930e2602ec6758f693f257c5c7eec78ef6097",
+    "SGPlayer/Classes/Core/SGPlatform/SGPLFScreen.m": "9077fa38bed6ae6a6112e5a344363aaf929ab3d14def2e0c2de461310d9cb6b2",
+    "SGPlayer/Classes/Core/SGPlatform/SGPLFTargets.h": "6820028c7935224d51b057957faacbaba3714fa73e4da6b76cf3af0abdee30fc",
+    "SGPlayer/Classes/Core/SGPlatform/SGPLFView.h": "b3cadca78489f2ad385d5a73901d2f431e5b92b1fa4ca9ab3aabb810bffda35e",
+    "SGPlayer/Classes/Core/SGPlatform/SGPLFView.m": "587a6d42cec8bb65a356aefe6991db39d716a85108c499b529182cddfb6ff143",
+    "SGPlayer/Classes/Core/SGProcessor/SGAudioFormatter.h": "1fac172bf7076886655d7ac1e935def88ff3e970ce492f5e3a2bef7152774201",
+    "SGPlayer/Classes/Core/SGProcessor/SGAudioFormatter.m": "dec03ff7eea7e206813bd0e77a77b2448368345d97e55a008b8c20dad002eeab",
+    "SGPlayer/Classes/Core/SGProcessor/SGAudioMixer.h": "94997dc13aa8a79cd29b01b1f1819bcff4f83a95e2c6e746ef9e87afff78894d",
+    "SGPlayer/Classes/Core/SGProcessor/SGAudioMixer.m": "2e37ecc4234e04382ee63b794c0efcda3f7f600f155e112f439a5be66ae1ff50",
+    "SGPlayer/Classes/Core/SGProcessor/SGAudioMixerUnit.h": "8fa98ed9c57d21dc610c85b9534c7ac3960398dc998608bb8ecf113e63955529",
+    "SGPlayer/Classes/Core/SGProcessor/SGAudioMixerUnit.m": "1819e29609c8c8a503439e1033fc48d0921f850bb16d5364fbda29bf9f8a68ef",
+    "SGPlayer/Classes/Core/SGProcessor/SGAudioProcessor.h": "e6e592602478537f47a0232ce788f36daa440956ca7a49a9b6e9389b3a54cac7",
+    "SGPlayer/Classes/Core/SGProcessor/SGAudioProcessor.m": "e55af9632637402a3454e100647109131546abaafb4ca3f5238f4fca13400d1a",
+    "SGPlayer/Classes/Core/SGProcessor/SGProcessor.h": "dfeafa80b3a931450e9524dbfe7c186b92254d311a9a7d4ad9cb871709e6e2be",
+    "SGPlayer/Classes/Core/SGProcessor/SGSWResample.h": "4c63462cf91aacace523c7521f4681b3a165c8cd0132d280b9c3f72a3926a16a",
+    "SGPlayer/Classes/Core/SGProcessor/SGSWResample.m": "976704085d901cc0cbb34fc5ae508d65d7400e521e131a5e4d465a3c86298cc6",
+    "SGPlayer/Classes/Core/SGProcessor/SGSWScale.h": "963a5ff52130e96571f6793463800660dc2ad28638d990d65f8e76ba589197c0",
+    "SGPlayer/Classes/Core/SGProcessor/SGSWScale.m": "497ba00e9b2c1eed35787c0ff203b2c108614a1872b3f95140d8da6cdfccc718",
+    "SGPlayer/Classes/Core/SGProcessor/SGSonic.h": "12f2240e9ec3c78d039f016e24527604dbd28cf4f92fc714201fb268b084b3a7",
+    "SGPlayer/Classes/Core/SGProcessor/SGSonic.m": "ee79189034889fc29b729f4b66b429e1b5e6cd52b98da989b2d0a73189737979",
+    "SGPlayer/Classes/Core/SGProcessor/SGVideoProcessor.h": "7ca0b78946bec3ad3b7ba53cb8f04355fa9e8a153d73c206c6a8d29436f5252c",
+    "SGPlayer/Classes/Core/SGProcessor/SGVideoProcessor.m": "b287811d5a2eb8dec7cea9d47a108f922d3a4cff9a159ded8a92be2996996831",
+    "SGPlayer/Classes/Core/SGRenderer/SGAudioRenderer.h": "611b4716b3442a542a6448950f11abf98264864ecd4bbb16d469d48b84aa4f4d",
+    "SGPlayer/Classes/Core/SGRenderer/SGAudioRenderer.m": "5e687bdb767d9686ef7ea71f4dd19767c43191991f97d3af535044a9c7ef928e",
+    "SGPlayer/Classes/Core/SGRenderer/SGClock+Internal.h": "0155dc27b8850c63c6a4b6f8d33a30372f5eb44fcb5e332c2d79e1fc7c12998d",
+    "SGPlayer/Classes/Core/SGRenderer/SGClock.h": "6f55ae3d0aba6c1f7db7fed543f6bddbf36294d72818015c0cc42c8d76708a47",
+    "SGPlayer/Classes/Core/SGRenderer/SGClock.m": "5e969fd787ba4f728345114cc4f67a6d3cfdb81a6933890b8f476e3bb7207571",
+    "SGPlayer/Classes/Core/SGRenderer/SGRenderTimer.h": "5063c2d213105d5dab7f960fba3a3e38aa15625548aec57ddf6bfab1f46ce54e",
+    "SGPlayer/Classes/Core/SGRenderer/SGRenderTimer.m": "c58467f89ecb2394ef82039eccc35a4e31bf8d65078706b183acaea944cc6ccc",
+    "SGPlayer/Classes/Core/SGRenderer/SGRenderable.h": "db5e3e49fcef781a6778bd17504a3eb6102dd40dba6362a15be36336d9c6d0d1",
+    "SGPlayer/Classes/Core/SGRenderer/SGRenderer+Internal.h": "2ae8875a167865630c131cbf43d80b85e5f6f25e931a8a3c8f4497aa19509e0a",
+    "SGPlayer/Classes/Core/SGRenderer/SGVideoRenderer.h": "1cdbfe6faca317d6f9cda45af6a94d4386615f3986daeccd595b60f941069926",
+    "SGPlayer/Classes/Core/SGRenderer/SGVideoRenderer.m": "3538a3b17e8c329a98e3c8055be0d31ec1faf7457eb5ec4e4fff43ace23506ef",
+    "SGPlayer/Classes/Core/SGSession/SGFrameOutput.h": "5c18c05994dd1ca13e01ef3e3aac3d4171a26b6f482516df350a92ae182be41f",
+    "SGPlayer/Classes/Core/SGSession/SGFrameOutput.m": "08455db881c61e2450afeddbbd3afa205879bc21c3ec0f5702b06a33103fdd65",
+    "SGPlayer/Classes/Core/SGSession/SGFrameReader.h": "e56411d29bdb773e38cdcbf29829755b1b60b73988d639a9f562f06422031abc",
+    "SGPlayer/Classes/Core/SGSession/SGFrameReader.m": "2b1b004c22ca59c489406f25052b042b40149249cdee569b7c0b8113bc99c9d2",
+    "SGPlayer/Classes/Core/SGSession/SGPacketOutput.h": "a90f7a59f991aab1d70c0ac8917d2c7609410d4588dfa9aa2b535c51685f7a2d",
+    "SGPlayer/Classes/Core/SGSession/SGPacketOutput.m": "5b8c88802074b9d1b58923cda7c7c5caff3a4bc6f77cb7920c5bc4e71c2aac43",
+    "SGPlayer/Classes/Core/SGSession/SGPlayerItem+Internal.h": "51b19a0ec2b5d2d5b8f6e9422ea030b2aecb33fc86236a3c80e4f9310d48a615",
+    "SGPlayer/Classes/Core/SGSession/SGPlayerItem.h": "2d1f088d4cdaa294e97f70f4874adfbee2ec03b8650e70e6a4008a498dfdc0d5",
+    "SGPlayer/Classes/Core/SGSession/SGPlayerItem.m": "28a85c4380e88789a0b31bf4959e5bc0b730e613755d47f96e794265329e3036",
+    "SGPlayer/Classes/Core/SGVR/SGMotionSensor.h": "b6df53d12cd3026d1d70429c59e17fcdeb9ab50c2bfc0729da962892ed96e07d",
+    "SGPlayer/Classes/Core/SGVR/SGMotionSensor.m": "4b046415256de98631d8aaf8902dc0963ebefb3e4c6c490c7e342850bf09dbed",
+    "SGPlayer/Classes/Core/SGVR/SGVRProjection.h": "dcc5fc72aaedaa37d585f24bffd7afd8de4428b65dfea2dde114f74a93e0d31f",
+    "SGPlayer/Classes/Core/SGVR/SGVRProjection.m": "8b29950e4bf38d158033fe42742f719fb5763e5a148fbbbdd2fca82007265d59",
+    "SGPlayer/Classes/Core/SGVR/SGVRViewport.h": "ae2f9a5a79a85e1f33372eab776b221b61161e8c90b1d53071967b65d9ca47be",
+    "SGPlayer/Classes/Core/SGVR/SGVRViewport.m": "ed93b74289bf250e24bca8d4850370c0c812263b52d6b9c73e75cec383818525",
+    "SGPlayer/Classes/Core/Vendor/sonic/sonic.c": "af70d11a66a2d5b139256c7b6ab974cd87673c677377942f3aaf13a4f18d368b",
+    "SGPlayer/Classes/Core/Vendor/sonic/sonic.h": "a4e53ec5955cc5a4a0db2474465fb307bc6c82a5698414723f4789a5143761a3",
+    "SGPlayer/Classes/Features/SGGIFExporter.m": "3064b65dfed84edba7105c538b19c106b5271a0b154157a923cde4b16ccef31c",
+    "SGPlayer/Classes/Features/SGHLSAssetStore.h": "bba7d6cddc77869e27015314ac1635f4ff2e69a4edad12600f7a959def25f37e",
+    "SGPlayer/Classes/Features/SGHLSAssetStore.m": "b253a448ae0b6af327c4fde1cdea007fdc012549793e2b1a89f1efc2bb54fa0c",
+    "SGPlayer/Classes/Features/SGMediaCache.h": "81207c99c43fc3abd054870d55c33ad006eeb38f30360262bc73e7c6010eccd9",
+    "SGPlayer/Classes/Features/SGMediaCache.m": "36e03e438f5afe00f78f5870cbefa2a042b5cdecc47efe2cbe9e2f2d541c9975",
+    "SGPlayer/Classes/Features/SGMediaEffects.h": "b22d9667dc709ebc06f544bbd7e4080486087f1d1548d9c68d7d0775f85d13cd",
+    "SGPlayer/Classes/Features/SGMediaEffects.m": "6973cf8294555b6771cce27b205c66a2a0d79b3e49199354852b691c567bd37f",
+    "SGPlayer/Classes/Features/SGMediaRemuxer.h": "b81aa262c7747cf6838bd46d7a2d8bc42577812833033d5bfde126caee866e99",
+    "SGPlayer/Classes/Features/SGMediaRemuxer.m": "bce44631efe73465eed8c1c3e798ab4bf6508f008f10ddda8612ee6b12176114",
+    "SGPlayer/Classes/Features/SGMediaTranscoder.h": "dade264ec208ed292eae2f42ec66a8333ae0c9ba3adac49a5ef87ff72fb46c3a",
+    "SGPlayer/Classes/Features/SGMediaTranscoder.m": "d0ecf5685a52b3051fafafd95b8f9a41fadbba22f1c0f453e600ad26313886a1",
+    "SGPlayer/Classes/Features/SGNativePlaybackPolicy.h": "307b684e60f70e74343cff7e57d301318c1ead5cd30f8a62014ad2031641ae5e",
+    "SGPlayer/Classes/Features/SGNativePlaybackPolicy.m": "ae99b98e14dfac284f400f80c8975fb7452db7e5c791de9bf69e284ab27b1800",
+    "SGPlayer/Classes/Features/SGPlaybackCapabilities.h": "adb3d6aa45f124279353c90a1987ad9bf1674ed64b9a20033f842f6a4d0308b0",
+    "SGPlayer/Classes/Features/SGPlaybackCapabilities.m": "02e341f77f3d78c8465372773df70e3dd48e65694e85d77acbfa19b636f7a26d",
+    "SGPlayer/Classes/Features/SGPlaybackController.h": "9f347070ff01cb43a16134a9026ed1c32aeb1e70e4cfe5f3b92db1bc846bce41",
+    "SGPlayer/Classes/Features/SGPlaybackController.m": "b689632ef55c8fedd70758f2d992666e47843c240bdd3a6bc93cb93c7927f257",
+    "SGPlayer/Classes/Features/SGPlaybackControls.h": "7ab611dd23c9d936fb1f3085eb81aeebef7a7b6de88c2e8bc4e965616441db46",
+    "SGPlayer/Classes/Features/SGPlaybackControls.m": "f92f97c5ec56dbec5698d7a43103a3e56f9cc0cc9101c134884b5495b6184a83",
+    "SGPlayer/Classes/Features/SGPlaybackCover.h": "bb91ad7ae0b4bf234b3623e35fca6e9628c4ff2a0113f82180deed0f78cfb1f4",
+    "SGPlayer/Classes/Features/SGPlaybackCover.m": "0d85016c032645379ffca46fe2c5c4d320259798fc44bd3bb13fe0a952065423",
+    "SGPlayer/Classes/Features/SGPlaybackGestures.h": "c78af8fd4178f5d4021df8d23295d956bea130525952b5477b8983ccb0db2d28",
+    "SGPlayer/Classes/Features/SGPlaybackGestures.m": "dc5d45a0dcab3e764b530b855a1ee8b24c642ab4134c9d649177fc9ae0874726",
+    "SGPlayer/Classes/Features/SGPlaybackPresentation.h": "3f6c38b2c4b6ab73688a014aae89a400ccf49571ebc54ab98029893445693174",
+    "SGPlayer/Classes/Features/SGPlaybackPresentation.m": "c6c9ad4283c4d9dc504fd9aea8e1743225c84bfe413d8e37ce1718f9f46e044d",
+    "SGPlayer/Classes/Features/SGPlaybackSession.h": "60fe41c56ab7c9a8cb1568e3ad8c0d8d754382d2adfe8202f45869f7e739e5cc",
+    "SGPlayer/Classes/Features/SGPlaybackSession.m": "da78b57aa4cda63e4ae0380bb5c1dec38989a2ddf69145795289383217c05c2d",
+    "SGPlayer/Classes/Features/SGSubtitleReader.m": "c8592b2330a6a920191c9a99aedb4eb47d24e81c25bf31be4d5e3dd318600f4d",
+    "SGPlayer/Classes/Features/SGTimelinePreview.h": "c51506938f91ace987e53b4e14665c83f4724b5435f8957702d44bf6c9414dc9",
+    "SGPlayer/Classes/Features/SGTimelinePreview.m": "cb91247530bc70b273c48b80eac4fd7e285d8209505e75e703964741412a0587",
+    "SGPlayer/Classes/SGPlayer.h": "13e9771eeb3af01986758ce72fb26320ad450944c887423b227b40539192880c",
+    "SGPlayer/Classes/SGPlayer.m": "b6a51f31528c6c05858df42cb97d33c2c810e20e842bbb60e04d9f5c1dfefeb2",
+    "SGPlayer/Classes/SGPlayerHeader.h": "6c6bb42ee2e68eb1d496a7c4d617ae38fff0e47870cac33586f991f73f3b5692",
+    "Swift/SGPlayerUI/SGPlayerView.swift": "42881fe3e75729589c3b0716f8bd3a209bc0a4951782ef8ea13dbf95aef5c671",
+    "Swift/Tests/PackagePlaybackTests.swift": "a2feaf5821e40298407bc014c5ba335e341b786f608f9a12020605ecca67909a",
+    "demo/demo-common/SGFeatureDemo.h": "5bbd62a0af8196bfb591c3de4492ec92d4a354e3ca711da5705d8eebb7b5976c",
+    "demo/demo-common/SGFeatureDemo.m": "b52866217bb97692d7f09df49d2d7f8a96e5a49e15074103710c2c17094acb90",
+    "demo/demo-common/SGVideoItem.h": "5ed030dc03c1f8f7c7a81289e566d5c167c4efc3e8b08a364299383a7df2a04a",
+    "demo/demo-common/SGVideoItem.m": "84ac0ffc602f846aad0e59d38b4b2f90272c2efe4b4e38226c11c8eeee56bc1c",
+    "demo/demo-ios/demo-ios.xcodeproj/project.pbxproj": "2e631171d274bbed512c78f3286ee1a23487a9054b0c81793758004f2c5a9edd",
+    "demo/demo-ios/demo-ios/AppDelegate.h": "a166b8d471996cd3d59748f4779b71cd38484ef1c5d855c609aeff65513e08e3",
+    "demo/demo-ios/demo-ios/AppDelegate.m": "56b61440fdd5e3560310f1df0b016c3c5776955c7071361f1c301c6f09dd5fc4",
+    "demo/demo-ios/demo-ios/Assets.xcassets/AppIcon.appiconset/Contents.json": "fa3f358c834af2d4ce44b12a5a15d6cba58b404a34217de58d38320ab1cab43f",
+    "demo/demo-ios/demo-ios/SGListViewController.h": "a67922fbcd54f62e3d7d72916d18081c4b29ab5a589fc66aab3dc74ea4e7aa68",
+    "demo/demo-ios/demo-ios/SGListViewController.m": "73414a2283eb8356cbb47aa027e6489c2b2230482b9518816b47c86b897be197",
+    "demo/demo-ios/demo-ios/SGPlayViewController.h": "805c82945e39eeeea504fb09a0d33583497f2d526b7f7731b1c6d2e448570a0c",
+    "demo/demo-ios/demo-ios/SGPlayViewController.m": "7041fc7344b585a67737b3582e2a0fd385e254e3ae917b3316f9815046f5563e",
+    "demo/demo-ios/demo-ios/main.m": "40c3ddaecbba1452baa335d30d67ae24468a36a75ef0e020422782188eea1837",
+    "demo/demo-macos/demo-macos.xcodeproj/project.pbxproj": "bf9520281e1d88d78936970c239df4f30aee4193e5398240105442aa7c9c2063",
+    "demo/demo-macos/demo-macos/AppDelegate.h": "550dab8a78cb4e51f5bd62ab20ea4c014cb0ce8a76527ede3f4e9dbf11134333",
+    "demo/demo-macos/demo-macos/AppDelegate.m": "0fba20ecec7c5a14c968720198857d949d232da08d55b642271462aeefa524e9",
+    "demo/demo-macos/demo-macos/Assets.xcassets/AppIcon.appiconset/Contents.json": "2d55c952e54746b6c80ed184411413e261e576411552d5700deb28625b16a9ab",
+    "demo/demo-macos/demo-macos/SGListViewController.h": "95e437a5eece5915ffa5680e400e21ca5713de0ea015d3fe4a17e84aa8892772",
+    "demo/demo-macos/demo-macos/SGListViewController.m": "bca0a2c6133c9220e2ceeb9005349986b3b8e78ba2420ac83ed1be77656e5ebf",
+    "demo/demo-macos/demo-macos/SGPlayViewController.h": "5a0ef44a41af029f5b22497e55c3ba5212e74e0850a1df836dbe709cdcc7e596",
+    "demo/demo-macos/demo-macos/SGPlayViewController.m": "4e80400c9abdb14ac1cfd9a9a8cc6fc662973934abe966198b12f38b3110f788",
+    "demo/demo-macos/demo-macos/main.m": "3f74b7e2c79a9cd80b0c7dbdf0da816220dff29862d0677169cf3e1e2929384d",
+    "demo/demo-tvos/demo-tvos.xcodeproj/project.pbxproj": "9559a882f9408b0f4a6ee69e62ac0171544d11639440881327eebe9c34262142",
+    "demo/demo-tvos/demo-tvos/AppDelegate.h": "e2503d299ed783bbbe3c577df34b8607a3f88292f410becca5b69a7125a5be95",
+    "demo/demo-tvos/demo-tvos/AppDelegate.m": "56b61440fdd5e3560310f1df0b016c3c5776955c7071361f1c301c6f09dd5fc4",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon - App Store.imagestack/Back.imagestacklayer/Content.imageset/Contents.json": "92689492632d2568231bfccbcc93cb329ab9d4b005639c37229dda93627779fc",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon - App Store.imagestack/Back.imagestacklayer/Contents.json": "972ec1fd42325872438eb085ac29e94f51c10788ec18ec5549439950866c541d",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon - App Store.imagestack/Contents.json": "b4aa17b18a22730f5cb29edd9843eaa4c87e4d6f9bbfd8f30dab5eed62872ac0",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon - App Store.imagestack/Front.imagestacklayer/Content.imageset/Contents.json": "92689492632d2568231bfccbcc93cb329ab9d4b005639c37229dda93627779fc",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon - App Store.imagestack/Front.imagestacklayer/Contents.json": "972ec1fd42325872438eb085ac29e94f51c10788ec18ec5549439950866c541d",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon - App Store.imagestack/Middle.imagestacklayer/Content.imageset/Contents.json": "92689492632d2568231bfccbcc93cb329ab9d4b005639c37229dda93627779fc",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon - App Store.imagestack/Middle.imagestacklayer/Contents.json": "972ec1fd42325872438eb085ac29e94f51c10788ec18ec5549439950866c541d",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon.imagestack/Back.imagestacklayer/Content.imageset/Contents.json": "dae3bebf389f590a15b92a3dce2d14fb5cb2c5fb1a88d460688ef7a25c4c55d9",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon.imagestack/Back.imagestacklayer/Contents.json": "972ec1fd42325872438eb085ac29e94f51c10788ec18ec5549439950866c541d",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon.imagestack/Contents.json": "b4aa17b18a22730f5cb29edd9843eaa4c87e4d6f9bbfd8f30dab5eed62872ac0",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon.imagestack/Front.imagestacklayer/Content.imageset/Contents.json": "dae3bebf389f590a15b92a3dce2d14fb5cb2c5fb1a88d460688ef7a25c4c55d9",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon.imagestack/Front.imagestacklayer/Contents.json": "972ec1fd42325872438eb085ac29e94f51c10788ec18ec5549439950866c541d",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon.imagestack/Middle.imagestacklayer/Content.imageset/Contents.json": "dae3bebf389f590a15b92a3dce2d14fb5cb2c5fb1a88d460688ef7a25c4c55d9",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon.imagestack/Middle.imagestacklayer/Contents.json": "972ec1fd42325872438eb085ac29e94f51c10788ec18ec5549439950866c541d",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/Contents.json": "abed8725fb804788e9692bd743f782f0cd2132d44b278e8f1894529aeb2eff02",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/Top Shelf Image Wide.imageset/Contents.json": "a80b3afbe1bc7c9f9bd3b15c6d9e5f99f690f887aaf30ad1ac6ab5125b2fab68",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/App Icon & Top Shelf Image.brandassets/Top Shelf Image.imageset/Contents.json": "a80b3afbe1bc7c9f9bd3b15c6d9e5f99f690f887aaf30ad1ac6ab5125b2fab68",
+    "demo/demo-tvos/demo-tvos/Assets.xcassets/Contents.json": "972ec1fd42325872438eb085ac29e94f51c10788ec18ec5549439950866c541d",
+    "demo/demo-tvos/demo-tvos/ViewController.h": "0f2b873956b89016a13f52c6f7369cab844350f74e7d4209c00289f17a76d38c",
+    "demo/demo-tvos/demo-tvos/ViewController.m": "7f4f9aff3730a931ce3cca2a86d8c5640f36b4fb4b72fcb68b11723e267800e9",
+    "demo/demo-tvos/demo-tvos/main.m": "d4bb428f1584adbe317634ab80d6383045d382f3fadceda60e6a1e8baac77af6",
+    "packaging/Package.swift": "a820f639b6e13dcf85df2282414478e60c834f97b0e726b5aaacb1165e42c3b2",
+    "scripts/build-ffmpeg.py": "f6140279cf09d9881947d7b1bfa8887b135d7fe0c74312470e519e5be0634360",
+    "scripts/build-metal.py": "e724426b5a756b475c04ae483a7ce2835ccb9c00f2869997c09f6643edb668b7",
+    "scripts/build-package.py": "251192191e34872dfe889d4e05c1b79ca839dc88415874977b17e0ba4bc72eda",
+    "scripts/build-subtitles.py": "1fac7bd8fa906907ad2494bde8d8732a0e3b66fdd1d0e0ee2cdccf83dc485054",
+    "scripts/check-caption-capture.swift": "6c1ae858fa9da6a2ca2d490708b84e73b47a6084c33928b53a2b1c738ae003a4",
+    "scripts/make-orientation-fixture.swift": "45091f41228a1d64131947d2774623183b98a9dc3f7a7dde6b96e90b9dfeba92",
+    "scripts/record-feature-validation.py": "af5e9b275c4ab89ed925746bc4900d20199d712954e5be4e1da4a7d410c5fa90",
+    "scripts/stamp-demo-framework.py": "b54384e0badd3d44b2b692ba2e2717ba4f5034aac20c950f44bd1554f7a53489",
+    "scripts/subtitle-font.json": "dbb4e79daf78b761487cee77d3c6c89b323b7f7511764611449aae1ec66839f0",
+    "scripts/subtitle-sources.json": "d76f1def97dc920d5a6f4f2a86dee51f77148d06d0b2bba1c54141cd9dca35f0",
+    "scripts/test-cache.py": "c3331abcc2b13ae400598aa216d065912efbff5a18682b4c2f303fe093392033",
+    "scripts/test-desktop-tv.py": "d4919797253a0eff7888f3be30af7f75572b1fb44727064e72defaa9879e115b",
+    "scripts/test-ffmpeg.py": "2ad7a0fa0c86f9bc7bd985fba6434f8bf37e2de8bdf29200338668e4de9be2f2",
+    "scripts/test-hls-download.py": "f6a6286047a0308a763d09d2cb340f0eba9cc8ec8a071891e8ad75bb42613403",
+    "scripts/test-iphone.py": "70296d74d14ef241cb06d828c8c701b5e5c8aea731f5bc5dca8dd7902c3438f0",
+    "scripts/test-swiftui.py": "27e2f67f76efe44f3b37f00f88ef298f42a6429d374ee429bafd30ec5d4a1ae6",
+    "scripts/verify-apple-builds.py": "416581aa9c8ecfcd074895b0c6ab289a67b4c684ddd273514e85a2857e4564ce",
+    "scripts/verify-demo-linkage.py": "9e97fae1257a83f6a392be6f86c677061d331c91ac6151e252d10d01d98e10e7",
+    "tests/SGFeatureUITests.m": "624e53c5f67b7f1f4e7c70286f4f74744e8427f88d2246846ca91319a17ec834",
+    "tests/ffmpeg-migration.m": "21943e9b94d8df640ff377b1cd38a064c7796905b3c804c38a86b3f0ecdbdcbb",
+    "tests/fixtures/transcode-av.json": "06f5837b2e4409b99d23b874c81304b5c9303f2f381a762292fecbcd6cc8688a",
+    "tests/hls-fixture.c": "ba9ca903ba85b449ddfd2eecf8da4888b15e83a0209c73f6dd975e4e4aaaf12b",
+    "tests/media-cache.m": "6bc217463a6ad7da728fbd1a05c23c6159aac82660982d44afcdac7935ff0392",
+    "tests/swiftui-smoke.swift": "3604350120ede0806bdce733e254ac7b62ad022c6785e38b9c4331890265836e"
+  },
+  "source_snapshot_digest": "070b10e0ab291489438b0c8f9bc3575543466843b5e375c517281048e2755728",
+  "limits": [
+    "Passing batch tests do not mean the union of requested features is implemented.",
+    "Unsupported simulator PiP skips do not replace supported physical-device start/background/restore acceptance.",
+    "The complete UI suites precede the additional iPhone touch test; the latter is recorded separately.",
+    "Baseline UI archive/executable hashes were captured before rebuilding the iPhone touch test.",
+    "Swift package XCTest drives Metal explicitly; the separate unlocked real app verifies default automatic rendering.",
+    "Native ABR preferences are validated against real AVPlayerItem properties; variant transitions/adverse-network behavior remain pending.",
+    "The new complete simulator UI suites include H.264/AAC exports; their binaries precede the isolated SAR correction, which has decoded-pixel ASan and cross-SDK build acceptance.",
+    "Historical MPEG-4 native-playback rejection and SAR-pixel failure are preserved as diagnostics, not passing acceptance.",
+    "Mac keyboard UI uses ABC for deterministic text-key injection and restores the original input source; other IME composition behaviors are not accepted by that result.",
+    "The current complete control suites include Mac keyboard/auto-hide, tvOS remote auto-hide and iPhone touch controls; earlier batch runs are preserved separately.",
+    "Historical Desktop GIF replacement stalls are unresolved outside isolated test output; private-directory success does not establish every protected-directory/cross-signature overwrite scenario.",
+    "The new long-tracking and progress adjustment fixes have separate targeted acceptance; Mac foreground progress acceptance passed after unlocking; historical locked runs remain diagnostic evidence.",
+    "XCTest slider adjustment is best effort: assertions compare the actual final thumb position to the media clock; physical VoiceOver remains unaccepted.",
+    "Audio-only exports and video-export regression have separate two-kernel targeted UI runs on Mac/iPhone simulator/tvOS simulator; the earlier complete suites precede this addition.",
+    "Audio UI binaries precede only the unused-video-budget guard; its invalid-video-settings boundary passed final ASan and cross-SDK builds.",
+    "Source snapshot describes the current workspace; individual tested binary revisions are recorded separately."
+  ]
+}

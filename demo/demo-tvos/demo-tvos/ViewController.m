@@ -13,6 +13,7 @@
 @interface ViewController ()
 
 @property (nonatomic, strong) SGFeatureDemo *features;
+@property (nonatomic) NSUInteger demoMode;
 @property (nonatomic, assign) BOOL seeking;
 @property (nonatomic, strong) SGPlayer *player;
 
@@ -28,7 +29,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.features=[[SGFeatureDemo alloc]initWithView:self.view];
+    self.demoMode=[NSProcessInfo.processInfo.arguments containsObject:@"--sgplayer-audio-export"]?3:[NSProcessInfo.processInfo.arguments containsObject:@"--sgplayer-transcode-demo"]?2:[NSProcessInfo.processInfo.arguments containsObject:@"--sgplayer-session-controls"]?1:0;
+    self.features=[[SGFeatureDemo alloc]initWithView:self.view sessionControls:self.demoMode==1 exportMode:self.demoMode==3?SGFeatureExportAudio:self.demoMode==2?SGFeatureExportVideo:SGFeatureExportNone];
+}
+- (void)pressesEnded:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+    for(UIPress *press in presses)if(press.type==UIPressTypeMenu){
+        [self.features close];for(UIView *view in [self.view.subviews copy])[view removeFromSuperview];
+        self.demoMode=(self.demoMode+1)%4;self.features=[[SGFeatureDemo alloc]initWithView:self.view sessionControls:self.demoMode==1 exportMode:self.demoMode==3?SGFeatureExportAudio:self.demoMode==2?SGFeatureExportVideo:SGFeatureExportNone];return;
+    }
+    [super pressesEnded:presses withEvent:event];
 }
 
 #pragma mark - SGPlayer Notifications

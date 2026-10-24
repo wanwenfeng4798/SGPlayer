@@ -17,6 +17,7 @@ English | [简体中文](README.zh-CN.md)
 - Background playback.
 - RTMP/RTSP streaming.
 - Setting playback speed.
+- Finite-range video/effect export and audio-only stereo AAC export in MP4/M4A, Matroska and MPEG-TS.
 - Multiple audio/video tracks.
 - H.264/H.265 hardware accelerator.
 - Accurate status notifications.
@@ -111,6 +112,7 @@ interaction remain outside this verification scope.
 - Test record: [English](documents/ffmpeg-9.0.2-testing.en.md) / [中文](documents/ffmpeg-9.0.2-testing.zh-CN.md)
 - Changelog: [English](CHANGELOG.md) / [中文](CHANGELOG.zh-CN.md)
 - Playback features and backend routing: [English](documents/media-features.en.md) / [中文](documents/media-features.zh-CN.md)
+- Expansion implementation and acceptance ledger: [English](documents/feature-expansion.en.md) / [中文](documents/feature-expansion.zh-CN.md)
 - Feature test record: [English](documents/media-features-testing.en.md) / [中文](documents/media-features-testing.zh-CN.md)
 - Historical feature assessment: [English](documents/media-features-assessment.en.md) / [中文](documents/media-features-assessment.zh-CN.md)
 - Additional format tests (8/8 after FLV/ASF timing fix): [English](documents/ffmpeg-formats-testing.en.md) / [中文](documents/ffmpeg-formats-testing.zh-CN.md)

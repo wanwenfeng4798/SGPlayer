@@ -62,7 +62,7 @@ def build_slice(src, sdk, arch, target, jobs):
            f'--extra-ldflags={flags}', '--enable-static', '--disable-shared', '--enable-pic',
            '--disable-autodetect', '--disable-gpl', '--disable-nonfree', '--disable-programs',
            '--disable-doc', '--disable-avdevice', '--disable-devices', '--disable-filters',
-           '--enable-filter=buffer,buffersink,format,scale,lutrgb,colorchannelmixer,hflip,vflip,gblur',
+           '--enable-filter=buffer,buffersink,format,scale,lutrgb,lut3d,colorchannelmixer,hflip,vflip,gblur,split,blend',
            '--disable-audiotoolbox', '--enable-videotoolbox', '--enable-securetransport',
            '--enable-network', '--enable-zlib', '--disable-bzlib', '--disable-iconv']
     # Apple's toolchain has no NASM. Keep compiler intrinsics/ARM assembly enabled.

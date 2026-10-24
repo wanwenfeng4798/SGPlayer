@@ -16,9 +16,10 @@ static NSError *SGEffectError(NSInteger code, NSString *message) {
 - (id)copyWithZone:(NSZone *)zone {
     SGFilterConfiguration *c = [[SGFilterConfiguration alloc] init];
     c.brightness = self.brightness; c.contrast = self.contrast; c.saturation = self.saturation;
-    c.grayscale = self.grayscale; c.horizontalFlip = self.horizontalFlip; c.verticalFlip = self.verticalFlip; c.blurRadius = self.blurRadius; c.colorCurves = self.colorCurves; return c;
+    c.grayscale = self.grayscale; c.horizontalFlip = self.horizontalFlip; c.verticalFlip = self.verticalFlip; c.blurRadius = self.blurRadius; c.colorCurves = self.colorCurves;
+    c.colorCube=self.colorCube;c.colorCubeDimension=self.colorCubeDimension;c.bloomRadius=self.bloomRadius;c.bloomIntensity=self.bloomIntensity;return c;
 }
-- (BOOL)active { return self.brightness != 0 || self.contrast != 1 || self.saturation != 1 || self.grayscale || self.horizontalFlip || self.verticalFlip || self.blurRadius != 0 || self.colorCurves.length > 0; }
+- (BOOL)active { return self.brightness != 0 || self.contrast != 1 || self.saturation != 1 || self.grayscale || self.horizontalFlip || self.verticalFlip || self.blurRadius != 0 || self.colorCurves.length > 0 || self.colorCube.length || self.bloomIntensity>0; }
 - (NSError *)validationError {
     if (!isfinite(self.brightness) || fabs(self.brightness) > 1 || !isfinite(self.contrast) || self.contrast < 0 || self.contrast > 4 || !isfinite(self.saturation) || self.saturation < 0 || self.saturation > 2 || !isfinite(self.blurRadius) || self.blurRadius < 0 || self.blurRadius > 20) return SGEffectError(1, @"Filter parameter out of range");
     if (self.colorCurves) {
@@ -27,7 +28,35 @@ static NSError *SGEffectError(NSInteger code, NSString *message) {
         const float *values=self.colorCurves.bytes;
         for(NSUInteger i=0;i<count*3;i++) if(!isfinite(values[i]) || values[i]<0 || values[i]>1) return SGEffectError(6,@"Invalid LUT sample");
     }
+    if(!isfinite(self.bloomRadius)||self.bloomRadius<0||self.bloomRadius>20||!isfinite(self.bloomIntensity)||self.bloomIntensity<0||self.bloomIntensity>1)return SGEffectError(7,@"Invalid bloom radius or intensity");
+    if(self.colorCube){
+        NSUInteger n=self.colorCubeDimension;
+        if(n<2||n>64||self.colorCube.length!=n*n*n*4*sizeof(float))return SGEffectError(8,@"3D LUT requires 2...64 cubed RGBA samples");
+        const float *values=self.colorCube.bytes;
+        for(NSUInteger i=0;i<n*n*n*4;i++)if(!isfinite(values[i])||values[i]<0||values[i]>1||(i%4==3&&values[i]!=1))return SGEffectError(8,@"Invalid 3D LUT sample or alpha");
+    }
     return nil;
+}
++ (instancetype)configurationWithCubeText:(NSString *)text error:(NSError **)error {
+    if(text.length>16*1024*1024){if(error)*error=SGEffectError(8,@"Cube text exceeds the 16 MB limit");return nil;}
+    SGFilterConfiguration *configuration=[self new];NSMutableData *data=[NSMutableData data];NSUInteger dimension=0,count=0;BOOL invalid=NO;
+    NSScanner *lines=[NSScanner scannerWithString:text];lines.charactersToBeSkipped=nil;
+    while(!lines.isAtEnd){
+        NSString *line=nil;[lines scanUpToCharactersFromSet:NSCharacterSet.newlineCharacterSet intoString:&line];[lines scanCharactersFromSet:NSCharacterSet.newlineCharacterSet intoString:nil];line=line?:@"";
+        NSString *body=[[line componentsSeparatedByString:@"#"].firstObject stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
+        if(!body.length||[body hasPrefix:@"TITLE "])continue;
+        NSScanner *scanner=[NSScanner scannerWithString:body];
+        if([scanner scanString:@"LUT_3D_SIZE" intoString:nil]){NSInteger n=0;if(dimension||![scanner scanInteger:&n]||!scanner.isAtEnd||n<2||n>64){invalid=YES;break;}dimension=n;continue;}
+        BOOL minimum=[scanner scanString:@"DOMAIN_MIN" intoString:nil];
+        BOOL maximum=!minimum&&[scanner scanString:@"DOMAIN_MAX" intoString:nil];
+        if(minimum||maximum){for(int i=0;i<3;i++){double value;if(![scanner scanDouble:&value]||value!=(minimum?0:1))invalid=YES;}if(!scanner.isAtEnd)invalid=YES;if(invalid)break;continue;}
+        if(!dimension||count>=dimension*dimension*dimension){invalid=YES;break;}
+        float values[4]={0,0,0,1};for(int i=0;i<3;i++)if(![scanner scanFloat:&values[i]]||!isfinite(values[i])||values[i]<0||values[i]>1)invalid=YES;
+        if(!scanner.isAtEnd)invalid=YES;if(invalid)break;
+        [data appendBytes:values length:sizeof(values)];count++;
+    }
+    if(invalid||!dimension||count!=dimension*dimension*dimension){if(error)*error=SGEffectError(8,@"Invalid .cube LUT: require a complete 3D cube with a unit input domain");return nil;}
+    configuration.colorCube=data;configuration.colorCubeDimension=dimension;return configuration;
 }
 @end
 
@@ -98,21 +127,46 @@ static NSError *SGEffectError(NSInteger code, NSString *message) {
 @property (nonatomic, strong) NSArray *sortedDanmaku;
 @property (nonatomic, strong) NSArray *sortedDanmakuSource;
 @property (atomic, strong, readwrite) NSError *lastError;
+@property (nonatomic, strong) SGMediaEffects *secondaryRenderer;
+@property (nonatomic, copy) NSData *cubeFileData;
+@property (nonatomic) NSUInteger cubeFileDimension;
+@property (nonatomic, strong) NSURL *cubeFileURL;
 @end
+static NSArray<SGSubtitleCue *> *SGSnapshotCues(NSArray<SGSubtitleCue *> *source) {
+    NSMutableArray *cues=[NSMutableArray arrayWithCapacity:source.count];
+    for(SGSubtitleCue *cue in source){SGSubtitleCue *copy=[SGSubtitleCue new];copy.start=cue.start;copy.duration=cue.duration;copy.text=cue.text;copy.ASS=cue.ASS;copy.bitmap=cue.bitmap;copy.region=cue.region;[cues addObject:copy];}
+    return cues;
+}
+static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
+    if(!source)return nil;SGSubtitleTrack *copy=[SGSubtitleTrack new];copy.index=source.index;copy.language=source.language;copy.title=source.title;copy.defaultTrack=source.defaultTrack;copy.forced=source.forced;copy.ASSHeader=source.ASSHeader;copy.cues=SGSnapshotCues(source.cues);
+    NSMutableDictionary *fonts=[NSMutableDictionary dictionary];[source.fonts enumerateKeysAndObjectsUsingBlock:^(NSString *name,NSData *bytes,BOOL *stop){fonts[name]=[bytes copy];}];copy.fonts=fonts;return copy;
+}
 @implementation SGMediaEffects
 - (instancetype)init {
     if ((self = [super init])) {
         _filter = [[SGFilterConfiguration alloc] init]; _subtitles = @[]; _danmaku = @[]; _watermarks = @[];
         _subtitlesEnabled = YES; _danmakuEnabled = YES; _maximumDanmakuCount = 40; _textSize = 28; _overlayOpacity = 1;
+        _subtitleVerticalPosition=.06;_secondarySubtitleVerticalPosition=.80;
         _subtitleFallbackFontURL = [[NSBundle bundleForClass:SGMediaEffects.class] URLForResource:@"NotoSansCJKsc-Regular" withExtension:@"otf"];
         _stickerRect = CGRectMake(0.05, 0.05, 0.2, 0.2);
         _context = [CIContext contextWithOptions:@{kCIContextCacheIntermediates: @NO}];
         _textCache = [[NSCache alloc] init]; _textCache.totalCostLimit = 16 * 1024 * 1024;
     } return self;
 }
-- (void)dealloc { if (_assTrack) ass_free_track(_assTrack); if (_assRenderer) ass_renderer_done(_assRenderer); if (_assLibrary) ass_library_done(_assLibrary); if (_graph) avfilter_graph_free(&_graph); if (_pixelPool) CVPixelBufferPoolRelease(_pixelPool); }
+- (void)dealloc { if (_assTrack) ass_free_track(_assTrack); if (_assRenderer) ass_renderer_done(_assRenderer); if (_assLibrary) ass_library_done(_assLibrary); if (_graph) avfilter_graph_free(&_graph); if (_pixelPool) CVPixelBufferPoolRelease(_pixelPool); if(_cubeFileURL)[NSFileManager.defaultManager removeItemAtURL:_cubeFileURL error:nil]; }
+- (SGMediaEffects *)snapshot {
+    @synchronized(self){
+        SGMediaEffects *copy=[SGMediaEffects new];copy.kernel=self.kernel;copy.softwareRendering=self.softwareRendering;copy.filter=self.filter;
+        copy.subtitleTrack=SGSnapshotTrack(self.subtitleTrack);copy.secondarySubtitleTrack=SGSnapshotTrack(self.secondarySubtitleTrack);copy.subtitles=SGSnapshotCues(self.subtitles);copy.subtitlesEnabled=self.subtitlesEnabled;
+        copy.subtitleOffset=self.subtitleOffset;copy.secondarySubtitleOffset=self.secondarySubtitleOffset;copy.subtitleVerticalPosition=self.subtitleVerticalPosition;copy.secondarySubtitleVerticalPosition=self.secondarySubtitleVerticalPosition;copy.subtitleFallbackFontURL=self.subtitleFallbackFontURL;
+        NSMutableArray *events=[NSMutableArray array];for(SGDanmakuItem *item in self.danmaku){SGDanmakuItem *event=[SGDanmakuItem new];event.start=item.start;event.duration=item.duration;event.mode=item.mode;event.text=item.text;[events addObject:event];}
+        copy.danmaku=events;copy.danmakuEnabled=self.danmakuEnabled;copy.maximumDanmakuCount=self.maximumDanmakuCount;copy.textSize=self.textSize;copy.overlayOpacity=self.overlayOpacity;
+        NSMutableArray *marks=[NSMutableArray array];for(SGWatermark *mark in self.watermarks){SGWatermark *item=[SGWatermark new];item.text=mark.text;item.image=mark.image;item.rect=mark.rect;item.opacity=mark.opacity;[marks addObject:item];}
+        copy.watermarks=marks;copy.sticker=self.sticker;copy.stickerRect=self.stickerRect;copy.stickerStart=self.stickerStart;return copy;
+    }
+}
 - (void)flush { @synchronized (self) { if (_graph) avfilter_graph_free(&_graph); _source = NULL; _sink = NULL; self.graphKey = nil; self.lastError = nil; } }
-- (BOOL)active { return self.filter.active || (self.subtitlesEnabled && self.subtitles.count) || (self.danmakuEnabled && self.danmaku.count) || self.watermarks.count || self.sticker; }
+- (BOOL)active { return self.filter.active || (self.subtitlesEnabled && (self.subtitles.count||self.secondarySubtitleTrack.cues.count)) || (self.danmakuEnabled && self.danmaku.count) || self.watermarks.count || self.sticker; }
 - (CIImage *)textImage:(NSString *)text size:(CGFloat)size width:(CGFloat)width {
     if (!text.length || text.length > 8192 || width <= 0) return nil;
     size = MIN(96, MAX(8, size)); width = MIN(8192, ceil(width));
@@ -178,6 +232,19 @@ static NSError *SGEffectError(NSInteger code, NSString *message) {
     if (config.horizontalFlip) [filters addObject:@"hflip"];
     if (config.verticalFlip) [filters addObject:@"vflip"];
     if (config.blurRadius > 0) [filters addObject:[NSString stringWithFormat:@"gblur=sigma=%.4f", config.blurRadius]];
+    if(config.colorCube.length){
+        if(![self.cubeFileData isEqual:config.colorCube]||self.cubeFileDimension!=config.colorCubeDimension){
+            NSURL *URL=[[NSURL fileURLWithPath:NSTemporaryDirectory() isDirectory:YES] URLByAppendingPathComponent:[NSString stringWithFormat:@"sgplayer-%@.cube",NSUUID.UUID.UUIDString]];
+            NSMutableString *text=[NSMutableString stringWithFormat:@"LUT_3D_SIZE %lu\n",(unsigned long)config.colorCubeDimension];const float *values=config.colorCube.bytes;
+            for(NSUInteger i=0;i<config.colorCube.length/sizeof(float);i+=4)[text appendFormat:@"%.9g %.9g %.9g\n",values[i],values[i+1],values[i+2]];
+            NSError *failure=nil;if(![text writeToURL:URL atomically:YES encoding:NSUTF8StringEncoding error:&failure]){self.lastError=failure;return nil;}
+            if(self.cubeFileURL)[NSFileManager.defaultManager removeItemAtURL:self.cubeFileURL error:nil];
+            self.cubeFileURL=URL;self.cubeFileData=config.colorCube;self.cubeFileDimension=config.colorCubeDimension;
+        }
+        NSString *path=[[self.cubeFileURL.path stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"'\\''"];
+        [filters addObject:[NSString stringWithFormat:@"lut3d=file='%@':interp=trilinear",path]];
+    }
+    if(config.bloomIntensity>0)[filters addObject:[NSString stringWithFormat:@"split=2[sgbase][sgglow];[sgglow]gblur=sigma=%.4f[sgblur];[sgbase][sgblur]blend=all_mode=screen:all_opacity=%.6f",MAX(.001,config.bloomRadius),config.bloomIntensity]];
     [filters addObject:@"format=bgra"];
     NSString *chain = [filters componentsJoinedByString:@","];
     NSString *key = [NSString stringWithFormat:@"%d:%d:%@", width, height, chain];
@@ -287,7 +354,7 @@ static NSError *SGEffectError(NSInteger code, NSString *message) {
         }
         SGFilterConfiguration *config = self.filter;
         self.lastError = [config validationError]; if (self.lastError) return nil;
-        if (!isfinite(self.textSize) || self.textSize < 8 || self.textSize > 96 || !isfinite(self.overlayOpacity) || self.overlayOpacity < 0 || self.overlayOpacity > 1 || !isfinite(self.subtitleOffset)) { self.lastError = SGEffectError(5,@"Invalid overlay size, opacity or offset"); return nil; }
+        if (!isfinite(self.textSize) || self.textSize < 8 || self.textSize > 96 || !isfinite(self.overlayOpacity) || self.overlayOpacity < 0 || self.overlayOpacity > 1 || !isfinite(self.subtitleOffset) || !isfinite(self.secondarySubtitleOffset) || !isfinite(self.subtitleVerticalPosition) || self.subtitleVerticalPosition<0 || self.subtitleVerticalPosition>1 || !isfinite(self.secondarySubtitleVerticalPosition) || self.secondarySubtitleVerticalPosition<0 || self.secondarySubtitleVerticalPosition>1) { self.lastError = SGEffectError(5,@"Invalid overlay size, opacity, position or offset"); return nil; }
         CGRect bounds = source.extent;
         if (!isfinite(bounds.size.width) || !isfinite(bounds.size.height) || bounds.size.width < 1 || bounds.size.height < 1 || bounds.size.width > 8192 || bounds.size.height > 8192) { self.lastError = SGEffectError(4, @"Unsupported canvas dimensions"); return nil; }
         CIImage *image = [source imageByApplyingTransform:CGAffineTransformMakeTranslation(-bounds.origin.x, -bounds.origin.y)];
@@ -300,6 +367,8 @@ static NSError *SGEffectError(NSInteger code, NSString *message) {
                 if (config.horizontalFlip) image = [image imageByApplyingTransform:CGAffineTransformMake(-1, 0, 0, 1, bounds.size.width, 0)];
                 if (config.verticalFlip) image = [image imageByApplyingTransform:CGAffineTransformMake(1, 0, 0, -1, 0, bounds.size.height)];
                 if (config.blurRadius > 0) image = [[[image imageByClampingToExtent] imageByApplyingFilter:@"CIGaussianBlur" withInputParameters:@{kCIInputRadiusKey: @(config.blurRadius)}] imageByCroppingToRect:bounds];
+                if(config.colorCube.length)image=[image imageByApplyingFilter:@"CIColorCube" withInputParameters:@{@"inputCubeDimension":@(config.colorCubeDimension),@"inputCubeData":config.colorCube}];
+                if(config.bloomIntensity>0)image=[[[image imageByClampingToExtent] imageByApplyingFilter:@"CIBloom" withInputParameters:@{kCIInputRadiusKey:@(config.bloomRadius),kCIInputIntensityKey:@(config.bloomIntensity)}] imageByCroppingToRect:bounds];
             }
             if (!image) return nil;
         }
@@ -311,7 +380,7 @@ static NSError *SGEffectError(NSInteger code, NSString *message) {
             if(!image)return nil;
         }
         if (self.subtitlesEnabled) {
-            CGFloat bottom = h * 0.06;
+            CGFloat bottom = h * self.subtitleVerticalPosition;
             for (SGSubtitleCue *cue in self.subtitles) {
                 double start = CMTimeGetSeconds(cue.start) + self.subtitleOffset, duration = CMTimeGetSeconds(cue.duration);
                 if (!isfinite(start) || !isfinite(duration) || seconds < start || seconds >= start + duration) continue;
@@ -325,6 +394,14 @@ static NSError *SGEffectError(NSInteger code, NSString *message) {
                 }
             }
         }
+        if(self.subtitlesEnabled&&self.secondarySubtitleTrack){
+            if(!self.secondaryRenderer)self.secondaryRenderer=[SGMediaEffects new];
+            SGMediaEffects *secondary=self.secondaryRenderer;secondary.softwareRendering=self.softwareRendering;
+            secondary.subtitleTrack=self.secondarySubtitleTrack;secondary.subtitles=self.secondarySubtitleTrack.cues;
+            secondary.subtitleOffset=self.secondarySubtitleOffset;secondary.subtitleVerticalPosition=self.secondarySubtitleVerticalPosition;
+            secondary.textSize=self.textSize;secondary.overlayOpacity=self.overlayOpacity;secondary.subtitleFallbackFontURL=self.subtitleFallbackFontURL;
+            image=[secondary composeImage:image atTime:time];if(!image){self.lastError=secondary.lastError;return nil;}
+        }else self.secondaryRenderer=nil;
         if (self.danmakuEnabled) {
             // Reconstruct deterministic lanes from media time, including after seeks.
             NSMutableArray *laneEnd = [NSMutableArray array];

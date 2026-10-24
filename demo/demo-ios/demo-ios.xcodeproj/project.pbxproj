@@ -5,10 +5,19 @@
 	};
 	objectVersion = 46;
 	objects = {
+        91A542DC5C1427DED066E931 = {isa = PBXFileReference; lastKnownFileType = file; path = "../../tests/fixtures/transcode-av.mp4"; sourceTree = SOURCE_ROOT; };
+        EFD9CA72AAC80FFD08E224C1 = {isa = PBXBuildFile; fileRef = 91A542DC5C1427DED066E931; };
+        E308B7FB77C1172BE7B3AE71 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SGDemoFrameworkRevision.c; sourceTree = DERIVED_FILE_DIR; };
+        2434DBECBDDBD0C9C6F06692 = {isa = PBXBuildFile; fileRef = E308B7FB77C1172BE7B3AE71; };
+        9673DB70D23DFED052DFD12D = {isa = PBXShellScriptBuildPhase; alwaysOutOfDate = 1; buildActionMask = 2147483647; files = (); inputPaths = ("$(SRCROOT)/../../scripts/stamp-demo-framework.py", "$(BUILT_PRODUCTS_DIR)/SGPlayer.framework/SGPlayer",); outputPaths = ("$(DERIVED_FILE_DIR)/SGDemoFrameworkRevision.c",); name = "Stamp linked SGPlayer archive"; runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = "/usr/bin/python3 \"${SRCROOT}/../../scripts/stamp-demo-framework.py\" \"${BUILT_PRODUCTS_DIR}/SGPlayer.framework/SGPlayer\" \"${DERIVED_FILE_DIR}/SGDemoFrameworkRevision.c\"\n"; };
+
+        9A303CD7A13CD0F72F758F05 = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "SGPlayer core archive"; path = SGPlayer.framework/SGPlayer; sourceTree = BUILT_PRODUCTS_DIR; };
+        3C4F6D70CFA343290A77FF0E = {isa = PBXBuildFile; fileRef = 9A303CD7A13CD0F72F758F05; };
+        A90200000000000000000005 = {isa = PBXContainerItemProxy; containerPortal = A90200000000000000000001; proxyType = 2; remoteGlobalIDString = 9CEFA6D61E7122BF00835CAB; remoteInfo = "SGPlayer"; };
         A90200000000000000000001 /* SGPlayer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ../../SGPlayer.xcodeproj; sourceTree = "<group>"; };
         A90200000000000000000002 /* SGPlayer target proxy */ = {isa = PBXContainerItemProxy; containerPortal = A90200000000000000000001; proxyType = 1; remoteGlobalIDString = 9CEFA6D51E7122BF00835CAB; remoteInfo = "SGPlayer iOS"; };
         A90200000000000000000003 /* SGPlayer target dependency */ = {isa = PBXTargetDependency; name = "SGPlayer iOS"; targetProxy = A90200000000000000000002; };
-        A90200000000000000000004 /* SGPlayer products */ = {isa = PBXGroup; children = (); name = "SGPlayer products"; sourceTree = "<group>"; };
+        A90200000000000000000004 /* SGPlayer products */ = {isa = PBXGroup; children = (9C4032C41FAB1188005AEB36,9C9824A41FAB073B00142215,9C9824AE1FAB10B100142215,9CB695132190680E00196E54,); name = "SGPlayer products"; sourceTree = "<group>"; };
 
 
 
@@ -93,7 +102,7 @@
 		9C3DD16B1E8FBD420003B17A /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		9C3DD16D1E8FBD4A0003B17A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9C3DD16F1E8FBD4F0003B17A /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		9C4032C41FAB1188005AEB36 /* SGPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SGPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C4032C41FAB1188005AEB36 /* SGPlayer.framework */ = {isa = PBXReferenceProxy; fileType = wrapper.framework; path = SGPlayer.framework; remoteRef = A90200000000000000000005; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C49E5F12304F77B00C5FB1F /* SGVideoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGVideoItem.m; sourceTree = "<group>"; };
 		9C49E5F22304F77B00C5FB1F /* SGVideoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGVideoItem.h; sourceTree = "<group>"; };
 		9C886B931E78EC9F00F2CFD1 /* SGPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SGPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,11 +120,11 @@
 		9C886BB91E78F13E00F2CFD1 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		9C886BBB1E78F14300F2CFD1 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		9C886BBD1E78F14700F2CFD1 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
-		9C9824A41FAB073B00142215 /* SGPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SGPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9C9824AE1FAB10B100142215 /* SGPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SGPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C9824A41FAB073B00142215 /* SGPlayer.framework */ = {isa = PBXReferenceProxy; fileType = wrapper.framework; path = SGPlayer.framework; remoteRef = A90200000000000000000005; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C9824AE1FAB10B100142215 /* SGPlayer.framework */ = {isa = PBXReferenceProxy; fileType = wrapper.framework; path = SGPlayer.framework; remoteRef = A90200000000000000000005; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA86E851E87575000E4A8B1 /* SGPlatform.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SGPlatform.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/demo-cxkylxbwkfilbmgwetaiuwiojpbb/Build/Products/Debug-iphonesimulator/SGPlatform.framework"; sourceTree = "<group>"; };
 		9CA86E891E8757B500E4A8B1 /* SGPlatform.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SGPlatform.framework; path = "../../Vendors/SGPlatform/build/Debug-iphoneos/SGPlatform.framework"; sourceTree = "<group>"; };
-		9CB695132190680E00196E54 /* SGPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SGPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CB695132190680E00196E54 /* SGPlayer.framework */ = {isa = PBXReferenceProxy; fileType = wrapper.framework; path = SGPlayer.framework; remoteRef = A90200000000000000000005; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CD90231230BDF1900A358AA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -124,12 +133,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                3C4F6D70CFA343290A77FF0E,
                 49D3B4C9F15E1C98230CFBF2 /* UniformTypeIdentifiers */,
                 DE5B413B351EF087B1D1BE6C /* ImageIO */,
                 0AF2321E783F6C312AA5CEF6 /* CoreText */,
                 8E1E17D35A445EFBE5D414A3 /* CoreImage */,
                 89F4072D4448D07773ED02D4 /* AVKit */,
-				9C8A0E342190A687006F7AE8 /* SGPlayer.framework in Frameworks */,
 				9CD90232230BDF1900A358AA /* AVFoundation.framework in Frameworks */,
 				9CD90234230BDF2C00A358AA /* AudioToolbox.framework in Frameworks */,
 				9CD90233230BDF2200A358AA /* VideoToolbox.framework in Frameworks */,
@@ -218,12 +227,8 @@
 			isa = PBXGroup;
 			children = (
 				9CD90231230BDF1900A358AA /* AVFoundation.framework */,
-				9CB695132190680E00196E54 /* SGPlayer.framework */,
 				9C329AA72005E11500252B10 /* SGAVPlayer.framework */,
 				9C329AA52005DF4A00252B10 /* SGAVPlayer.framework */,
-				9C4032C41FAB1188005AEB36 /* SGPlayer.framework */,
-				9C9824AE1FAB10B100142215 /* SGPlayer.framework */,
-				9C9824A41FAB073B00142215 /* SGPlayer.framework */,
 				9C3DD16F1E8FBD4F0003B17A /* CoreMedia.framework */,
 				9C3DD16D1E8FBD4A0003B17A /* AudioToolbox.framework */,
 				9C3DD16B1E8FBD420003B17A /* VideoToolbox.framework */,
@@ -246,6 +251,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9C886BAA1E78EC9F00F2CFD1 /* Build configuration list for PBXNativeTarget "demo-ios" */;
 			buildPhases = (
+                9673DB70D23DFED052DFD12D,
 				9C886B8F1E78EC9F00F2CFD1 /* Sources */,
 				9C886B901E78EC9F00F2CFD1 /* Frameworks */,
 				9C886B911E78EC9F00F2CFD1 /* Resources */,
@@ -306,6 +312,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                EFD9CA72AAC80FFD08E224C1,
                 2BDA19E22A1AD887C870F7C5,
                 174596E7B641D0315154443D,
                 A0F56E14AB01F99881AE9B74,
@@ -333,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                2434DBECBDDBD0C9C6F06692,
                 3A32B6B51ED25DC8006AA45D,
 				9C886B9E1E78EC9F00F2CFD1 /* SGListViewController.m in Sources */,
 				9C03E5F3212E732B001F0E1B /* SGPlayViewController.m in Sources */,

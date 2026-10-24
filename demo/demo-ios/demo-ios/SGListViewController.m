@@ -13,9 +13,11 @@
 
 @interface SGFeatureViewController : UIViewController
 @property (nonatomic, strong) SGFeatureDemo *features;
+@property (nonatomic) BOOL sessionControls;
+@property (nonatomic) SGFeatureExportMode exportMode;
 @end
 @implementation SGFeatureViewController
-- (void)viewDidLoad { [super viewDidLoad]; self.view.backgroundColor=UIColor.blackColor; self.features=[[SGFeatureDemo alloc]initWithView:self.view]; }
+- (void)viewDidLoad { [super viewDidLoad]; self.view.backgroundColor=UIColor.blackColor; self.features=[[SGFeatureDemo alloc]initWithView:self.view sessionControls:self.sessionControls exportMode:[NSProcessInfo.processInfo.arguments containsObject:@"--sgplayer-audio-export"]?SGFeatureExportAudio:[NSProcessInfo.processInfo.arguments containsObject:@"--sgplayer-transcode-demo"]?SGFeatureExportVideo:self.exportMode]; }
 - (void)viewDidDisappear:(BOOL)animated { [super viewDidDisappear:animated]; [self.features close]; }
 @end
 
@@ -52,20 +54,20 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.videoItems.count+1;
+    return self.videoItems.count+4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.textLabel.text = indexPath.row == self.videoItems.count ? @"全部功能 / All features" : self.videoItems[indexPath.row].name;
-    cell.accessibilityIdentifier = indexPath.row == self.videoItems.count ? @"feature.open" : [NSString stringWithFormat:@"demo.%ld",(long)indexPath.row];
+    cell.textLabel.text = indexPath.row == self.videoItems.count+3 ? @"音频导出 / Export audio" : indexPath.row == self.videoItems.count+2 ? @"视频导出 / Export video" : indexPath.row == self.videoItems.count+1 ? @"播放会话 / Playback session" : indexPath.row == self.videoItems.count ? @"全部功能 / All features" : self.videoItems[indexPath.row].name;
+    cell.accessibilityIdentifier = indexPath.row == self.videoItems.count+3 ? @"audio-export.open" : indexPath.row == self.videoItems.count+2 ? @"transcode.open" : indexPath.row == self.videoItems.count+1 ? @"session.open" : indexPath.row == self.videoItems.count ? @"feature.open" : [NSString stringWithFormat:@"demo.%ld",(long)indexPath.row];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == self.videoItems.count) { [self.navigationController pushViewController:[[SGFeatureViewController alloc]init] animated:YES]; return; }
+    if (indexPath.row >= self.videoItems.count) { SGFeatureViewController *controller=[SGFeatureViewController new];controller.sessionControls=indexPath.row==self.videoItems.count+1;controller.exportMode=indexPath.row==self.videoItems.count+3?SGFeatureExportAudio:indexPath.row==self.videoItems.count+2?SGFeatureExportVideo:SGFeatureExportNone;[self.navigationController pushViewController:controller animated:YES]; return; }
     SGPlayViewController *vc = [[SGPlayViewController alloc] init];
     vc.videoItem = self.videoItems[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];

@@ -13,6 +13,7 @@
 #import "SGOptions.h"
 #import "SGError.h"
 #import "SGMacro.h"
+#import <VideoToolbox/VideoToolbox.h>
 
 @interface SGCodecContext ()
 
@@ -133,7 +134,8 @@
     }
     codecContext->pkt_timebase = self->_timebase;
     if ((self->_options.hardwareDecodeH264 && self->_codecpar->codec_id == AV_CODEC_ID_H264) ||
-        (self->_options.hardwareDecodeH265 && self->_codecpar->codec_id == AV_CODEC_ID_H265)) {
+        (self->_options.hardwareDecodeH265 && self->_codecpar->codec_id == AV_CODEC_ID_H265) ||
+        (self->_options.hardwareDecodeAV1 && self->_codecpar->codec_id == AV_CODEC_ID_AV1 && VTIsHardwareDecodeSupported(kCMVideoCodecType_AV1))) {
         codecContext->get_format = SGCodecContextGetFormat;
     }
     

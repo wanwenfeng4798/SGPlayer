@@ -312,6 +312,8 @@ static void TestHTTPS(const char *url)
 
 #include "ffmpeg-formats.inc"
 #include "media-features.inc"
+#include "playback-session.inc"
+#include "transcode.inc"
 
 int main(int argc, const char *argv[])
 {
@@ -323,6 +325,15 @@ int main(int argc, const char *argv[])
         if (argc >= 6 && argv[5][0]) formatsPassed = TestAdditionalFormats([NSString stringWithUTF8String:argv[5]]);
         if (argc >= 7 && argv[6][0]) MakeVideo(argv[1], "mpeg4");
         if (argc >= 7 && argv[6][0]) TestMediaFeatures([NSString stringWithUTF8String:argv[6]], [NSString stringWithUTF8String:argv[1]]);
+        if (argc >= 7 && argv[6][0]) {
+            TestPlaybackCoverState();
+            TestNativePlaybackPolicy([NSString stringWithUTF8String:argv[1]]);
+            TestPlaybackSessionPolicies([NSString stringWithUTF8String:argv[6]]);
+            TestTimelinePreviews([NSString stringWithUTF8String:argv[1]]);
+            TestRemuxAVSynchronization([NSString stringWithUTF8String:argv[6]], [NSString stringWithUTF8String:argv[1]]);
+            TestMediaTranscoding([NSString stringWithUTF8String:argv[6]], [NSString stringWithUTF8String:argv[1]], argc>3 && argv[3][0]);
+            TestMediaRemuxing([NSString stringWithUTF8String:argv[6]], [NSString stringWithUTF8String:argv[1]]);
+        }
         TestRunningClockRate();
         TestLayoutAndBuffers();
         TestResample();

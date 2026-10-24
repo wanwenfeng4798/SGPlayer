@@ -265,7 +265,7 @@
             continue;
         }
         SGAudioDescriptor *ad = obj.descriptor;
-        if (self->_flags.needsAlignment) {
+        if (self->_flags.needsAlignment && self->_options.padAudioToRangeStart) {
             self->_flags.needsAlignment = NO;
             CMTime start = timeRange.start;
             CMTime duration = CMTimeSubtract(obj.timeStamp, start);
@@ -281,6 +281,7 @@
                 if (obj1) [ret addObject:obj1];
             }
         }
+        self->_flags.needsAlignment = NO;
         if (SGCMTimeIsValid(timeRange.duration, NO)) {
             CMTime start = obj.timeStamp;
             CMTime duration = CMTimeSubtract(CMTimeRangeGetEnd(timeRange), start);

@@ -21,6 +21,18 @@ FOUNDATION_EXPORT const unsigned char SGPlayerVersionString[];
 #import <SGPlayer/SGDefines.h>
 
 #import <SGPlayer/SGMediaEffects.h>
+#import <SGPlayer/SGMediaTranscoder.h>
+#import <SGPlayer/SGPlaybackCover.h>
+#import <SGPlayer/SGPlaybackGestures.h>
+#import <SGPlayer/SGNativePlaybackPolicy.h>
+#import <SGPlayer/SGHLSAssetStore.h>
+#import <SGPlayer/SGPlaybackCapabilities.h>
+#import <SGPlayer/SGMediaRemuxer.h>
+#import <SGPlayer/SGPlaybackPresentation.h>
+#import <SGPlayer/SGPlaybackControls.h>
+#import <SGPlayer/SGTimelinePreview.h>
+#import <SGPlayer/SGMediaCache.h>
+#import <SGPlayer/SGPlaybackSession.h>
 #import <SGPlayer/SGPlaybackController.h>
 #import <SGPlayer/SGOptions.h>
 #import <SGPlayer/SGDemuxerOptions.h>
@@ -86,6 +98,18 @@ FOUNDATION_EXPORT const unsigned char SGPlayerVersionString[];
 #import "SGDefines.h"
 
 #import "SGMediaEffects.h"
+#import "SGMediaTranscoder.h"
+#import "SGPlaybackCover.h"
+#import "SGPlaybackGestures.h"
+#import "SGNativePlaybackPolicy.h"
+#import "SGHLSAssetStore.h"
+#import "SGPlaybackCapabilities.h"
+#import "SGMediaRemuxer.h"
+#import "SGPlaybackPresentation.h"
+#import "SGPlaybackControls.h"
+#import "SGTimelinePreview.h"
+#import "SGMediaCache.h"
+#import "SGPlaybackSession.h"
 #import "SGPlaybackController.h"
 #import "SGOptions.h"
 #import "SGDemuxerOptions.h"

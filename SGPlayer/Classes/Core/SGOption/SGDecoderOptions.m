@@ -20,6 +20,8 @@
     obj->_threadsAuto = self->_threadsAuto;
     obj->_hardwareDecodeH264 = self->_hardwareDecodeH264;
     obj->_hardwareDecodeH265 = self->_hardwareDecodeH265;
+    obj->_hardwareDecodeAV1 = self->_hardwareDecodeAV1;
+    obj->_padAudioToRangeStart = self->_padAudioToRangeStart;
     obj->_preferredCVPixelFormat = self->_preferredCVPixelFormat;
     obj->_supportedPixelFormats = self->_supportedPixelFormats.copy;
     obj->_supportedAudioDescriptors = self->_supportedAudioDescriptors.copy;
@@ -35,6 +37,8 @@
         self->_threadsAuto = YES;
         self->_hardwareDecodeH264 = YES;
         self->_hardwareDecodeH265 = YES;
+        self->_hardwareDecodeAV1 = YES;
+        self->_padAudioToRangeStart = YES;
         self->_preferredCVPixelFormat = SGPixelFormatFF2AV(AV_PIX_FMT_NV12);
         self->_supportedPixelFormats = [SGVideoRenderer supportedPixelFormats];
         self->_supportedAudioDescriptors = @[[SGAudioRenderer supportedAudioDescriptor]];

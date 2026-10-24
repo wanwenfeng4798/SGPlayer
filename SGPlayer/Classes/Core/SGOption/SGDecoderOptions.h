@@ -43,6 +43,11 @@
     Default is YES.
  */
 @property (nonatomic) BOOL hardwareDecodeH265;
+/// AV1 VideoToolbox decoding is attempted only when the current device reports hardware support.
+@property (nonatomic) BOOL hardwareDecodeAV1;
+/// Insert leading silence to align audio to a segment start. YES for playback;
+/// offline encoders can disable it to preserve timestamp gaps without large padding buffers.
+@property (nonatomic) BOOL padAudioToRangeStart;
 
 /*!
  @property preferredPixelFormat
