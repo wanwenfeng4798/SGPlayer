@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger, SGKernelSelectionPolicy) {
     SGKernelSelectionPolicyManual,
     SGKernelSelectionPolicyPreferNative,
     SGKernelSelectionPolicyPreferFFmpeg,
+    SGKernelSelectionPolicyAutomatic, // Inspect actual AVFoundation asset/track support.
 };
 
 /// A separately addressable rendition. HLS variants within one playlist remain AVPlayer's responsibility.
@@ -48,7 +49,9 @@ typedef NS_ENUM(NSInteger, SGKernelSelectionPolicy) {
 @property(nonatomic, readonly) NSInteger selectedRendition;
 @property(nonatomic, readonly) SGPlaybackSessionState state;
 @property(nonatomic, strong, readonly, nullable) NSError *error;
-@property(nonatomic) SGKernelSelectionPolicy kernelPolicy; // manual by default
+@property(nonatomic) SGKernelSelectionPolicy kernelPolicy; // automatic by default
+/// Keep FFmpeg for features such as VR projection; suppress incompatible native fallback.
+@property(nonatomic) BOOL requiresFFmpeg;
 @property(nonatomic) SGPlaybackLoopMode loopMode;
 @property(nonatomic) BOOL resumeEnabled;              // YES, nil store disables persistence
 @property(nonatomic) BOOL automaticAdvance;           // YES

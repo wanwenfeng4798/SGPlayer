@@ -22,6 +22,7 @@ def run(command, **kwargs):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--device', required=True, help='Connected iPhone UDID or CoreDevice identifier')
+    parser.add_argument("--auto-only", action="store_true", help="Run only automatic backend routing after building/installing")
     args = parser.parse_args()
     required = (ROOT / '.xcode-version').read_text().strip()
     version = subprocess.check_output(['xcodebuild', '-version'], text=True).splitlines()[0]
@@ -47,31 +48,50 @@ def main():
     device = ['xcrun', 'devicectl', 'device']
     run([*device, 'install', 'app', '--device', args.device, app,
          '--json-output', output / 'install.json'])
-    run_id = str(uuid.uuid4())
-    run([*device, 'process', 'launch', '--device', args.device, '--terminate-existing',
-         '--json-output', output / 'launch.json', BUNDLE, '--', '--sgplayer-smoke-test',
-         f'--sgplayer-smoke-run={run_id}'])
-    result_file = output / 'smoke-result.json'
-    result = None
-    for _ in range(84):
+    if not args.auto_only:
+        run_id = str(uuid.uuid4())
+        run([*device, 'process', 'launch', '--device', args.device, '--terminate-existing',
+             '--json-output', output / 'launch.json', BUNDLE, '--', '--sgplayer-smoke-test',
+             f'--sgplayer-smoke-run={run_id}'])
+        result_file = output / 'smoke-result.json'
+        result = None
+        for _ in range(84):
+            time.sleep(5)
+            command = [*device, 'copy', 'from', '--device', args.device, '--domain-type',
+                       'appDataContainer', '--domain-identifier', BUNDLE, '--source',
+                       'Documents/sgplayer-device-smoke.json', '--destination', result_file]
+            received = subprocess.run(list(map(str, command)), cwd=ROOT, capture_output=True)
+            if received.returncode == 0:
+                candidate = json.loads(result_file.read_text())
+                if candidate.get('runID') == run_id:
+                    result = candidate
+                    break
+        if not result:
+            raise SystemExit('No result from the current iPhone playback test within 420 seconds')
+        print(json.dumps(result, indent=2), flush=True)
+        if not result.get('passed') or result.get('ffmpegVersion') != '9.0.2':
+            raise SystemExit('iPhone playback regression failed')
+        run([*device, 'copy', 'from', '--device', args.device, '--domain-type', 'appDataContainer',
+             '--domain-identifier', BUNDLE, '--source', 'Documents/sgplayer-device-smoke.png',
+             '--destination', output / 'smoke-frame.png'])
+    auto_run = str(uuid.uuid4())
+    run([*device, 'process', 'launch', '--device', args.device, '--terminate-existing', BUNDLE,
+         '--', '--sgplayer-features', '--sgplayer-auto-kernel-test', f'--sgplayer-smoke-run={auto_run}'])
+    auto_result = output / 'auto-kernel-test.json'
+    for _ in range(30):
         time.sleep(5)
-        command = [*device, 'copy', 'from', '--device', args.device, '--domain-type',
-                   'appDataContainer', '--domain-identifier', BUNDLE, '--source',
-                   'Documents/sgplayer-device-smoke.json', '--destination', result_file]
-        received = subprocess.run(list(map(str, command)), cwd=ROOT, capture_output=True)
+        received = subprocess.run([*device, 'copy', 'from', '--device', args.device, '--domain-type',
+                                  'appDataContainer', '--domain-identifier', BUNDLE, '--source',
+                                  'Documents/auto-kernel-test.json', '--destination', str(auto_result)], capture_output=True)
         if received.returncode == 0:
-            candidate = json.loads(result_file.read_text())
-            if candidate.get('runID') == run_id:
-                result = candidate
+            candidate = json.loads(auto_result.read_text())
+            if candidate.get('runID') == auto_run:
+                if not candidate.get('passed'):
+                    raise SystemExit('Automatic kernel routing failed: ' + json.dumps(candidate))
+                print('PASS automatic kernels: native MP4, playable extensionless MP4, FFV1 MKV, misnamed FFV1 MP4', flush=True)
                 break
-    if not result:
-        raise SystemExit('No result from the current iPhone playback test within 420 seconds')
-    print(json.dumps(result, indent=2), flush=True)
-    if not result.get('passed') or result.get('ffmpegVersion') != '9.0.2':
-        raise SystemExit('iPhone playback regression failed')
-    run([*device, 'copy', 'from', '--device', args.device, '--domain-type', 'appDataContainer',
-         '--domain-identifier', BUNDLE, '--source', 'Documents/sgplayer-device-smoke.png',
-         '--destination', output / 'smoke-frame.png'])
+    else:
+        raise SystemExit('No automatic kernel result from current run')
     # Leave the normal demo UI ready for manual testing.
     run([*device, 'process', 'launch', '--device', args.device, '--terminate-existing',
          '--json-output', output / 'normal-launch.json', BUNDLE])

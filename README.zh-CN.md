@@ -12,7 +12,7 @@ SGPlayer 是面向 iOS、macOS 和 tvOS 的媒体播放框架。
 - 后台播放、RTMP/RTSP 流媒体和播放倍速设置。
 - 多音视频轨道、H.264/H.265 硬件解码。
 - 播放状态通知与线程安全。
-- 显式 FFmpeg/原生内核选择，共用字幕、弹幕、水印、GIF 贴纸、画中画合成。
+- 自动检测并选择 FFmpeg/原生内核，保留显式调试接口，共用字幕、弹幕、水印、GIF 贴纸、画中画合成。
 - FFmpeg libavfilter / 原生 Core Image 滤镜、ASS 样式、截图与独立 GIF 片段导出。
 - 有限片段视频/效果导出与纯音频双声道 AAC 导出，支持 MP4/M4A、Matroska、MPEG-TS。
 

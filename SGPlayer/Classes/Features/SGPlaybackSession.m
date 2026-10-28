@@ -1,6 +1,7 @@
 #import "SGPlaybackSession.h"
 #import "SGPlayer.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SGFFmpeg.h"
 
 @implementation SGPlaybackRendition
 - (instancetype)initWithIdentifier:(NSString *)identifier title:(NSString *)title URL:(NSURL *)URL {
@@ -55,6 +56,7 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
 @property(nonatomic) BOOL transitioning;
 @property(nonatomic) BOOL looping;
 @property(nonatomic) BOOL closed;
+@property(nonatomic, strong) AVURLAsset *selectionAsset;
 @end
 
 @implementation SGPlaybackSession
@@ -63,6 +65,7 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
     NSParameterAssert(controller);
     if ((self = [super init])) {
         _controller = controller;
+        _kernelPolicy = SGKernelSelectionPolicyAutomatic;
         _resumeStore = store;
         _items = @[];
         _events = [NSMutableArray array];
@@ -235,19 +238,46 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
                                  completion(success);
                              }];
     };
-    SGPlaybackKernel kernel = self.controller.kernel;
-    if (choose && self.kernelPolicy != SGKernelSelectionPolicyManual) {
-        NSSet *nativeExtensions = [NSSet setWithArray:@[ @"mp4", @"mov", @"m4v", @"m4a", @"mp3", @"aac", @"m3u8" ]];
-        kernel = self.kernelPolicy == SGKernelSelectionPolicyPreferNative &&
-                         [nativeExtensions containsObject:URL.pathExtension.lowercaseString]
-                     ? SGPlaybackKernelNative
-                     : SGPlaybackKernelFFmpeg;
+    [self.selectionAsset cancelLoading];
+    self.selectionAsset = nil;
+    void (^select)(SGPlaybackKernel) = ^(SGPlaybackKernel kernel) {
+        SGPlaybackSession *self = weakSelf;
+        if (!self || self.closed || revision != self.revision) { completion(NO); return; }
+        if (kernel != self.controller.kernel) [self.controller resetToKernel:kernel];
+        replace();
+    };
+    if (!choose || self.kernelPolicy == SGKernelSelectionPolicyManual) {
+        select(self.controller.kernel);
+    } else if (self.requiresFFmpeg || self.kernelPolicy == SGKernelSelectionPolicyPreferFFmpeg) {
+        select(SGPlaybackKernelFFmpeg);
+    } else {
+        [self.controller resetToKernel:self.controller.kernel];
+        // AVFoundation inspects the container and codecs on this device, including URLs without extensions.
+        AVURLAsset *asset = [AVURLAsset URLAssetWithURL:URL options:nil];
+        self.selectionAsset = asset;
+        __block BOOL finished = NO;
+        void (^finish)(BOOL) = ^(BOOL native) {
+            if (finished) return;
+            finished = YES;
+            [asset cancelLoading];
+            select(native ? SGPlaybackKernelNative : SGPlaybackKernelFFmpeg);
+        };
+        [asset loadValuesAsynchronouslyForKeys:@[@"playable", @"tracks"] completionHandler:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                BOOL native = [asset statusOfValueForKey:@"playable" error:nil] == AVKeyValueStatusLoaded &&
+                              [asset statusOfValueForKey:@"tracks" error:nil] == AVKeyValueStatusLoaded && asset.playable;
+                if (native) for (AVAssetTrack *track in asset.tracks) {
+                    if (([track.mediaType isEqual:AVMediaTypeVideo] || [track.mediaType isEqual:AVMediaTypeAudio]) &&
+                        !track.decodable) { native = NO; break; }
+                }
+                finish(native);
+            });
+        }];
+        double timeout = isfinite(self.loadingTimeout) ? MIN(5, MAX(1, self.loadingTimeout)) : 5;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ finish(NO); });
     }
-    // Select an empty backend before replacement: never reopen the previous item's URL.
-    if (kernel != self.controller.kernel)
-        [self.controller resetToKernel:kernel];
-    replace();
 }
+
 - (BOOL)next {
     if (![self currentItem])
         return NO;
@@ -363,6 +393,15 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
     [self.resumeStore setObject:positions forKey:@"SGPlayer.resume.v1"];
     self.lastSavedAt = CACurrentMediaTime();
 }
+- (BOOL)isCompatibilityError:(NSError *)error {
+    if ([error.domain isEqual:AVFoundationErrorDomain])
+        return error.code == AVErrorFileFormatNotRecognized || error.code == AVErrorDecoderNotFound ||
+               error.code == AVErrorDecodeFailed;
+    if ([error.domain hasPrefix:@"SGPlayer-Error-FFmpeg"])
+        return error.code == AVERROR_DECODER_NOT_FOUND || error.code == AVERROR_DEMUXER_NOT_FOUND ||
+               error.code == AVERROR_INVALIDDATA || error.code == AVERROR(ENOSYS);
+    return [error.domain isEqual:@"SGPlayer-Error-SGErrorCode"] && error.code == SGErrorCodeNoValidFormat;
+}
 - (void)tick {
     if (self.closed || ![self currentItem])
         return;
@@ -376,17 +415,13 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
     CFTimeInterval now = CACurrentMediaTime();
     NSError *error = self.error ?: self.controller.error;
     if (error && !self.transitioning && self.state != SGPlaybackSessionStateFailed) {
-        if (self.kernelPolicy != SGKernelSelectionPolicyManual && self.fallbackCount == 0) {
+        if (self.kernelPolicy != SGKernelSelectionPolicyManual && self.fallbackCount == 0 && !self.requiresFFmpeg &&
+            [self isCompatibilityError:error]) {
             self.fallbackCount++;
-            double position = CMTimeGetSeconds(self.controller.currentTime);
             [self event:@"fallback" details:@{@"from" : @(self.controller.kernel), @"code" : @(error.code)}];
-            [self.controller resetToKernel:self.controller.kernel == SGPlaybackKernelFFmpeg ? SGPlaybackKernelNative
-                                                                                            : SGPlaybackKernelFFmpeg];
-            [self openURL:[self currentItem].renditions[self.selectedRendition].URL
-                    position:isfinite(position) ? position : self.recoveryPosition
-                chooseKernel:NO
-                  completion:^(BOOL success){
-                  }];
+            SGPlaybackKernel target = self.controller.kernel == SGPlaybackKernelNative ? SGPlaybackKernelFFmpeg : SGPlaybackKernelNative;
+            [self switchToKernel:target completion:^(BOOL success) {}];
+
         } else {
             self.error = error;
             [self.controller pause];
@@ -503,6 +538,8 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
     return data && [data writeToURL:URL options:NSDataWritingAtomic error:error];
 }
 - (void)close {
+    [self.selectionAsset cancelLoading];
+    self.selectionAsset = nil;
     if (self.closed)
         return;
     [self saveResumePosition];

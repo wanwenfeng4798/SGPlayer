@@ -88,3 +88,9 @@ controller.effects.watermarks = @[watermark];
 CJK 字体使每个平台框架增加约 15.7 MiB，其官方来源、SHA-256 和字节数固定于 `scripts/subtitle-font.json`。
 
 第三方声明见 [licenses](../licenses/README.md)。Portions of this software are copyright © The FreeType Project (www.freetype.org). All rights reserved.
+
+### 自动选择内核
+
+`SGPlaybackSession` 默认使用 `SGKernelSelectionPolicyAutomatic`。打开媒体时异步检查 AVFoundation 对实际容器及音视频轨道的可播放、可解码能力，无需依赖文件后缀。探测最多等待 5 秒（不超过加载超时），未确认原生支持时使用 FFmpeg。格式或解码错误最多自动切换一次；网络、权限及普通加载超时不触发内核切换。切换复用控制器，保留播放意图、进度、倍速和已加载字幕。快速换源和关闭会使旧探测结果失效。
+
+SwiftUI 的 `SGPlayerModel()` 默认自动选择；显式传入 `.ffmpeg` 或 `.native` 可强制指定。共用控件默认隐藏内核按钮，调试时设置 `showsKernelSelection = YES` 可显示。直接使用 `SGPlayer` 或 `SGPlaybackController` 的现有显式接口保持原行为。

@@ -4,7 +4,7 @@ import SGPlayer
 
 @MainActor
 public final class SGPlayerModel: ObservableObject {
-    public enum Engine: Int { case ffmpeg, native }
+    public enum Engine: Int { case ffmpeg, native, automatic }
     public enum State: Int { case idle, loading, playing, paused, buffering, ended, failed }
     @Published public private(set) var state: State = .idle
     @Published public private(set) var error: Error?
@@ -18,7 +18,7 @@ public final class SGPlayerModel: ObservableObject {
     private let engine: Engine
     private let resumeStore: UserDefaults?
 
-    public init(engine: Engine = .ffmpeg, resumeStore: UserDefaults? = .standard) {
+    public init(engine: Engine = .automatic, resumeStore: UserDefaults? = .standard) {
         self.engine = engine
         self.resumeStore = resumeStore
     }
@@ -76,9 +76,10 @@ public final class SGPlayerModel: ObservableObject {
         close()
         boundView = ObjectIdentifier(host)
         hostView = host
-        let controller = SGPlaybackController(kernel: SGPlaybackKernel(rawValue: engine.rawValue)!, view: host.surface)
+        let controller = SGPlaybackController(kernel: SGPlaybackKernel(rawValue: engine == .automatic ? 0 : engine.rawValue)!, view: host.surface)
         controller.effects.subtitleFallbackFontURL = Bundle.module.url(forResource: "NotoSansCJKsc-Regular", withExtension: "otf", subdirectory: "Fonts")
         let session = SGPlaybackSession(controller: controller, resumeStore: resumeStore)
+        session.kernelPolicy = engine == .automatic ? .automatic : .manual
         self.session = session
         session.changed = { [weak self] session in
             DispatchQueue.main.async { [weak self] in

@@ -600,7 +600,7 @@
 #endif
 #endif
     for (NSUInteger i = 0; i < self.buttons.count; i++)
-        [self.buttons[i] setHidden:self.controlsLocked && i != 11];
+        [self.buttons[i] setHidden:(self.controlsLocked && i != 11) || (i == 5 && !self.showsKernelSelection)];
     BOOL loading = self.session.state == SGPlaybackSessionStateLoading;
     [self.buttons[1] setEnabled:!loading];
     [self.buttons[2] setEnabled:!loading];

@@ -39,11 +39,15 @@
 - (void)resetToKernel:(SGPlaybackKernel)kernel {self.resets++;self.testKernel=kernel;self.testError=nil;self.testTime=kCMTimeInvalid;}
 - (void)replaceWithURL:(NSURL *)URL atTime:(CMTime)time completion:(void (^)(BOOL))completion {
     [self.openedURLs addObject:URL];self.testTime=time;
-    self.testError=self.failOpen?[NSError errorWithDomain:@"test" code:99 userInfo:nil]:nil;
+    self.testError=self.failOpen?[NSError errorWithDomain:@"SGPlayer-Error-FFmpeg" code:AVERROR_INVALIDDATA userInfo:nil]:nil;
     if(self.deferCompletion)self.pendingCompletion=completion;else completion(!self.failOpen);
 }
 - (void)replaceWithURL:(NSURL *)URL atTime:(CMTime)time preservingSubtitles:(BOOL)preserve completion:(void (^)(BOOL))completion { [self replaceWithURL:URL atTime:time completion:completion]; }
 - (void)seekToTime:(CMTime)time completion:(void (^)(BOOL))completion {self.testTime=time;if(self.deferCompletion)self.pendingCompletion=completion;else completion(YES);}
+- (void)switchToKernel:(SGPlaybackKernel)kernel completion:(void (^)(BOOL))completion {
+    NSURL *URL=self.openedURLs.lastObject;CMTime time=self.testTime;[self resetToKernel:kernel];
+    [self replaceWithURL:URL atTime:time completion:completion];
+}
 - (void)close {self.testPlaying=NO;}
 @end
 @interface SGPlaybackSession (PolicyTests)
@@ -58,7 +62,7 @@ static void TestMacKeyboardPolicies(void) {
     __weak SGPlaybackControls *released=nil;
     @autoreleasepool {
     SGSessionTestController *backend=[SGSessionTestController new];
-    SGPlaybackSession *session=[[SGPlaybackSession alloc]initWithController:backend resumeStore:nil];CHECK([session loadItems:@[SessionTestItem(@"keys")] startIndex:0 autoPlay:YES error:nil]);
+    SGPlaybackSession *session=[[SGPlaybackSession alloc]initWithController:backend resumeStore:nil];session.kernelPolicy=SGKernelSelectionPolicyManual;CHECK([session loadItems:@[SessionTestItem(@"keys")] startIndex:0 autoPlay:YES error:nil]);
     SGPlaybackControls *controls=[[SGPlaybackControls alloc]initWithSession:session];
     NSEvent *(^key)(NSString *,unsigned short,NSEventModifierFlags,BOOL)=^NSEvent *(NSString *text,unsigned short code,NSEventModifierFlags flags,BOOL repeat){return [NSEvent keyEventWithType:NSEventTypeKeyDown location:NSZeroPoint modifierFlags:flags timestamp:0 windowNumber:0 context:nil characters:text charactersIgnoringModifiers:text isARepeat:repeat keyCode:code];};
     CHECK([controls handleKeyEvent:key(@" ",49,0,YES)]&&backend.playing);
@@ -86,7 +90,7 @@ static void TestPlaybackSessionPolicies(NSString *directory) {
     NSString *suite=[@"SGPlayer.tests." stringByAppendingString:NSUUID.UUID.UUIDString];
     NSUserDefaults *store=[[NSUserDefaults alloc]initWithSuiteName:suite];
     SGSessionTestController *backend=[SGSessionTestController new];
-    SGPlaybackSession *session=[[SGPlaybackSession alloc]initWithController:backend resumeStore:store];
+    SGPlaybackSession *session=[[SGPlaybackSession alloc]initWithController:backend resumeStore:store];session.kernelPolicy=SGKernelSelectionPolicyManual;
     SGPlaybackItem *first=SessionTestItem(@"first"),*second=SessionTestItem(@"second");NSError *error=nil;
     CHECK((![session loadItems:@[first,first] startIndex:0 autoPlay:NO error:&error] && error));
     CHECK(([session loadItems:@[first,second] startIndex:0 autoPlay:YES error:&error]));CHECK(backend.playing && session.selectedIndex==0);
@@ -103,11 +107,15 @@ static void TestPlaybackSessionPolicies(NSString *directory) {
     [session pause];backend.pendingCompletion(YES);backend.pendingCompletion=nil;backend.deferCompletion=NO;CHECK(!backend.playing);
     [session clearLoop];session.loopMode=SGPlaybackLoopModeAll;CHECK([session selectItemAtIndex:1]);[session play];
     backend.testTime=backend.testDuration;[session tick];CHECK(session.selectedIndex==0 && backend.playing);
-    session.kernelPolicy=SGKernelSelectionPolicyPreferNative;backend.failOpen=YES;
+    session.kernelPolicy=SGKernelSelectionPolicyPreferFFmpeg;backend.failOpen=YES;
     CHECK([session selectItemAtIndex:0]);NSUInteger before=backend.openedURLs.count;
-    [session tick];CHECK(backend.resets==1 && backend.openedURLs.count==before+1);
+    [session tick];CHECK(backend.resets>=1 && backend.openedURLs.count==before+1);
     [session tick];[session tick];CHECK(session.state==SGPlaybackSessionStateFailed && backend.openedURLs.count==before+1);
     backend.failOpen=NO;[session retry];CHECK(session.state==SGPlaybackSessionStatePaused);
+    // Transport errors must never trigger a second backend request.
+    backend.testError=[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorNotConnectedToInternet userInfo:nil];
+    before=backend.openedURLs.count;[session tick];CHECK(session.state==SGPlaybackSessionStateFailed&&backend.openedURLs.count==before);
+    backend.testError=nil;[session retry];
     NSData *report=[NSJSONSerialization dataWithJSONObject:session.diagnostics options:0 error:&error];CHECK(report);
     NSString *reportText=[[NSString alloc]initWithData:report encoding:NSUTF8StringEncoding];CHECK(![reportText containsString:@"secret"] && ![reportText containsString:@"example.com"]);
     CHECK([session exportDiagnosticsToURL:[NSURL fileURLWithPath:[directory stringByAppendingPathComponent:@"session-diagnostics.json"]] error:&error]);
@@ -116,7 +124,7 @@ static void TestPlaybackSessionPolicies(NSString *directory) {
     CHECK([session selectItemAtIndex:1]);void (^current)(BOOL)=[backend.pendingCompletion copy];
     stale(NO);CHECK(session.selectedIndex==1 && session.state==SGPlaybackSessionStateLoading);current(YES);CHECK(session.error==nil);
     backend.pendingCompletion=nil;backend.deferCompletion=NO;
-    SGSessionTestController *otherBackend=[SGSessionTestController new];SGPlaybackSession *other=[[SGPlaybackSession alloc]initWithController:otherBackend resumeStore:nil];
+    SGSessionTestController *otherBackend=[SGSessionTestController new];SGPlaybackSession *other=[[SGPlaybackSession alloc]initWithController:otherBackend resumeStore:nil];other.kernelPolicy=SGKernelSelectionPolicyManual;
     SGPlaybackCoordinator *group=[SGPlaybackCoordinator new];[group registerSession:session];[group activateSession:other];CHECK(otherBackend.playing&&!backend.playing);[group pauseAll];CHECK(!otherBackend.playing);
     [other close];[session close];CHECK(![session next]);[store removePersistentDomainForName:suite];
     puts("PASS session playlist/resume/rendition/A-B/pause race/bounded fallback/stale completions/private diagnostics/coordinator");
@@ -218,7 +226,7 @@ static void TestRemuxAVSynchronization(NSString *directory,NSString *videoPath) 
 }
 
 static void TestPlaybackCoverState(void) {
-    SGSessionTestController *backend=[SGSessionTestController new];SGPlaybackSession *session=[[SGPlaybackSession alloc]initWithController:backend resumeStore:nil];
+    SGSessionTestController *backend=[SGSessionTestController new];SGPlaybackSession *session=[[SGPlaybackSession alloc]initWithController:backend resumeStore:nil];session.kernelPolicy=SGKernelSelectionPolicyManual;
     SGPLFView *view=[[SGPLFView alloc]initWithFrame:CGRectMake(0,0,320,180)];view.accessibilityLabel=@"Original media";
     NSImage *image=[[NSImage alloc]initWithSize:NSMakeSize(32,32)];SGPlaybackCover *cover=[[SGPlaybackCover alloc]initWithSession:session view:view image:image];
     CHECK(cover.visible&&[view.accessibilityLabel isEqual:@"Video cover"]);

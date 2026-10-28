@@ -244,6 +244,7 @@
     [self.nativePlayer replaceCurrentItemWithPlayerItem:nil];
     self.ffmpegPlayer=nil;self.nativePlayer=nil;self.nativeOutput=nil;self.nativeAudioGroup=nil;self.URL=nil;
     self.kernel=kernel;self.effects.kernel=kernel;[self.effects flush];
+    self.presentedFrameCount=0;self.lastOutputTime=kCMTimeInvalid;
     self.lastBuffer=nil;self.nativeSourceBuffer=nil;self.controllerError=nil;
     [self.displayLayer flushAndRemoveImage];[self setupBackend];
 }

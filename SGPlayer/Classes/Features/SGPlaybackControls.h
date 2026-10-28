@@ -9,6 +9,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithSession:(SGPlaybackSession *)session;
 @property(nonatomic, strong, readonly) SGPlaybackSession *session;
 @property(nonatomic) BOOL controlsLocked;
+/// Advanced debugging override. Hidden by default; normal playback selects automatically.
+@property(nonatomic) BOOL showsKernelSelection;
 /// Replace/detach the cover on the video surface; nil removes it.
 - (void)setCoverImage:(nullable SGPLFImage *)image forView:(SGPLFView *)view;
 // Hosts own window, orientation and presentation policy.

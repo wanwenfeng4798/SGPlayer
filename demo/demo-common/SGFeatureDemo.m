@@ -76,7 +76,8 @@
         if([NSProcessInfo.processInfo.arguments containsObject:@"--sgplayer-feature-invalid-source"]) self.mediaURL=[NSBundle.mainBundle.bundleURL URLByAppendingPathComponent:@"missing-test-media.mp4"];
         if(videoExportDemo){NSURL *fixture=[NSBundle.mainBundle URLForResource:@"transcode-av" withExtension:@"mp4"];if(fixture){self.mediaURL=fixture;self.sources=@[fixture];}self.playback.volume=.1;}
         if(sessionControls){[self setupSessionControls:controls width:width height:height];return self;}
-        if (self.mediaURL) [self.playback replaceWithURL:self.mediaURL];
+        self.session=[[SGPlaybackSession alloc]initWithController:self.playback resumeStore:nil];
+        if (self.mediaURL) [self openAutomaticURL:self.mediaURL];
         NSArray *actions=@[@"play",@"pause",@"seek",@"kernel",@"subtitles",@"danmaku",@"watermark",@"filter",@"sticker",@"pip",@"export",@"stop",@"source",@"vr",@"rate",@"screenshot"];
         NSArray *titles=@[@"播放 Play",@"暂停 Pause",@"跳转 Seek",@"内核 Kernel",@"字幕 Subs",@"弹幕 Danmaku",@"水印 Mark",@"滤镜 Filter",@"贴纸 Sticker",@"画中画 PiP",@"导出 GIF",@"停止 Stop",@"媒体 Source",@"全景 VR",@"倍速 Rate",@"截图 Capture"];
         NSMutableDictionary *buttons=[NSMutableDictionary dictionary];
@@ -98,6 +99,7 @@
             [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventPrimaryActionTriggered];
             button.autoresizingMask=UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
 #endif
+            if(i==3 && ![NSProcessInfo.processInfo.arguments containsObject:@"--sgplayer-debug-kernel"]) button.hidden=YES;
             [view addSubview:button];buttons[actions[i]]=button;
         }
         self.buttons=buttons;
@@ -117,12 +119,13 @@
         };
         self.timer=[NSTimer scheduledTimerWithTimeInterval:0.2 repeats:YES block:^(NSTimer *timer){[weakSelf updateStatus];}];
         [self.playback play];
+        if([NSProcessInfo.processInfo.arguments containsObject:@"--sgplayer-auto-kernel-test"]) [self verifyAutomaticKernels];
     }return self;
 }
 - (void)dealloc {[self.timer invalidate];[self.presentation restore];[self.session close];[self.playback close];[self.exporter cancel];[self.transcoder cancel];}
 - (void)setupSessionControls:(CGFloat)height width:(CGFloat)width height:(CGFloat)containerHeight {
     NSUserDefaults *store=[NSProcessInfo.processInfo.arguments containsObject:@"--sgplayer-no-resume"]?nil:NSUserDefaults.standardUserDefaults;
-    self.session=[[SGPlaybackSession alloc]initWithController:self.playback resumeStore:store];self.session.kernelPolicy=SGKernelSelectionPolicyPreferFFmpeg;
+    self.session=[[SGPlaybackSession alloc]initWithController:self.playback resumeStore:store];self.session.kernelPolicy=SGKernelSelectionPolicyAutomatic;
     NSArray *sources=[NSProcessInfo.processInfo.arguments containsObject:@"--sgplayer-feature-orientation-test"]&&self.mediaURL?@[self.mediaURL]:self.sources;
     BOOL coverTest=[NSProcessInfo.processInfo.arguments containsObject:@"--sgplayer-cover-test"];
     if(coverTest&&self.mediaURL){sources=@[[NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"SGPlayer-cover-missing.mp4"]],self.mediaURL];self.session.kernelPolicy=SGKernelSelectionPolicyManual;}
@@ -186,6 +189,40 @@
 - (void)writeHLSResult:(NSDictionary *)result {
     [[NSJSONSerialization dataWithJSONObject:result options:NSJSONWritingPrettyPrinted error:nil]writeToURL:[[self directory]URLByAppendingPathComponent:@"hls-test.json"] options:NSDataWritingAtomic error:nil];
 }
+- (void)verifyAutomaticKernels {
+    NSURL *native=[NSBundle.mainBundle URLForResource:@"orientation" withExtension:@"mp4"];
+    NSURL *ffmpeg=[NSBundle.mainBundle URLForResource:@"ffv1" withExtension:@"mkv"];
+    if(!native || !ffmpeg)return;
+    NSURL *extensionless=[[self directory]URLByAppendingPathComponent:@"native-without-extension"];
+    NSURL *misnamed=[[self directory]URLByAppendingPathComponent:@"ffv1-misnamed.mp4"];
+    [[NSData dataWithContentsOfURL:native]writeToURL:extensionless atomically:YES];
+    [[NSData dataWithContentsOfURL:ffmpeg]writeToURL:misnamed atomically:YES];
+    NSArray *URLs=@[native,extensionless,ffmpeg,misnamed];
+    __block NSUInteger index=0;__block NSTimeInterval started=NSDate.timeIntervalSinceReferenceDate;
+    NSMutableArray *results=[NSMutableArray array];
+    [self.timer invalidate];[self openAutomaticURL:URLs[0]];
+    __weak typeof(self) weakSelf=self;
+    self.timer=[NSTimer scheduledTimerWithTimeInterval:.2 repeats:YES block:^(NSTimer *timer){
+        SGFeatureDemo *self=weakSelf;if(!self){[timer invalidate];return;}
+        BOOL ready=self.session.state==SGPlaybackSessionStatePlaying&&self.playback.presentedFrameCount>=3;
+        if(!ready&&!self.session.error&&NSDate.timeIntervalSinceReferenceDate-started<25)return;
+        SGPlaybackKernel expected=index<2?SGPlaybackKernelNative:SGPlaybackKernelFFmpeg;
+        BOOL passed=ready&&!self.session.error&&(index==1 || self.playback.kernel==expected);
+        [results addObject:@{@"index":@(index),@"passed":@(passed),@"kernel":@(self.playback.kernel),@"frames":@(self.playback.presentedFrameCount)}];
+        if(!passed || ++index==URLs.count){
+            NSString *run=@"";for(NSString *arg in NSProcessInfo.processInfo.arguments)if([arg hasPrefix:@"--sgplayer-smoke-run="])run=[arg substringFromIndex:@"--sgplayer-smoke-run=".length];
+            NSDictionary *report=@{@"passed":@(passed),@"runID":run,@"cases":results};
+            [[NSJSONSerialization dataWithJSONObject:report options:NSJSONWritingPrettyPrinted error:nil]writeToURL:[[self directory]URLByAppendingPathComponent:@"auto-kernel-test.json"] atomically:YES];
+            [timer invalidate];return;
+        }
+        started=NSDate.timeIntervalSinceReferenceDate;[self openAutomaticURL:URLs[index]];
+    }];
+}
+- (void)openAutomaticURL:(NSURL *)URL {
+    SGPlaybackRendition *rendition=[[SGPlaybackRendition alloc]initWithIdentifier:@"original" title:@"Original" URL:URL];
+    SGPlaybackItem *item=[[SGPlaybackItem alloc]initWithIdentifier:URL.lastPathComponent title:URL.lastPathComponent renditions:@[rendition]];
+    [self.session loadItems:@[item] startIndex:0 autoPlay:YES error:nil];
+}
 - (void)buttonPressed:(id)sender {
 #if SGPLATFORM_TARGET_OS_MAC
     NSString *identifier=[sender identifier];
@@ -237,10 +274,10 @@
     } else if ([identifier isEqual:@"pip"]) {
         if(self.playback.pictureInPictureActive)[self.playback stopPictureInPicture];else{NSError *error=nil;[self.playback startPictureInPicture:&error];self.lastActionError=error;}
     } else if ([identifier isEqual:@"stop"]) { [self.playback pause];[self.exporter cancel];[self.playback stopPictureInPicture];if(self.transcoder){self.exportGeneration++;[self.transcoder cancel];self.transcoder=nil;self.busy=NO;self.exportMessage=self.audioExportDemo?@"Audio:cancelled":@"Video:cancelled";} }
-    else if ([identifier isEqual:@"source"] && !self.busy && self.sources.count) {if(self.videoExportDemo){self.exportedVideo=nil;self.exportMessage=nil;[self setVideoExportButtonReady:NO];}self.sourceIndex=(self.sourceIndex+1)%self.sources.count;self.mediaURL=self.sources[self.sourceIndex];[self.playback replaceWithURL:self.mediaURL];[self.playback play];}
+    else if ([identifier isEqual:@"source"] && !self.busy && self.sources.count) {if(self.videoExportDemo){self.exportedVideo=nil;self.exportMessage=nil;[self setVideoExportButtonReady:NO];}self.sourceIndex=(self.sourceIndex+1)%self.sources.count;self.mediaURL=self.sources[self.sourceIndex];[self openAutomaticURL:self.mediaURL];}
     else if ([identifier isEqual:@"vr"]) {
-        if(self.playback.kernel==SGPlaybackKernelFFmpeg){SGVideoRenderer *renderer=self.playback.ffmpegPlayer.videoRenderer;renderer.displayMode=renderer.displayMode==SGDisplayModePlane?SGDisplayModeVR:SGDisplayModePlane;}
-        else self.lastActionError=[NSError errorWithDomain:@"SGDemo" code:3 userInfo:@{NSLocalizedDescriptionKey:@"VR projection requires the FFmpeg/Metal backend"}];
+        if(self.playback.kernel==SGPlaybackKernelFFmpeg){SGVideoRenderer *renderer=self.playback.ffmpegPlayer.videoRenderer;renderer.displayMode=renderer.displayMode==SGDisplayModePlane?SGDisplayModeVR:SGDisplayModePlane;self.session.requiresFFmpeg=renderer.displayMode!=SGDisplayModePlane;}
+        else {self.session.requiresFFmpeg=YES;[self.session switchToKernel:SGPlaybackKernelFFmpeg completion:^(BOOL success){if(success)self.playback.ffmpegPlayer.videoRenderer.displayMode=SGDisplayModeVR;}];}
     } else if ([identifier isEqual:@"rate"]) self.playback.rate=self.playback.rate==1?0.5:self.playback.rate==0.5?2:1;
     else if ([identifier isEqual:@"screenshot"]) {
         SGPLFImage *image=[self.playback currentImage];NSData *data=nil;
@@ -274,7 +311,7 @@
 - (void)playExportedVideo {
     if(!self.exportedVideo)return;
     SGMediaEffects *effects=self.playback.effects;effects.filter=[SGFilterConfiguration new];effects.subtitles=@[];effects.subtitleTrack=nil;effects.secondarySubtitleTrack=nil;effects.danmaku=@[];effects.watermarks=@[];effects.sticker=nil;
-    self.mediaURL=self.exportedVideo;[self.playback replaceWithURL:self.mediaURL];[self.playback play];self.exportMessage=self.audioExportDemo?@"Audio:playing":@"Video:playing";
+    self.mediaURL=self.exportedVideo;[self openAutomaticURL:self.mediaURL];self.exportMessage=self.audioExportDemo?@"Audio:playing":@"Video:playing";
 }
 - (void)exportVideo {
     self.busy=YES;self.exportMessage=self.audioExportDemo?@"Audio:working":@"Video:working";self.transcoder=[SGMediaTranscoder new];SGMediaTranscoder *exporter=self.transcoder;NSUInteger generation=++self.exportGeneration;

@@ -88,3 +88,7 @@ Apps linking SGPlayer also use AVKit, CoreImage, CoreText, ImageIO, UniformTypeI
 The bundled CJK font adds approximately 15.7 MiB to each framework. Its official source, SHA-256 and byte count are pinned in `scripts/subtitle-font.json`.
 
 Third-party notices are in [licenses](../licenses/README.md). Portions of this software are copyright © The FreeType Project (www.freetype.org). All rights reserved.
+
+### Automatic backend selection
+
+SGPlaybackSession defaults to SGKernelSelectionPolicyAutomatic. AVFoundation inspects the actual asset and audio/video track decoding support on the current device, independent of file extensions. Detection is bounded to five seconds or the configured loading timeout, whichever is shorter. Unconfirmed native support uses FFmpeg. Format/decoder errors permit one fallback; transport, permissions and ordinary loading timeouts do not. requiresFFmpeg keeps VR on FFmpeg. SwiftUI SGPlayerModel() defaults to automatic; explicit .ffmpeg/.native remain forced. Controls hide the kernel override unless showsKernelSelection is enabled. Direct SGPlayer/SGPlaybackController APIs retain explicit behavior.
