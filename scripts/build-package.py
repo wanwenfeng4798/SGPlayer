@@ -71,7 +71,11 @@ def main():
     (output / 'build-report.json').write_text(json.dumps(report, indent=2) + '\n')
     shutil.copy2(ROOT / 'LICENSE', output / 'LICENSE')
     (output / 'README.md').write_text("SGPlayer local Swift package\n\nAdd this extracted folder as a local package in Xcode. Import SGPlayerUI and use SGPlayerModel() for automatic engine selection, or import SGPlayer for Objective-C APIs. Binary-only integrations may use Artifacts/SGPlayer.xcframework; copy Sources/SGPlayerUI/Resources/Fonts and Licenses into the host application's resources. Minimum deployment: iOS/tvOS 15, macOS 12.\n")
-    archive = shutil.make_archive(str(output), 'zip', root_dir=output.parent, base_dir=output.name)
+    # Preserve macOS versioned framework symlinks (Headers, Modules, Versions/Current).
+    # shutil.make_archive records linked directories as empty ZIP directories.
+    archive = output.with_suffix('.zip')
+    archive.unlink(missing_ok=True)
+    subprocess.run(['ditto', '-c', '-k', '--keepParent', str(output), str(archive)], check=True)
     print(f'Package ready: {archive}', flush=True)
 
 if __name__ == '__main__':
