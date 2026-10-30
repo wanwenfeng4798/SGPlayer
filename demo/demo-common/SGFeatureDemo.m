@@ -159,6 +159,40 @@
     self.sessionControls.toggleFullScreen=^{SGFeatureDemo *self=weakSelf;if(!self)return;if(self.presentation.mode==SGPlaybackPresentationModeFullScreen)[self.presentation restore];else[self.presentation showFullScreenInView:self.view];};
     self.sessionControls.dismissPresentation=^{[weakSelf.presentation restore];};
     self.sessionControls.toggleFloatingWindow=^{SGFeatureDemo *self=weakSelf;if(!self)return;if(self.presentation.mode==SGPlaybackPresentationModeFloating)[self.presentation restore];else{CGFloat w=MIN(320,self.view.bounds.size.width-20),h=MIN(208,self.view.bounds.size.height-20);[self.presentation showFloatingInView:self.view frame:CGRectMake(10,10,w,h)];}};
+
+#if !SGPLATFORM_TARGET_OS_TV
+    self.videoView.frame=self.view.bounds;
+    self.sessionControls.frame=self.view.bounds;
+#if SGPLATFORM_TARGET_OS_MAC
+    self.videoView.autoresizingMask=NSViewWidthSizable|NSViewHeightSizable;
+    self.sessionControls.autoresizingMask=NSViewWidthSizable|NSViewHeightSizable;
+#else
+    self.videoView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.sessionControls.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+#endif
+    // Explicit diagnostic demo mode keeps automation data out of the normal toolbar.
+    if([NSProcessInfo.processInfo.arguments containsObject:@"--sgplayer-session-controls"]) {
+        self.sessionControls.showsKernelSelection=YES;
+#if SGPLATFORM_TARGET_OS_MAC
+        NSTextField *diagnostic=[NSTextField labelWithString:@""];
+        diagnostic.frame=NSMakeRect(8,containerHeight-24,width-16,22);
+#else
+        UILabel *diagnostic=[[UILabel alloc]initWithFrame:CGRectMake(8,0,width-16,22)];
+#endif
+        diagnostic.accessibilityIdentifier=@"session.diagnostics";
+        self.statusLabel=diagnostic;[self.view addSubview:diagnostic];
+        self.timer=[NSTimer scheduledTimerWithTimeInterval:.2 repeats:YES block:^(NSTimer *timer){
+            SGFeatureDemo *demo=weakSelf;if(!demo)return;
+            NSArray *states=@[@"Idle",@"Loading",@"Playing",@"Paused",@"Buffering",@"Ended",@"Failed"];
+            NSString *message=[NSString stringWithFormat:@"%@ %.1f / %.1fs %@",states[demo.session.state],CMTimeGetSeconds(demo.playback.currentTime),CMTimeGetSeconds(demo.playback.duration),demo.playback.kernel==SGPlaybackKernelNative?@"Native":@"FFmpeg"];
+#if SGPLATFORM_TARGET_OS_MAC
+            [demo.statusLabel setStringValue:message];
+#else
+            [demo.statusLabel setText:message];
+#endif
+        }];
+    }
+#endif
     self.buttons=@{};
     for(NSString *argument in NSProcessInfo.processInfo.arguments)if([argument hasPrefix:@"--sgplayer-hls-test="])[self verifyHLS:[NSURL URLWithString:[argument substringFromIndex:@"--sgplayer-hls-test=".length]]];
 }

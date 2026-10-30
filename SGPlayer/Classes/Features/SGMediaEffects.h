@@ -13,6 +13,7 @@ typedef NS_ENUM(NSInteger, SGDanmakuMode) {
     SGDanmakuModeScrolling,
     SGDanmakuModeTop,
     SGDanmakuModeBottom,
+    SGDanmakuModeReverse,
 };
 
 @interface SGSubtitleCue : NSObject
@@ -42,10 +43,17 @@ typedef NS_ENUM(NSInteger, SGDanmakuMode) {
 @end
 
 @interface SGDanmakuItem : NSObject
+@property (nonatomic) NSUInteger rgbColor;
+@property (nonatomic) CGFloat fontSize;
 @property (nonatomic) CMTime start;
 @property (nonatomic) NSTimeInterval duration;
 @property (nonatomic) SGDanmakuMode mode;
 @property (nonatomic, copy) NSString *text;
+@end
+
+/// Reads standard Bilibili XML on the calling thread; run remote reads on a worker.
+@interface SGDanmakuReader : NSObject
++ (nullable NSArray<SGDanmakuItem *> *)readURL:(NSURL *)URL error:(NSError **)error;
 @end
 
 @interface SGWatermark : NSObject
@@ -106,6 +114,7 @@ typedef NS_ENUM(NSInteger, SGDanmakuMode) {
 @property (atomic) CGFloat textSize;
 @property (atomic) CGFloat overlayOpacity;
 @property (atomic, copy) NSArray<SGWatermark *> *watermarks;
+@property (atomic) BOOL watermarksEnabled; // YES; hiding preserves loaded watermark content.
 @property (atomic, strong, nullable) SGAnimatedImage *sticker;
 @property (atomic) CGRect stickerRect;
 @property (atomic) NSTimeInterval stickerStart;

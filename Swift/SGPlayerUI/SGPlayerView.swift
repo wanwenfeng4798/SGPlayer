@@ -77,6 +77,7 @@ public final class SGPlayerModel: ObservableObject {
         boundView = ObjectIdentifier(host)
         hostView = host
         let controller = SGPlaybackController(kernel: SGPlaybackKernel(rawValue: engine == .automatic ? 0 : engine.rawValue)!, view: host.surface)
+        controller.pictureInPictureView = host
         controller.effects.subtitleFallbackFontURL = Bundle.module.url(forResource: "NotoSansCJKsc-Regular", withExtension: "otf", subdirectory: "Fonts")
         let session = SGPlaybackSession(controller: controller, resumeStore: resumeStore)
         session.kernelPolicy = engine == .automatic ? .automatic : .manual
@@ -149,6 +150,7 @@ final class SGPlayerHostView: SGPlatformContainer {
         controls.translatesAutoresizingMaskIntoConstraints = false
         addSubview(controls)
         installedControls = controls
+#if os(tvOS)
         installedConstraints = [
             surface.leadingAnchor.constraint(equalTo: leadingAnchor),
             surface.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -159,6 +161,18 @@ final class SGPlayerHostView: SGPlatformContainer {
             controls.bottomAnchor.constraint(equalTo: bottomAnchor),
             controls.heightAnchor.constraint(equalToConstant: 260)
         ]
+#else
+        installedConstraints = [
+            surface.leadingAnchor.constraint(equalTo: leadingAnchor),
+            surface.trailingAnchor.constraint(equalTo: trailingAnchor),
+            surface.topAnchor.constraint(equalTo: topAnchor),
+            surface.bottomAnchor.constraint(equalTo: bottomAnchor),
+            controls.leadingAnchor.constraint(equalTo: leadingAnchor),
+            controls.trailingAnchor.constraint(equalTo: trailingAnchor),
+            controls.bottomAnchor.constraint(equalTo: bottomAnchor),
+            controls.topAnchor.constraint(equalTo: topAnchor)
+        ]
+#endif
         NSLayoutConstraint.activate(installedConstraints)
     }
 }

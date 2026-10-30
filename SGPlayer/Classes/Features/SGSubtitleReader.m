@@ -9,10 +9,50 @@
 - (instancetype)init { if ((self = [super init])) { _language = @"und"; _title = @""; _cues = @[]; _fonts = @{}; } return self; }
 @end
 @implementation SGDanmakuItem
-- (instancetype)init { if ((self = [super init])) { _text = @""; _start = kCMTimeZero; _duration = 6; } return self; }
+- (instancetype)init { if ((self = [super init])) { _text = @""; _start = kCMTimeZero; _duration = 6; _rgbColor = 0xffffff; } return self; }
 @end
 @implementation SGWatermark
 - (instancetype)init { if ((self = [super init])) { _text = @""; _rect = CGRectMake(0.7, 0.04, 0.25, 0.08); _opacity = 1; } return self; }
+@end
+
+
+@interface SGXMLDanmakuParser : NSObject <NSXMLParserDelegate>
+@property(nonatomic,strong) NSMutableArray<SGDanmakuItem *> *items;
+@property(nonatomic,strong) SGDanmakuItem *current;
+@property(nonatomic,strong) NSMutableString *text;
+@end
+@implementation SGXMLDanmakuParser
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)name namespaceURI:(NSString *)uri qualifiedName:(NSString *)qualified attributes:(NSDictionary<NSString *,NSString *> *)attributes {
+    if (![name isEqual:@"d"]) return;
+    NSArray<NSString *> *fields=[attributes[@"p"] componentsSeparatedByString:@","];
+    if (fields.count < 2) return;
+    double seconds=0;NSScanner *scanner=[NSScanner scannerWithString:fields[0]];
+    if (![scanner scanDouble:&seconds] || !scanner.isAtEnd || !isfinite(seconds) || seconds < 0) return;
+    NSInteger mode=fields[1].integerValue;
+    if (mode < 1 || mode > 6) return;
+    self.current=[SGDanmakuItem new];self.text=[NSMutableString string];
+    self.current.start=CMTimeMakeWithSeconds(seconds,600);
+    self.current.mode=mode==4?SGDanmakuModeBottom:mode==5?SGDanmakuModeTop:mode==6?SGDanmakuModeReverse:SGDanmakuModeScrolling;
+    if(fields.count>2)self.current.fontSize=MIN(96,MAX(8,fields[2].doubleValue));
+    if(fields.count>3)self.current.rgbColor=fields[3].longLongValue&0xffffff;
+}
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)text { [self.text appendString:text]; }
+- (void)parser:(NSXMLParser *)parser foundCDATA:(NSData *)data { NSString *text=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];if(text)[self.text appendString:text]; }
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)name namespaceURI:(NSString *)uri qualifiedName:(NSString *)qualified {
+    if(![name isEqual:@"d"])return;
+    if(self.current&&self.text.length){self.current.text=self.text;[self.items addObject:self.current];}
+    self.current=nil;self.text=nil;
+}
+@end
+@implementation SGDanmakuReader
++ (NSArray<SGDanmakuItem *> *)readURL:(NSURL *)URL error:(NSError **)error {
+    NSData *data=[NSData dataWithContentsOfURL:URL options:0 error:error];if(!data)return nil;
+    NSXMLParser *parser=[[NSXMLParser alloc]initWithData:data];
+    parser.shouldResolveExternalEntities=NO;parser.externalEntityResolvingPolicy=NSXMLParserResolveExternalEntitiesNever;
+    SGXMLDanmakuParser *delegate=[SGXMLDanmakuParser new];delegate.items=[NSMutableArray array];parser.delegate=delegate;
+    if(![parser parse]){if(error)*error=parser.parserError;return nil;}
+    return [delegate.items copy];
+}
 @end
 
 static NSString *SGSubtitlePlainText(NSString *ass)

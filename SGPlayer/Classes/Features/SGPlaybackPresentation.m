@@ -14,6 +14,8 @@
 @property(nonatomic, weak) SGPLFView *originalParent;
 @property(nonatomic) CGRect originalFrame;
 @property(nonatomic) NSUInteger originalMask;
+@property(nonatomic) BOOL originalTranslatesMask;
+@property(nonatomic, copy) NSArray<NSLayoutConstraint *> *originalConstraints;
 @property(nonatomic) NSUInteger originalIndex;
 @property(nonatomic, strong) SGPLFView *host;
 @property(nonatomic, readwrite) SGPlaybackPresentationMode mode;
@@ -47,6 +49,20 @@
     self.originalParent = self.surface.superview;
     self.originalFrame = self.surface.frame;
     self.originalMask = self.surface.autoresizingMask;
+    self.originalTranslatesMask = self.surface.translatesAutoresizingMaskIntoConstraints;
+    NSMutableArray *saved = [NSMutableArray array];
+    for (NSLayoutConstraint *constraint in self.surface.constraints) {
+        if (constraint.firstItem == self.surface && (!constraint.secondItem || constraint.secondItem == self.surface)) [saved addObject:constraint];
+    }
+    for (SGPLFView *owner = self.originalParent; owner; owner = owner.superview) {
+        for (NSLayoutConstraint *constraint in owner.constraints) {
+            if (constraint.firstItem == self.surface || constraint.secondItem == self.surface) [saved addObject:constraint];
+        }
+    }
+    self.originalConstraints = saved;
+    [NSLayoutConstraint deactivateConstraints:saved];
+    self.surface.translatesAutoresizingMaskIntoConstraints = YES;
+
     self.originalIndex = [self.surface.superview.subviews indexOfObject:self.surface];
 #if SGPLATFORM_TARGET_OS_TV
     self.host = [[SGPresentationHost alloc] initWithFrame:frame];
@@ -59,7 +75,7 @@
     self.host.layer.backgroundColor = NSColor.blackColor.CGColor;
     self.host.autoresizingMask = mode == SGPlaybackPresentationModeFullScreen ? NSViewWidthSizable | NSViewHeightSizable
                                                                               : NSViewMinXMargin | NSViewMinYMargin;
-    NSButton *close = [NSButton buttonWithTitle:@"Restore" target:self action:@selector(restore)];
+    NSButton *close = [NSButton buttonWithTitle:@"返回播放器" target:self action:@selector(restoreFromControl)];
     close.frame = NSMakeRect(0, frame.size.height - 28, 80, 28);
     close.autoresizingMask = NSViewMinYMargin;
     NSPanGestureRecognizer *drag = [[NSPanGestureRecognizer alloc] initWithTarget:self action:@selector(drag:)];
@@ -76,9 +92,9 @@
                                      : UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
     CGFloat header = SGPLATFORM_TARGET_OS_TV ? 60 : 44;
     UIButton *close = [UIButton buttonWithType:UIButtonTypeSystem];
-    [close setTitle:@"Restore" forState:UIControlStateNormal];
+    [close setTitle:@"返回播放器" forState:UIControlStateNormal];
     close.frame = CGRectMake(0, 0, SGPLATFORM_TARGET_OS_TV ? 160 : 100, header);
-    [close addTarget:self action:@selector(restore) forControlEvents:UIControlEventPrimaryActionTriggered];
+    [close addTarget:self action:@selector(restoreFromControl) forControlEvents:UIControlEventPrimaryActionTriggered];
     close.titleLabel.font = [UIFont systemFontOfSize:SGPLATFORM_TARGET_OS_TV ? 24 : 17];
     UIPanGestureRecognizer *drag = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(drag:)];
     if (mode == SGPlaybackPresentationModeFloating)
@@ -89,7 +105,7 @@
     self.surface.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 #endif
     close.accessibilityIdentifier = @"session.restore";
-    close.accessibilityLabel = @"Restore playback surface";
+    close.accessibilityLabel = @"返回播放器";
     [self.host addSubview:self.surface];
     [self.host addSubview:close];
 #if SGPLATFORM_TARGET_OS_TV
@@ -119,13 +135,15 @@
     return YES;
 }
 - (BOOL)showFloatingInView:(SGPLFView *)container frame:(CGRect)frame {
+    if (!container) return NO;
+    CGRect safe = container.bounds;
 #if SGPLATFORM_TARGET_OS_IPHONE_OR_TV
-    CGRect safe = UIEdgeInsetsInsetRect(container.bounds, container.safeAreaInsets);
+    safe = UIEdgeInsetsInsetRect(container.bounds, container.safeAreaInsets);
+#endif
     frame.size.width = MIN(frame.size.width, safe.size.width);
     frame.size.height = MIN(frame.size.height, safe.size.height);
     frame.origin.x = MIN(MAX(CGRectGetMinX(safe), frame.origin.x), CGRectGetMaxX(safe) - frame.size.width);
     frame.origin.y = MIN(MAX(CGRectGetMinY(safe), frame.origin.y), CGRectGetMaxY(safe) - frame.size.height);
-#endif
     return [self presentIn:container frame:frame mode:SGPlaybackPresentationModeFloating];
 }
 - (BOOL)showFullScreenInView:(SGPLFView *)container {
@@ -155,6 +173,7 @@
                          MAX(CGRectGetMinY(bounds), CGRectGetMaxY(bounds) - frame.size.height));
     self.host.frame = frame;
 }
+- (void)restoreFromControl { if(self.dismissalRequested)self.dismissalRequested();else [self restore]; }
 - (void)restore {
     if (!self.host)
         return;
@@ -173,9 +192,21 @@
 #endif
         self.surface.frame = self.originalFrame;
         self.surface.autoresizingMask = self.originalMask;
+        self.surface.translatesAutoresizingMaskIntoConstraints = self.originalTranslatesMask;
+        [NSLayoutConstraint activateConstraints:self.originalConstraints];
     }
     [self.host removeFromSuperview];
+    if (parent) {
+#if SGPLATFORM_TARGET_OS_MAC
+        self.surface.needsLayout = YES;
+        [parent layoutSubtreeIfNeeded];
+#else
+        [self.surface setNeedsLayout];
+        [parent layoutIfNeeded];
+#endif
+    }
     self.host = nil;
+    self.originalConstraints = nil;
     self.originalParent = nil;
     self.mode = SGPlaybackPresentationModeInline;
 }

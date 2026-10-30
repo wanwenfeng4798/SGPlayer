@@ -9,10 +9,22 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithSession:(SGPlaybackSession *)session;
 @property(nonatomic, strong, readonly) SGPlaybackSession *session;
 @property(nonatomic) BOOL controlsLocked;
+/// Disabling controls disables playback gestures/shortcuts; Escape can still dismiss a presentation.
+@property(nonatomic) BOOL controlsEnabled;
+@property(nonatomic) BOOL showsVolumeControl;
+@property(nonatomic) BOOL showsSettingsControl;
+@property(nonatomic) BOOL showsFullscreenControl;
+@property(nonatomic) BOOL showsLockControl;
+@property(nonatomic) BOOL keepLastFrameWhenComplete;
+@property(nonatomic) BOOL coverEnabled;
+@property(nonatomic, copy, nullable) void (^screenshotCaptured)(SGPLFImage *image);
 /// Advanced debugging override. Hidden by default; normal playback selects automatically.
 @property(nonatomic) BOOL showsKernelSelection;
 /// Replace/detach the cover on the video surface; nil removes it.
 - (void)setCoverImage:(nullable SGPLFImage *)image forView:(SGPLFView *)view;
+/// WebVTT sprite preview; relative image URLs are resolved against the VTT file.
+- (void)loadTimelineSpritesFromURL:(nullable NSURL *)URL completion:(void (^)(NSError * _Nullable error))completion;
+- (void)timelineImageAtTime:(CMTime)time completion:(void (^)(SGPLFImage * _Nullable image, NSError * _Nullable error))completion;
 // Hosts own window, orientation and presentation policy.
 @property(nonatomic, copy, nullable) void (^toggleFullScreen)(void);
 @property(nonatomic, copy, nullable) void (^toggleFloatingWindow)(void);

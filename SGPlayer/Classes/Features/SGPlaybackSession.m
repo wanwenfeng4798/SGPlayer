@@ -28,6 +28,14 @@
 }
 @end
 
+@implementation SGPlaybackAdvertisement
+- (instancetype)initWithURL:(NSURL *)URL atTime:(CMTime)time skipAfter:(NSTimeInterval)seconds {
+    NSParameterAssert(URL.scheme.length && CMTIME_IS_NUMERIC(time) && CMTimeGetSeconds(time) >= 0 && isfinite(seconds) && seconds >= 0);
+    if ((self = [super init])) { _URL = [URL copy]; _time = time; _skipAfter = seconds; }
+    return self;
+}
+@end
+
 static NSError *SGSessionError(NSInteger code, NSString *message) {
     return [NSError errorWithDomain:@"SGPlaybackSession" code:code userInfo:@{NSLocalizedDescriptionKey : message}];
 }
@@ -57,6 +65,13 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
 @property(nonatomic) BOOL looping;
 @property(nonatomic) BOOL closed;
 @property(nonatomic, strong) AVURLAsset *selectionAsset;
+@property(nonatomic, readwrite, getter=isAdvertisementActive) BOOL advertisementActive;
+@property(nonatomic) double advertisementReturnTime;
+@property(nonatomic) BOOL advertisementReturnPlaying;
+@property(nonatomic) BOOL advertisementSubtitles;
+@property(nonatomic) BOOL advertisementDanmaku;
+@property(nonatomic) double advertisementSkipAfter;
+@property(nonatomic, strong) NSMutableIndexSet *firedAdvertisements;
 @end
 
 @implementation SGPlaybackSession
@@ -68,6 +83,8 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
         _kernelPolicy = SGKernelSelectionPolicyAutomatic;
         _resumeStore = store;
         _items = @[];
+        _advertisements = @[];
+        _firedAdvertisements = [NSMutableIndexSet indexSet];
         _events = [NSMutableArray array];
         _selectedIndex = NSNotFound;
         _selectedRendition = NSNotFound;
@@ -154,6 +171,7 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
             *error = SGSessionError(1, @"Playlist requires unique identifiers, valid URLs and an in-range start index");
         return NO;
     }
+    [self cancelAdvertisement];
     [self saveResumePosition];
     self.items = items;
     self.selectedIndex = NSNotFound;
@@ -180,7 +198,9 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
     NSAssert(NSThread.isMainThread, @"Main thread required");
     if (self.closed || index < 0 || index >= (NSInteger)self.items.count)
         return NO;
+    [self cancelAdvertisement];
     [self saveResumePosition];
+    [self.firedAdvertisements removeAllIndexes];
     self.selectedIndex = index;
     self.selectedRendition = 0;
     self.loopRange = kCMTimeRangeInvalid;
@@ -294,7 +314,7 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
 }
 - (void)selectRenditionAtIndex:(NSInteger)index completion:(void (^)(BOOL))completion {
     SGPlaybackItem *item = [self currentItem];
-    if (self.closed || self.transitioning || index < 0 || index >= (NSInteger)item.renditions.count) {
+    if (self.closed || self.advertisementActive || self.transitioning || index < 0 || index >= (NSInteger)item.renditions.count) {
         completion(NO);
         return;
     }
@@ -319,7 +339,7 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
     return YES;
 }
 - (void)switchToKernel:(SGPlaybackKernel)kernel completion:(void (^)(BOOL))completion {
-    if (self.closed || self.transitioning) {
+    if (self.closed || self.advertisementActive || self.transitioning) {
         completion(NO);
         return;
     }
@@ -359,6 +379,7 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
     [self saveResumePosition];
 }
 - (void)retry {
+    if (self.advertisementActive) { [self finishAdvertisement]; return; }
     if (![self currentItem] || self.closed)
         return;
     double time = CMTimeGetSeconds(self.controller.currentTime);
@@ -372,7 +393,7 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
 }
 - (void)saveResumePosition {
     SGPlaybackItem *item = [self currentItem];
-    if (!item || !self.resumeEnabled || !self.resumeStore || self.transitioning)
+    if (!item || self.advertisementActive || !self.resumeEnabled || !self.resumeStore || self.transitioning)
         return;
     double time = CMTimeGetSeconds(self.controller.currentTime), duration = CMTimeGetSeconds(self.controller.duration);
     if (!isfinite(time) || time < 0)
@@ -392,6 +413,63 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
     }
     [self.resumeStore setObject:positions forKey:@"SGPlayer.resume.v1"];
     self.lastSavedAt = CACurrentMediaTime();
+}
+- (void)setAdvertisements:(NSArray<SGPlaybackAdvertisement *> *)advertisements {
+    _advertisements = [advertisements copy] ?: @[];
+    [self.firedAdvertisements removeAllIndexes];
+}
+- (NSTimeInterval)advertisementSkipRemaining {
+    if (!self.advertisementActive) return 0;
+    double time = CMTimeGetSeconds(self.controller.currentTime);
+    return MAX(0, self.advertisementSkipAfter - (isfinite(time) ? MAX(0,time) : 0));
+}
+- (BOOL)canSkipAdvertisement { return self.advertisementActive && !self.transitioning && self.advertisementSkipRemaining <= .001; }
+- (void)cancelAdvertisement {
+    if (!self.advertisementActive) return;
+    self.advertisementActive = NO;
+    self.transitioning = YES;
+    self.controller.effects.subtitlesEnabled = self.advertisementSubtitles;
+    self.controller.effects.danmakuEnabled = self.advertisementDanmaku;
+}
+- (BOOL)playAdvertisementWithURL:(NSURL *)URL skipAfter:(NSTimeInterval)seconds {
+    NSAssert(NSThread.isMainThread, @"Main thread required");
+    if (self.closed || self.transitioning || self.advertisementActive || ![self currentItem] || !URL.scheme.length || !isfinite(seconds) || seconds < 0) return NO;
+    [self saveResumePosition];
+    double time = CMTimeGetSeconds(self.controller.currentTime);
+    self.advertisementReturnTime = isfinite(time) ? MAX(0,time) : 0;
+    self.advertisementReturnPlaying = self.controller.playing;
+    self.advertisementSkipAfter = seconds;
+    self.advertisementSubtitles = self.controller.effects.subtitlesEnabled;
+    self.advertisementDanmaku = self.controller.effects.danmakuEnabled;
+    self.controller.effects.subtitlesEnabled = NO;
+    self.controller.effects.danmakuEnabled = NO;
+    self.advertisementActive = YES;
+    [self event:@"ad.start" details:@{}];
+    [self.controller play];
+    __weak typeof(self) weakSelf = self;
+    [self openURL:URL position:0 chooseKernel:NO completion:^(BOOL success) {
+        if (!success && weakSelf.advertisementActive) [weakSelf finishAdvertisement];
+    }];
+    return YES;
+}
+- (void)finishAdvertisement {
+    if (!self.advertisementActive || self.closed) return;
+    double position = self.advertisementReturnTime;
+    BOOL playing = self.advertisementReturnPlaying;
+    [self cancelAdvertisement];
+    [self event:@"ad.finish" details:@{}];
+    if (playing) [self.controller play]; else [self.controller pause];
+    [self openURL:[self currentItem].renditions[self.selectedRendition].URL position:position chooseKernel:NO completion:^(BOOL success) {}];
+}
+- (BOOL)playPreRollAdvertisementWithURL:(NSURL *)URL skipAfter:(NSTimeInterval)seconds {
+    BOOL started=[self playAdvertisementWithURL:URL skipAfter:seconds];
+    if (started) { self.advertisementReturnTime=0; self.advertisementReturnPlaying=YES; }
+    return started;
+}
+- (BOOL)skipAdvertisement {
+    if (!self.canSkipAdvertisement) return NO;
+    [self event:@"ad.skip" details:@{}];
+    [self finishAdvertisement]; return YES;
 }
 - (BOOL)isCompatibilityError:(NSError *)error {
     if ([error.domain isEqual:AVFoundationErrorDomain])
@@ -414,6 +492,7 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
 #endif
     CFTimeInterval now = CACurrentMediaTime();
     NSError *error = self.error ?: self.controller.error;
+    if (self.advertisementActive && error && !self.transitioning) { [self finishAdvertisement]; return; }
     if (error && !self.transitioning && self.state != SGPlaybackSessionStateFailed) {
         if (self.kernelPolicy != SGKernelSelectionPolicyManual && self.fallbackCount == 0 && !self.requiresFFmpeg &&
             [self isCompatibilityError:error]) {
@@ -445,9 +524,20 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
     BOOL ended = isfinite(time) && isfinite(duration) && duration > 0 && time >= duration - 0.05;
     if (self.controller.kernel == SGPlaybackKernelFFmpeg)
         ended |= (self.controller.ffmpegPlayer.sstateInfo.playback & SGPlaybackStateFinished) != 0;
+    if (self.advertisementActive) {
+        if (ended) { [self finishAdvertisement]; return; }
+    } else if (self.controller.playing && isfinite(time)) {
+        for (NSUInteger i = 0; i < self.advertisements.count; i++) {
+            SGPlaybackAdvertisement *ad = self.advertisements[i];
+            if (![self.firedAdvertisements containsIndex:i] && time >= CMTimeGetSeconds(ad.time)) {
+                [self.firedAdvertisements addIndex:i];
+                [self playAdvertisementWithURL:ad.URL skipAfter:ad.skipAfter]; return;
+            }
+        }
+    }
     BOOL endWasPlaying =
         ended && (self.state == SGPlaybackSessionStatePlaying || self.state == SGPlaybackSessionStateBuffering);
-    if (!self.looping && (self.controller.playing || endWasPlaying) && CMTIMERANGE_IS_VALID(self.loopRange) &&
+    if (!self.advertisementActive && !self.looping && (self.controller.playing || endWasPlaying) && CMTIMERANGE_IS_VALID(self.loopRange) &&
         (ended || (isfinite(time) && time >= CMTimeGetSeconds(CMTimeRangeGetEnd(self.loopRange))))) {
         self.looping = YES;
         NSUInteger revision = self.revision;
@@ -517,6 +607,8 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
     CFTimeInterval now = CACurrentMediaTime();
     return @{
         @"schema" : @1,
+        @"advertisementActive" : @(self.advertisementActive),
+        @"canSkipAdvertisement" : @(self.canSkipAdvertisement),
         @"state" : @(self.state),
         @"itemIndex" : @(self.selectedIndex),
         @"renditionIndex" : @(self.selectedRendition),
@@ -542,6 +634,7 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
     self.selectionAsset = nil;
     if (self.closed)
         return;
+    [self cancelAdvertisement];
     [self saveResumePosition];
     self.closed = YES;
     self.revision++;

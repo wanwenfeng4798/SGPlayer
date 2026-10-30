@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Real counters from the most recent AVPlayer access-log event; empty without a native log.
 /// Bitrates are bits/second; transferred bytes and downloaded media seconds refer to that event.
 @property (nonatomic, copy, readonly) NSDictionary<NSString *, NSNumber *> *nativePlaybackMetrics;
+@property (nonatomic, copy) AVLayerVideoGravity videoGravity; // aspect fit / aspect fill / stretch, shared by both kernels
 @property (nonatomic) float volume; // 0...1, applies to both backends
 @property (nonatomic) NSTimeInterval sourceLoadingTimeout; // 20 seconds; finite, 1...120
 @property (nonatomic, readonly) BOOL playing;
@@ -29,7 +30,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) NSError *error;
 @property (nonatomic, readonly) NSUInteger presentedFrameCount;
 @property (nonatomic, readonly) NSUInteger backgroundFrameCount;
+/// iOS uses AVKit PiP; macOS uses a native nonactivating floating panel.
 @property (nonatomic, readonly) BOOL pictureInPictureActive;
+/// Composite view to move on macOS (include controls/transforms); nil uses the rendering view.
+@property (nonatomic, weak, nullable) SGPLFView *pictureInPictureView;
+/// Opt-in primary-player automatic PiP on app background/minimization.
+@property (nonatomic) BOOL automaticPictureInPictureEnabled;
 @property (nonatomic, strong, readonly) AVPictureInPictureController *pictureInPictureController;
 @property (nonatomic, copy, nullable) void (^pictureInPictureChanged)(BOOL active, NSError * _Nullable error);
 @property (nonatomic, copy, nullable) void (^restoreInterface)(void (^completion)(BOOL restored));
@@ -47,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pause;
 - (void)seekToTime:(CMTime)time completion:(void (^)(BOOL success))completion;
 - (void)switchToKernel:(SGPlaybackKernel)kernel completion:(void (^)(BOOL success))completion;
+- (void)loadDanmakuFromURL:(NSURL *)URL completion:(void (^)(NSError * _Nullable error))completion;
 - (void)loadSubtitlesFromURL:(NSURL *)URL completion:(void (^)(NSError * _Nullable error))completion;
 - (BOOL)selectSubtitleTrack:(NSInteger)index; // -1 disables subtitles
 - (BOOL)selectSecondarySubtitleTrack:(NSInteger)index; // -1 disables the second track

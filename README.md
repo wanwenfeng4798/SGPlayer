@@ -33,6 +33,8 @@ The list above describes framework features; observed verification coverage is d
 - Metal
 - AudioToolbox
 
+macOS Picture in Picture uses an AppKit floating panel inside the framework, moving the same video/control container; iOS uses system AVKit. Capability snapshots expose `pictureInPictureBackend` and `systemPictureInPicture` to distinguish them. `scripts/test-pip-layout.py --logic-only` checks both kernels and window lifecycle; rerun without this flag on an unlocked desktop for visible-pixel acceptance.
+
 ## Requirements
 
 - iOS 15.0 or later

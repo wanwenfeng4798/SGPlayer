@@ -39,6 +39,14 @@ typedef NS_ENUM(NSInteger, SGKernelSelectionPolicy) {
 @property(nonatomic, copy, readonly) NSArray<SGPlaybackRendition *> *renditions;
 @end
 
+/// An interstitial scheduled against the content timeline. Each entry fires once per selected item.
+@interface SGPlaybackAdvertisement : NSObject
+- (instancetype)initWithURL:(NSURL *)URL atTime:(CMTime)time skipAfter:(NSTimeInterval)seconds;
+@property(nonatomic, copy, readonly) NSURL *URL;
+@property(nonatomic, readonly) CMTime time;
+@property(nonatomic, readonly) NSTimeInterval skipAfter;
+@end
+
 /// Main-thread session policy. Owns its controller's source and polls at 10 Hz; call close when finished.
 /// Resume positions are scoped to stable item identifiers, never to credential-bearing URLs.
 @interface SGPlaybackSession : NSObject
@@ -73,6 +81,15 @@ typedef NS_ENUM(NSInteger, SGKernelSelectionPolicy) {
 - (void)pause;
 - (void)retry;
 - (void)saveResumePosition;
+@property(nonatomic, copy) NSArray<SGPlaybackAdvertisement *> *advertisements;
+@property(nonatomic, readonly, getter=isAdvertisementActive) BOOL advertisementActive;
+@property(nonatomic, readonly) BOOL canSkipAdvertisement;
+@property(nonatomic, readonly) NSTimeInterval advertisementSkipRemaining;
+/// Interrupts the current content item; restores the same rendition and position on end, failure or skip.
+- (BOOL)playAdvertisementWithURL:(NSURL *)URL skipAfter:(NSTimeInterval)seconds;
+/// Plays a preroll, then starts the selected content from zero.
+- (BOOL)playPreRollAdvertisementWithURL:(NSURL *)URL skipAfter:(NSTimeInterval)seconds;
+- (BOOL)skipAdvertisement;
 /// JSON-safe snapshot: elapsed times are monotonic; URLs and arbitrary error descriptions are excluded.
 - (NSDictionary<NSString *, id> *)diagnostics;
 - (BOOL)exportDiagnosticsToURL:(NSURL *)URL error:(NSError **)error;

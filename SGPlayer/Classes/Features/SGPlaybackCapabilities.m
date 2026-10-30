@@ -15,7 +15,15 @@
         @"hardwareH264" : @(VTIsHardwareDecodeSupported(kCMVideoCodecType_H264)),
         @"hardwareHEVC" : @(VTIsHardwareDecodeSupported(kCMVideoCodecType_HEVC)),
         @"hardwareAV1" : @(VTIsHardwareDecodeSupported(kCMVideoCodecType_AV1)),
+        #if TARGET_OS_OSX
+        @"pictureInPicture" : @YES,
+        @"systemPictureInPicture" : @NO,
+        @"pictureInPictureBackend" : @"appKitPanel",
+#else
         @"pictureInPicture" : @([AVPictureInPictureController isPictureInPictureSupported]),
+        @"systemPictureInPicture" : @([AVPictureInPictureController isPictureInPictureSupported]),
+        @"pictureInPictureBackend" : @"avKitSampleBuffer",
+#endif
         @"filters" : filters
     };
 }

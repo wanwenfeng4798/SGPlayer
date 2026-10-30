@@ -145,7 +145,7 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
 - (instancetype)init {
     if ((self = [super init])) {
         _filter = [[SGFilterConfiguration alloc] init]; _subtitles = @[]; _danmaku = @[]; _watermarks = @[];
-        _subtitlesEnabled = YES; _danmakuEnabled = YES; _maximumDanmakuCount = 40; _textSize = 28; _overlayOpacity = 1;
+        _watermarksEnabled = YES; _subtitlesEnabled = YES; _danmakuEnabled = YES; _maximumDanmakuCount = 40; _textSize = 28; _overlayOpacity = 1;
         _subtitleVerticalPosition=.06;_secondarySubtitleVerticalPosition=.80;
         _subtitleFallbackFontURL = [[NSBundle bundleForClass:SGMediaEffects.class] URLForResource:@"NotoSansCJKsc-Regular" withExtension:@"otf"];
         _stickerRect = CGRectMake(0.05, 0.05, 0.2, 0.2);
@@ -159,14 +159,14 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
         SGMediaEffects *copy=[SGMediaEffects new];copy.kernel=self.kernel;copy.softwareRendering=self.softwareRendering;copy.filter=self.filter;
         copy.subtitleTrack=SGSnapshotTrack(self.subtitleTrack);copy.secondarySubtitleTrack=SGSnapshotTrack(self.secondarySubtitleTrack);copy.subtitles=SGSnapshotCues(self.subtitles);copy.subtitlesEnabled=self.subtitlesEnabled;
         copy.subtitleOffset=self.subtitleOffset;copy.secondarySubtitleOffset=self.secondarySubtitleOffset;copy.subtitleVerticalPosition=self.subtitleVerticalPosition;copy.secondarySubtitleVerticalPosition=self.secondarySubtitleVerticalPosition;copy.subtitleFallbackFontURL=self.subtitleFallbackFontURL;
-        NSMutableArray *events=[NSMutableArray array];for(SGDanmakuItem *item in self.danmaku){SGDanmakuItem *event=[SGDanmakuItem new];event.start=item.start;event.duration=item.duration;event.mode=item.mode;event.text=item.text;[events addObject:event];}
+        NSMutableArray *events=[NSMutableArray array];for(SGDanmakuItem *item in self.danmaku){SGDanmakuItem *event=[SGDanmakuItem new];event.start=item.start;event.duration=item.duration;event.mode=item.mode;event.text=item.text;event.fontSize=item.fontSize;event.rgbColor=item.rgbColor;[events addObject:event];}
         copy.danmaku=events;copy.danmakuEnabled=self.danmakuEnabled;copy.maximumDanmakuCount=self.maximumDanmakuCount;copy.textSize=self.textSize;copy.overlayOpacity=self.overlayOpacity;
         NSMutableArray *marks=[NSMutableArray array];for(SGWatermark *mark in self.watermarks){SGWatermark *item=[SGWatermark new];item.text=mark.text;item.image=mark.image;item.rect=mark.rect;item.opacity=mark.opacity;[marks addObject:item];}
-        copy.watermarks=marks;copy.sticker=self.sticker;copy.stickerRect=self.stickerRect;copy.stickerStart=self.stickerStart;return copy;
+        copy.watermarks=marks;copy.watermarksEnabled=self.watermarksEnabled;copy.sticker=self.sticker;copy.stickerRect=self.stickerRect;copy.stickerStart=self.stickerStart;return copy;
     }
 }
 - (void)flush { @synchronized (self) { if (_graph) avfilter_graph_free(&_graph); _source = NULL; _sink = NULL; self.graphKey = nil; self.lastError = nil; } }
-- (BOOL)active { return self.filter.active || (self.subtitlesEnabled && (self.subtitles.count||self.secondarySubtitleTrack.cues.count)) || (self.danmakuEnabled && self.danmaku.count) || self.watermarks.count || self.sticker; }
+- (BOOL)active { return self.filter.active || (self.subtitlesEnabled && (self.subtitles.count||self.secondarySubtitleTrack.cues.count)) || (self.danmakuEnabled && self.danmaku.count) || (self.watermarksEnabled && self.watermarks.count) || self.sticker; }
 - (CIImage *)textImage:(NSString *)text size:(CGFloat)size width:(CGFloat)width {
     if (!text.length || text.length > 8192 || width <= 0) return nil;
     size = MIN(96, MAX(8, size)); width = MIN(8192, ceil(width));
@@ -424,14 +424,20 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
                 if (lane == NSNotFound) continue;
                 laneEnd[lane] = @(start + duration); // Stable assignments survive seeks and event expiry.
                 if (seconds >= start + duration || visible >= MIN(200,self.maximumDanmakuCount)) continue;
-                CGFloat textWidth = MIN(w * 1.5, MAX(fontSize, item.text.length * fontSize * 0.8));
-                CIImage *text = [self textImage:[item.text stringByReplacingOccurrencesOfString:@"\n" withString:@" "] size:fontSize width:textWidth];
-                CGFloat x = item.mode == SGDanmakuModeScrolling ? w - (w + textWidth) * ((seconds - start) / duration) : (w - textWidth)/2;
+                CGFloat itemSize = item.fontSize > 0 ? MIN(96,MAX(8,item.fontSize)) : fontSize;
+                CGFloat textWidth = MIN(w * 1.5, MAX(itemSize, item.text.length * itemSize * 0.8));
+                CIImage *text = [self textImage:[item.text stringByReplacingOccurrencesOfString:@"\n" withString:@" "] size:itemSize width:textWidth];
+                if(item.rgbColor!=0xffffff)text=[text imageByApplyingFilter:@"CIColorMatrix" withInputParameters:@{
+                    @"inputRVector":[CIVector vectorWithX:((item.rgbColor>>16)&255)/255.0 Y:0 Z:0 W:0],
+                    @"inputGVector":[CIVector vectorWithX:0 Y:((item.rgbColor>>8)&255)/255.0 Z:0 W:0],
+                    @"inputBVector":[CIVector vectorWithX:0 Y:0 Z:(item.rgbColor&255)/255.0 W:0]}];
+                double phase=(seconds-start)/duration;
+                CGFloat x = item.mode == SGDanmakuModeScrolling ? w-(w+textWidth)*phase : item.mode==SGDanmakuModeReverse ? -textWidth+(w+textWidth)*phase : (w-textWidth)/2;
                 CGFloat y = h * 0.9 - (lane + 1) * (fontSize + 8);
                 image = [self place:text rect:CGRectMake(x, y, text.extent.size.width, text.extent.size.height) opacity:opacity on:image]; visible++;
             }
         }
-        for (SGWatermark *mark in self.watermarks) {
+        for (SGWatermark *mark in (self.watermarksEnabled ? self.watermarks : @[])) {
             CGRect r = mark.rect;
             CIImage *overlay = mark.image ?: [self textImage:mark.text size:fontSize width:MAX(1,r.size.width*w)];
             image = [self place:overlay rect:CGRectMake(r.origin.x*w, (1-r.origin.y-r.size.height)*h, r.size.width*w, r.size.height*h) opacity:mark.opacity on:image];

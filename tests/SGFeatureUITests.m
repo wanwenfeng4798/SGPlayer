@@ -84,6 +84,21 @@
     return parts.count>1?[parts[1] doubleValue]:-1;
 }
 - (void)pressSession:(NSString *)name {
+#if !TARGET_OS_TV
+    NSDictionary *menuTitles=@{@"back":@"后退 10 秒",@"forward":@"前进 10 秒",@"previous":@"上一集",@"next":@"下一集",@"kernel":@"播放内核",@"audio":@"切换音轨",@"subtitles":@"切换字幕",@"quality":@"切换清晰度",@"retry":@"重新加载",@"pip":@"画中画",@"floating":@"悬浮播放"};
+    if(menuTitles[name]) {
+        XCUIElement *settings=self.app.buttons[@"session.settings"];
+        XCTAssertTrue([settings waitForExistenceWithTimeout:10]);
+#if TARGET_OS_OSX
+        [settings click];XCUIElement *item=self.app.menuItems[menuTitles[name]];
+        XCTAssertTrue([item waitForExistenceWithTimeout:5]);[item click];
+#else
+        [settings tap];XCUIElement *item=self.app.buttons[menuTitles[name]];
+        XCTAssertTrue([item waitForExistenceWithTimeout:5]);[item tap];
+#endif
+        return;
+    }
+#endif
     XCUIElement *button=self.app.buttons[[@"session." stringByAppendingString:name]];XCTAssertTrue([button waitForExistenceWithTimeout:10]);
 #if TARGET_OS_OSX
     [button click];
@@ -109,7 +124,11 @@
 #endif
 }
 - (void)waitForSession:(NSString *)text {
+    #if TARGET_OS_TV
     XCUIElement *label=self.app.staticTexts[@"session.status"];
+#else
+    XCUIElement *label=self.app.staticTexts[@"session.diagnostics"];
+#endif
     NSPredicate *predicate=[NSPredicate predicateWithBlock:^BOOL(id object,NSDictionary *bindings){NSString *value=label.label.length?label.label:label.value;return [value containsString:text];}];
     XCTNSPredicateExpectation *expectation=[[XCTNSPredicateExpectation alloc]initWithPredicate:predicate object:label];
     XCTAssertEqual([XCTWaiter waitForExpectations:@[expectation] timeout:35],XCTWaiterResultCompleted,@"Session: %@",label.label);
@@ -118,7 +137,11 @@
 - (void)waitForSessionTime:(double)target tolerance:(double)tolerance {
     __block NSString *lastStatus=@"unavailable";
     NSPredicate *predicate=[NSPredicate predicateWithBlock:^BOOL(id object,NSDictionary *bindings){
-        XCUIElement *label=self.app.staticTexts[@"session.status"];
+        #if TARGET_OS_TV
+    XCUIElement *label=self.app.staticTexts[@"session.status"];
+#else
+    XCUIElement *label=self.app.staticTexts[@"session.diagnostics"];
+#endif
         if (!label.exists)return NO;
         NSString *value=label.label.length?label.label:label.value;
         lastStatus=value?:@"";

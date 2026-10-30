@@ -10,6 +10,8 @@ typedef NS_ENUM(NSInteger, SGPlaybackPresentationMode) {
 @interface SGPlaybackPresentation : NSObject
 - (instancetype)initWithSurface:(SGPLFView *)surface;
 @property(nonatomic, readonly) SGPlaybackPresentationMode mode;
+/// Optional host action for the restore button; direct restore never invokes it.
+@property(nonatomic, copy, nullable) void (^dismissalRequested)(void);
 - (BOOL)showFloatingInView:(SGPLFView *)container frame:(CGRect)frame;
 - (BOOL)showFullScreenInView:(SGPLFView *)container;
 - (void)restore;

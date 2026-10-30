@@ -14,7 +14,6 @@
 - (instancetype)initWithSession:(SGPlaybackSession *)session view:(SGPLFView *)view image:(SGPLFImage *)image {
     NSParameterAssert(session);
     NSParameterAssert(view);
-    NSParameterAssert(image);
     NSAssert(NSThread.isMainThread, @"Main thread required");
     if ((self = [super init])) {
         _session = session;
@@ -73,8 +72,9 @@
     }
     BOOL waiting = session.state == SGPlaybackSessionStateIdle || session.state == SGPlaybackSessionStateLoading ||
                    session.state == SGPlaybackSessionStateFailed || session.controller.presentedFrameCount == 0;
-    self.imageView.hidden = !waiting;
-    if (waiting)
+    BOOL show = session.state == SGPlaybackSessionStateEnded ? !self.keepLastFrameWhenComplete : (self.image != nil && waiting);
+    self.imageView.hidden = !show;
+    if (show)
         self.surface.accessibilityLabel = @"Video cover";
     else if ([self.surface.accessibilityLabel isEqual:@"Video cover"])
         self.surface.accessibilityLabel = self.originalAccessibilityLabel;

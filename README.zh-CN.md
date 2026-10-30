@@ -18,6 +18,8 @@ SGPlayer 是面向 iOS、macOS 和 tvOS 的媒体播放框架。
 
 以上为框架功能清单，实际验证范围见下方测试记录。
 
+macOS 画中画使用框架内的 AppKit 原生浮动面板，移动同一个视频与控制容器；iOS 使用系统 AVKit。能力快照提供 `pictureInPictureBackend` 和 `systemPictureInPicture`，区分两种实现。`scripts/test-pip-layout.py --logic-only` 验证双内核窗口生命周期；可见像素验收需在解锁桌面后省略该参数重跑。
+
 ## 依赖与要求
 
 - FFmpeg 9.0.2、Metal、AudioToolbox。

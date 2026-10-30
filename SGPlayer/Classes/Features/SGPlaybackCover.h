@@ -4,8 +4,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Presentation cover, shown before the first presented frame and on idle/loading/failure.
 /// It follows the video surface's bounds. Main thread only; call close when finished.
 @interface SGPlaybackCover : NSObject
-- (instancetype)initWithSession:(SGPlaybackSession *)session view:(SGPLFView *)view image:(SGPLFImage *)image;
-@property(nonatomic, strong) SGPLFImage *image;
+- (instancetype)initWithSession:(SGPlaybackSession *)session view:(SGPLFView *)view image:(nullable SGPLFImage *)image;
+@property(nonatomic, strong, nullable) SGPLFImage *image;
+@property(nonatomic) BOOL keepLastFrameWhenComplete;
 @property(nonatomic, readonly) BOOL visible;
 - (void)refresh;
 - (void)close;

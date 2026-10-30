@@ -1,9 +1,14 @@
 #import "SGPlaybackController.h"
 #import "SGPlayer.h"
+#import "SGPlaybackPresentation.h"
 #import <QuartzCore/QuartzCore.h>
 #import <CoreMedia/CoreMedia.h>
 
-@interface SGPlaybackController () <AVPictureInPictureSampleBufferPlaybackDelegate, AVPictureInPictureControllerDelegate>
+@interface SGPlaybackController () <AVPictureInPictureSampleBufferPlaybackDelegate, AVPictureInPictureControllerDelegate
+#if SGPLATFORM_TARGET_OS_MAC
+, NSWindowDelegate
+#endif
+>
 @property (nonatomic, readwrite) SGPlaybackKernel kernel;
 @property (nonatomic, strong, readwrite) SGMediaEffects *effects;
 @property (nonatomic, strong, readwrite) SGPlayer *ffmpegPlayer;
@@ -30,6 +35,15 @@
 @property (nonatomic) NSUInteger subtitleGeneration;
 @property (nonatomic) CMTime lastOutputTime;
 @property (nonatomic) NSUInteger foregroundRevision;
+@property (nonatomic) NSUInteger danmakuGeneration;
+@property (nonatomic) BOOL automaticSavedVideoBackgroundPolicy;
+@property (nonatomic) BOOL closed;
+@property (nonatomic) CGSize videoPresentationSize;
+#if SGPLATFORM_TARGET_OS_MAC
+@property(nonatomic, strong) NSPanel *pictureInPicturePanel;
+@property(nonatomic, strong) SGPlaybackPresentation *pictureInPicturePresentation;
+@property(nonatomic, weak) NSWindow *pictureInPictureSourceWindow;
+#endif
 @property (nonatomic, strong) AVMediaSelectionGroup *nativeAudioGroup;
 @property (nonatomic, copy, readwrite) SGNativePlaybackPolicy *nativePlaybackPolicy;
 @end
@@ -42,23 +56,23 @@
         _effects = [[SGMediaEffects alloc] init]; _effects.kernel = kernel;
         _nativePlaybackPolicy=[SGNativePlaybackPolicy new];
         _context = [CIContext contextWithOptions:@{kCIContextCacheIntermediates:@NO}];
-        _displayLayer = [[AVSampleBufferDisplayLayer alloc] init];
-        _displayLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+        _displayLayer=[AVSampleBufferDisplayLayer new];
+        _videoGravity=AVLayerVideoGravityResizeAspect;_displayLayer.videoGravity=_videoGravity;
 #if SGPLATFORM_TARGET_OS_MAC
-        view.wantsLayer = YES;
+        view.wantsLayer=YES;
+        _displayLayer.autoresizingMask=kCALayerWidthSizable|kCALayerHeightSizable;
 #endif
-        _displayLayer.frame = view.bounds;
+        _displayLayer.frame=view.bounds;[view.layer insertSublayer:_displayLayer atIndex:0];
+        CMTimebaseRef timebase=NULL;CMTimebaseCreateWithSourceClock(NULL,CMClockGetHostTimeClock(),&timebase);
+        _displayLayer.controlTimebase=timebase;if(timebase)CFRelease(timebase);
+        AVPictureInPictureControllerContentSource *source=[[AVPictureInPictureControllerContentSource alloc]initWithSampleBufferDisplayLayer:_displayLayer playbackDelegate:self];
+        _pictureInPictureController=[[AVPictureInPictureController alloc]initWithContentSource:source];
+        _pictureInPictureController.delegate=self;
 #if SGPLATFORM_TARGET_OS_MAC
-        _displayLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterAutomaticPictureInPicture:) name:NSApplicationDidResignActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterAutomaticPictureInPicture:) name:NSWindowWillMiniaturizeNotification object:nil];
 #endif
-        [view.layer insertSublayer:_displayLayer atIndex:0];
-        CMTimebaseRef timebase = NULL;
-        CMTimebaseCreateWithSourceClock(NULL,CMClockGetHostTimeClock(),&timebase);
-        _displayLayer.controlTimebase = timebase;
-        if (timebase) CFRelease(timebase);
-        AVPictureInPictureControllerContentSource *source = [[AVPictureInPictureControllerContentSource alloc] initWithSampleBufferDisplayLayer:_displayLayer playbackDelegate:self];
-        _pictureInPictureController = [[AVPictureInPictureController alloc] initWithContentSource:source];
-        _pictureInPictureController.delegate = self;
+
 #if SGPLATFORM_TARGET_OS_IPHONE_OR_TV
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -80,12 +94,25 @@
     if (self.kernel == SGPlaybackKernelFFmpeg) {
         self.ffmpegPlayer = [[SGPlayer alloc] init];
         self.ffmpegPlayer.videoRenderer.view = self.view;
+        self.ffmpegPlayer.videoRenderer.scalingMode = [self.videoGravity isEqual:AVLayerVideoGravityResizeAspectFill] ? SGScalingModeResizeAspectFill : [self.videoGravity isEqual:AVLayerVideoGravityResize] ? SGScalingModeResize : SGScalingModeResizeAspect;
         self.ffmpegPlayer.videoRenderer.effects = self.effects;
+#if SGPLATFORM_TARGET_OS_IPHONE_OR_TV
+        if (self.automaticPictureInPictureEnabled) {
+            self.automaticSavedVideoBackgroundPolicy = self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack;
+            self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack = NO;
+        }
+#endif
         self.ffmpegPlayer.rate = self.rate;
         self.ffmpegPlayer.audioRenderer.volume=self.volume;
         __weak SGPlaybackController *weakSelf = self;
         self.ffmpegPlayer.videoRenderer.frameOutput = ^(SGVideoFrame *frame) {
             SGPlaybackController *self=weakSelf;
+            SGRational size=frame.descriptor.presentationSize;
+            if(size.num>0 && size.den>0) {
+                CGSize presentation=CGSizeMake(size.num,size.den);
+                if(labs([frame.metadata[@"rotate"] integerValue])%180==90) presentation=CGSizeMake(presentation.height,presentation.width);
+                self.videoPresentationSize=presentation;
+            }
             if (!self.background || !self.pictureInPictureActive) return;
             CIImage *source=nil;
             if (frame.pixelBuffer) source=[CIImage imageWithCVPixelBuffer:frame.pixelBuffer];
@@ -108,10 +135,21 @@
         self.nativePlayer.allowsExternalPlayback=YES;
     }
 }
+- (void)setVideoGravity:(AVLayerVideoGravity)gravity {
+    if (![gravity isEqual:AVLayerVideoGravityResizeAspect] && ![gravity isEqual:AVLayerVideoGravityResizeAspectFill] && ![gravity isEqual:AVLayerVideoGravityResize]) return;
+    _videoGravity = [gravity copy];
+    self.ffmpegPlayer.videoRenderer.scalingMode = [gravity isEqual:AVLayerVideoGravityResizeAspectFill] ? SGScalingModeResizeAspectFill : [gravity isEqual:AVLayerVideoGravityResize] ? SGScalingModeResize : SGScalingModeResizeAspect;
+    [self layoutDisplayLayer];
+}
 - (CMTime)currentTime { return self.kernel == SGPlaybackKernelFFmpeg ? self.ffmpegPlayer.timeInfo.playback : self.nativePlayer.currentTime; }
 - (CMTime)duration { return self.kernel == SGPlaybackKernelFFmpeg ? self.ffmpegPlayer.timeInfo.duration : self.nativePlayer.currentItem.duration; }
 - (NSError *)error { return self.controllerError ?: self.effects.lastError ?: (self.kernel == SGPlaybackKernelFFmpeg ? self.ffmpegPlayer.error : self.nativePlayer.currentItem.error ?: self.nativePlayer.error); }
-- (BOOL)pictureInPictureActive { return self.pictureInPictureController.isPictureInPictureActive; }
+- (BOOL)pictureInPictureActive {
+#if SGPLATFORM_TARGET_OS_MAC
+    if (self.pictureInPicturePanel.visible) return YES;
+#endif
+    return self.pictureInPictureController.isPictureInPictureActive;
+}
 - (void)setRate:(float)rate {
     if (!isfinite(rate) || rate <= 0 || rate > 4) { self.controllerError = [NSError errorWithDomain:@"SGPlayback" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Rate must be in (0,4]"}]; return; }
     _rate = rate;
@@ -163,6 +201,7 @@
     return YES;
 }
 - (void)replaceWithURL:(NSURL *)URL {
+    self.videoPresentationSize=CGSizeZero;
     NSAssert(NSThread.isMainThread,@"Main thread required");
     self.generation++; self.subtitleGeneration++; self.URL = URL; self.controllerError = nil;
     self.subtitleTracks = @[]; self.selectedSubtitleTrack = -1; self.effects.subtitles = @[]; self.effects.subtitleTrack = nil;
@@ -186,10 +225,8 @@
 - (void)pause { self.playing = NO; [self.ffmpegPlayer pause]; [self.nativePlayer pause]; [self updatePiPClock]; }
 - (void)updatePiPClock {
     CMTime time = self.currentTime;
-    CMTimebaseRef base = self.displayLayer.controlTimebase;
-    if (base && CMTIME_IS_NUMERIC(time)) {
-        CMTimebaseSetTime(base,time); CMTimebaseSetRate(base,self.playing ? self.rate : 0);
-    }
+    CMTimebaseRef base=self.displayLayer.controlTimebase;
+    if (base && CMTIME_IS_NUMERIC(time)) { CMTimebaseSetTime(base,time);CMTimebaseSetRate(base,self.playing?self.rate:0); }
     [self.pictureInPictureController invalidatePlaybackState];
 }
 - (void)seekToTime:(CMTime)time completion:(void (^)(BOOL))completion {
@@ -257,6 +294,19 @@
     [self replaceWithURL:URL atTime:time completion:completion];
     self.subtitleTracks=tracks;[self selectSubtitleTrack:selected];[self selectSecondarySubtitleTrack:secondary];
 }
+- (void)loadDanmakuFromURL:(NSURL *)URL completion:(void (^)(NSError *))completion {
+    NSUInteger generation = ++self.danmakuGeneration;
+    self.effects.danmakuEnabled = YES;
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0), ^{
+        NSError *failure = nil;
+        NSArray *items = [SGDanmakuReader readURL:URL error:&failure];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (generation != self.danmakuGeneration) { completion([NSError errorWithDomain:@"SGDanmaku" code:2 userInfo:@{NSLocalizedDescriptionKey:@"Danmaku load superseded"}]); return; }
+            if (items) self.effects.danmaku = items;
+            completion(failure);
+        });
+    });
+}
 - (void)loadSubtitlesFromURL:(NSURL *)URL completion:(void (^)(NSError *))completion {
     NSUInteger generation = ++self.subtitleGeneration;
     __weak SGPlaybackController *weakSelf = self;
@@ -280,8 +330,26 @@
     for(SGSubtitleTrack *track in self.subtitleTracks)if(track.index==index){self.selectedSecondarySubtitleTrack=index;self.effects.secondarySubtitleTrack=track;return YES;}
     return NO;
 }
+- (void)layoutDisplayLayer {
+    // Give AVKit a video-shaped source layer instead of carrying inline
+    // letterboxing into its remote PiP presentation.
+    AVLayerVideoGravity gravity = self.videoGravity;
+    CGRect frame = self.view.bounds;
+    if (self.lastBuffer && [gravity isEqual:AVLayerVideoGravityResizeAspect]) {
+        CVPixelBufferRef buffer = (__bridge CVPixelBufferRef)self.lastBuffer;
+        frame = AVMakeRectWithAspectRatioInsideRect(CGSizeMake(CVPixelBufferGetWidth(buffer),CVPixelBufferGetHeight(buffer)),frame);
+    }
+    if (CGRectEqualToRect(self.displayLayer.frame,frame) && [self.displayLayer.videoGravity isEqual:gravity]) return;
+    [CATransaction begin]; [CATransaction setDisableActions:YES];
+    self.displayLayer.videoGravity = gravity;
+    self.displayLayer.frame = frame;
+    [CATransaction commit];
+}
 - (void)tick {
-    self.displayLayer.frame = self.view.bounds;
+#if SGPLATFORM_TARGET_OS_MAC
+    [self updatePanelVideoAspect];
+#endif
+    [self layoutDisplayLayer];
     if (self.playing && self.kernel == SGPlaybackKernelFFmpeg && (self.ffmpegPlayer.sstateInfo.playback & SGPlaybackStateFinished)) { self.playing = NO; [self updatePiPClock]; }
     if (self.playing && self.kernel == SGPlaybackKernelNative && self.nativePlayer.currentItem.status == AVPlayerItemStatusReadyToPlay && self.nativePlayer.rate == 0 && CMTIME_IS_NUMERIC(self.duration) && CMTimeCompare(self.currentTime,self.duration)>=0) { self.playing = NO; [self updatePiPClock]; }
     if (self.kernel != SGPlaybackKernelNative || !self.nativeOutput) return;
@@ -349,17 +417,115 @@
     CGImageRelease(image);return result;
 }
 
+- (void)setAutomaticPictureInPictureEnabled:(BOOL)enabled {
+    BOOL changed = _automaticPictureInPictureEnabled != enabled;
+    _automaticPictureInPictureEnabled = enabled;
+#if SGPLATFORM_TARGET_OS_IPHONE_OR_TV
+    if (changed && self.ffmpegPlayer) {
+        if (enabled) { self.automaticSavedVideoBackgroundPolicy = self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack; self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack = NO; }
+        else if (!self.pictureInPictureActive) self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack = self.automaticSavedVideoBackgroundPolicy;
+    }
+#endif
+#if SGPLATFORM_TARGET_OS_IPHONE
+    self.pictureInPictureController.canStartPictureInPictureAutomaticallyFromInline = enabled;
+#endif
+}
+#if SGPLATFORM_TARGET_OS_MAC
+- (void)enterAutomaticPictureInPicture:(NSNotification *)notification {
+    if (self.closed || !self.automaticPictureInPictureEnabled || !self.playing || self.pictureInPictureActive || !self.view.window.visible) return;
+    if ([notification.name isEqual:NSWindowWillMiniaturizeNotification] && notification.object != self.view.window) return;
+    [self startPictureInPicture:nil];
+}
+#endif
+#if SGPLATFORM_TARGET_OS_MAC
+- (CGFloat)pictureInPictureAspectRatio {
+    CGSize size=self.kernel==SGPlaybackKernelFFmpeg ? self.videoPresentationSize : self.nativePlayer.currentItem.presentationSize;
+    if(size.width>0 && size.height>0) return MIN(4,MAX(.25,size.width/size.height));
+    if(self.kernel==SGPlaybackKernelNative && self.lastBuffer) {
+        CVPixelBufferRef buffer=(__bridge CVPixelBufferRef)self.lastBuffer;
+        return MIN(4,MAX(.25,(CGFloat)CVPixelBufferGetWidth(buffer)/MAX(1,CVPixelBufferGetHeight(buffer))));
+    }
+    return 16.0/9;
+}
+- (void)updatePanelVideoAspect {
+    NSPanel *panel=self.pictureInPicturePanel;if(!panel)return;
+    NSRect content=[panel contentRectForFrameRect:panel.frame];
+    CGFloat height=content.size.width/[self pictureInPictureAspectRatio]+28;
+    if(fabs(content.size.height-height)<1)return;
+    CGFloat top=NSMaxY(panel.frame);content.size.height=height;
+    NSRect frame=[panel frameRectForContentRect:content];frame.origin=NSMakePoint(panel.frame.origin.x,top-frame.size.height);
+    [panel setFrame:frame display:YES];
+}
+- (BOOL)startPanelPictureInPicture:(NSError **)error {
+    if (self.pictureInPicturePanel) return YES;
+    NSView *content=self.pictureInPictureView ?: self.view;
+    NSWindow *source=content.window;
+    if(self.closed || !source || !content.superview) {
+        if(error)*error=[NSError errorWithDomain:@"SGPictureInPicture" code:2 userInfo:@{NSLocalizedDescriptionKey:@"A visible player view is required for Picture in Picture"}];return NO;
+    }
+    NSScreen *screen=source.screen ?: NSScreen.mainScreen;
+    NSRect usable=screen.visibleFrame;
+    CGFloat ratio=[self pictureInPictureAspectRatio];
+    CGFloat width=MIN(420,MAX(160,usable.size.width-40));
+    CGFloat height=width/ratio+28;
+    if(height>usable.size.height-80){height=usable.size.height-80;width=(height-28)*ratio;}
+    NSRect rect=NSMakeRect(NSMaxX(usable)-width-20,NSMaxY(usable)-height-48,width,height);
+    NSPanel *panel=[[NSPanel alloc]initWithContentRect:rect styleMask:NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskResizable|NSWindowStyleMaskNonactivatingPanel backing:NSBackingStoreBuffered defer:NO];
+    panel.title=@"画中画";panel.identifier=@"sgplayer.pictureInPicture";
+    panel.floatingPanel=YES;panel.hidesOnDeactivate=NO;panel.canHide=NO;panel.worksWhenModal=YES;panel.becomesKeyOnlyIfNeeded=YES;
+    panel.level=NSFloatingWindowLevel;panel.collectionBehavior=NSWindowCollectionBehaviorCanJoinAllSpaces|NSWindowCollectionBehaviorFullScreenAuxiliary;
+    panel.releasedWhenClosed=NO;panel.minSize=NSMakeSize(200,140);
+    SGPlaybackPresentation *presentation=[[SGPlaybackPresentation alloc]initWithSurface:content];
+    __weak typeof(self) weakSelf=self;
+    presentation.dismissalRequested=^{
+        SGPlaybackController *self=weakSelf;if(!self)return;
+        void (^restore)(BOOL)=^(BOOL allowed){if(!allowed)return;NSWindow *window=weakSelf.pictureInPictureSourceWindow;[weakSelf stopPictureInPicture];[window deminiaturize:nil];[window makeKeyAndOrderFront:nil];[NSApp activateIgnoringOtherApps:YES];};
+        if(self.restoreInterface)self.restoreInterface(restore);else restore(YES);
+    };
+    if(![presentation showFullScreenInView:panel.contentView]) {
+        if(error)*error=[NSError errorWithDomain:@"SGPictureInPicture" code:3 userInfo:@{NSLocalizedDescriptionKey:@"Could not move playback into the Picture in Picture window"}];return NO;
+    }
+    self.pictureInPictureSourceWindow=source;self.pictureInPicturePresentation=presentation;self.pictureInPicturePanel=panel;
+    panel.delegate=self;[panel orderFrontRegardless];
+    if(self.pictureInPictureChanged)self.pictureInPictureChanged(YES,nil);
+    return YES;
+}
+- (void)windowWillClose:(NSNotification *)notification {
+    if(notification.object!=self.pictureInPicturePanel)return;
+    [self.pictureInPicturePresentation restore];self.pictureInPicturePresentation=nil;
+    self.pictureInPicturePanel.delegate=nil;self.pictureInPicturePanel=nil;self.pictureInPictureSourceWindow=nil;
+    if(self.pictureInPictureChanged)self.pictureInPictureChanged(NO,nil);
+}
+- (NSSize)windowWillResize:(NSWindow *)window toSize:(NSSize)size {
+    if(window!=self.pictureInPicturePanel)return size;
+    CGFloat ratio=[self pictureInPictureAspectRatio];
+    NSRect content=[window contentRectForFrameRect:NSMakeRect(0,0,size.width,size.height)];
+    content.size.height=content.size.width/MIN(4,MAX(.25,ratio))+28;
+    return [window frameRectForContentRect:content].size;
+}
+#endif
 - (BOOL)startPictureInPicture:(NSError **)error {
+#if SGPLATFORM_TARGET_OS_MAC
+    return [self startPanelPictureInPicture:error];
+#else
     if (![AVPictureInPictureController isPictureInPictureSupported]) {
         if (error) *error = [NSError errorWithDomain:@"SGPictureInPicture" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Picture in Picture is unsupported on this system/device"}]; return NO;
     }
     if (!self.pictureInPictureController.isPictureInPicturePossible) {
         if (error) *error = [NSError errorWithDomain:@"SGPictureInPicture" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Picture in Picture is not ready for the visible playback source"}]; return NO;
     }
-    [self updatePiPClock]; [self.pictureInPictureController startPictureInPicture]; return YES;
+    [self layoutDisplayLayer]; [self updatePiPClock];
+    [self.pictureInPictureController startPictureInPicture]; return YES;
+#endif
 }
-- (void)stopPictureInPicture { [self.pictureInPictureController stopPictureInPicture]; }
-- (void)close { self.generation++; self.subtitleGeneration++; [self pause]; [self stopPictureInPicture]; [_timer invalidate]; _timer = nil; self.ffmpegPlayer.videoRenderer.composedFrameOutput = nil; [self.ffmpegPlayer replaceWithPlayerItem:nil]; [self.nativePlayer replaceCurrentItemWithPlayerItem:nil]; [self.displayLayer flushAndRemoveImage]; [self.displayLayer removeFromSuperlayer]; self.lastBuffer = nil; self.nativeSourceBuffer = nil; [self.effects flush]; }
+- (void)stopPictureInPicture {
+#if SGPLATFORM_TARGET_OS_MAC
+    NSPanel *panel=self.pictureInPicturePanel;
+    if(panel){[panel close];return;}
+#endif
+    [self.pictureInPictureController stopPictureInPicture];
+}
+- (void)close { self.closed=YES; self.danmakuGeneration++; self.generation++; self.subtitleGeneration++; [self pause]; [self stopPictureInPicture]; [_timer invalidate]; _timer = nil; self.ffmpegPlayer.videoRenderer.composedFrameOutput = nil; [self.ffmpegPlayer replaceWithPlayerItem:nil]; [self.nativePlayer replaceCurrentItemWithPlayerItem:nil]; [self.displayLayer flushAndRemoveImage]; [self.displayLayer removeFromSuperlayer]; self.lastBuffer = nil; self.nativeSourceBuffer = nil; [self.effects flush]; }
 - (void)pictureInPictureController:(AVPictureInPictureController *)controller setPlaying:(BOOL)playing { if (playing) [self play]; else [self pause]; }
 - (CMTimeRange)pictureInPictureControllerTimeRangeForPlayback:(AVPictureInPictureController *)controller { CMTime duration = self.duration; return CMTIME_IS_NUMERIC(duration) ? CMTimeRangeMake(kCMTimeZero,duration) : CMTimeRangeMake(kCMTimeZero,kCMTimePositiveInfinity); }
 - (BOOL)pictureInPictureControllerIsPlaybackPaused:(AVPictureInPictureController *)controller { return !self.playing; }
@@ -368,14 +534,15 @@
 - (void)pictureInPictureControllerDidStartPictureInPicture:(AVPictureInPictureController *)controller {
 #if SGPLATFORM_TARGET_OS_IPHONE_OR_TV
     self.previousVideoBackgroundPolicy=self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack;
+    if (!self.automaticPictureInPictureEnabled) self.automaticSavedVideoBackgroundPolicy=self.previousVideoBackgroundPolicy;
     self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack=NO;
 #endif
     if (self.pictureInPictureChanged) self.pictureInPictureChanged(YES,nil); }
 - (void)pictureInPictureControllerDidStopPictureInPicture:(AVPictureInPictureController *)controller {
 #if SGPLATFORM_TARGET_OS_IPHONE_OR_TV
-    self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack=self.previousVideoBackgroundPolicy;
+    self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack=self.automaticPictureInPictureEnabled?NO:self.automaticSavedVideoBackgroundPolicy;
 #endif
     if (self.pictureInPictureChanged) self.pictureInPictureChanged(NO,nil); }
-- (void)pictureInPictureController:(AVPictureInPictureController *)controller failedToStartPictureInPictureWithError:(NSError *)error { self.controllerError = error; if (self.pictureInPictureChanged) self.pictureInPictureChanged(NO,error); }
+- (void)pictureInPictureController:(AVPictureInPictureController *)controller failedToStartPictureInPictureWithError:(NSError *)error { if (self.pictureInPictureChanged) self.pictureInPictureChanged(NO,error); }
 - (void)pictureInPictureController:(AVPictureInPictureController *)controller restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:(void (^)(BOOL))completion { if (self.restoreInterface) self.restoreInterface(completion); else completion(YES); }
 @end
