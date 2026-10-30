@@ -358,7 +358,18 @@
     CVPixelBufferRef source = fresh ? [self.nativeOutput copyPixelBufferForItemTime:time itemTimeForDisplay:NULL] : (!self.playing && self.nativeSourceBuffer ? CVPixelBufferRetain((__bridge CVPixelBufferRef)self.nativeSourceBuffer) : NULL);
     if (fresh && source) self.nativeSourceBuffer=CFBridgingRelease(CVPixelBufferRetain(source));
     if (source) {
-        CVPixelBufferRef composed = [self.effects copyPixelBufferForImage:[CIImage imageWithCVPixelBuffer:source] atTime:time];
+        CIImage *canvas=[CIImage imageWithCVPixelBuffer:source];
+        if(self.effects.active && !self.background) {
+#if SGPLATFORM_TARGET_OS_MAC
+            CGFloat backing=self.view.window.backingScaleFactor ?: NSScreen.mainScreen.backingScaleFactor;
+#else
+            CGFloat backing=self.view.window.screen.scale ?: 1;
+#endif
+            CGRect video=AVMakeRectWithAspectRatioInsideRect(canvas.extent.size,self.view.bounds);
+            CGFloat factor=MIN(4,MAX(1,video.size.width*MAX(1,backing)/canvas.extent.size.width));
+            if(factor>1.01)canvas=[canvas imageByApplyingFilter:@"CILanczosScaleTransform" withInputParameters:@{@"inputScale":@(factor),@"inputAspectRatio":@1}];
+        }
+        CVPixelBufferRef composed = [self.effects copyPixelBufferForImage:canvas atTime:time];
         if (composed) { [self enqueueBuffer:composed time:time]; CVPixelBufferRelease(composed); }
         CVPixelBufferRelease(source);
     }

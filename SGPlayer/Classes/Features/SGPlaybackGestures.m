@@ -1,4 +1,5 @@
 #import "SGPlaybackGestures.h"
+#import "SGPlayer.h"
 #if SGPLATFORM_TARGET_OS_IPHONE
 @interface SGPlaybackGestureTarget : NSObject
 @property(nonatomic, weak) SGPlaybackGestures *owner;
@@ -19,6 +20,7 @@
 @property(nonatomic) CGFloat lastBrightness;
 @property(nonatomic) BOOL changedBrightness;
 @property(nonatomic) NSInteger axis;
+@property(nonatomic) CGPoint startingVR;
 @property(nonatomic) double startingTime;
 @property(nonatomic) double targetTime;
 @property(nonatomic) double duration;
@@ -157,6 +159,18 @@
         return;
     UIView *view = self.view;
     SGPlaybackController *controller = self.session.controller;
+    if(controller.kernel==SGPlaybackKernelFFmpeg && controller.ffmpegPlayer.videoRenderer.displayMode!=SGDisplayModePlane) {
+        SGVRViewport *viewport=controller.ffmpegPlayer.videoRenderer.viewport;
+        if(gesture.state==UIGestureRecognizerStateBegan) self.startingVR=CGPointMake(viewport.x,viewport.y);
+        if(gesture.state==UIGestureRecognizerStateBegan || gesture.state==UIGestureRecognizerStateChanged) {
+            CGPoint delta=[gesture translationInView:view];
+            CGFloat degrees=viewport.degress;
+            viewport.x=self.startingVR.x-delta.x/MAX(1,view.bounds.size.height)*degrees;
+            viewport.y=MIN(89,MAX(-89,self.startingVR.y+delta.y/MAX(1,view.bounds.size.height)*degrees));
+            if(self.interaction)self.interaction();
+        }
+        return;
+    }
     if (gesture.state == UIGestureRecognizerStateBegan) {
         self.operationRevision++;
         if (self.interaction)

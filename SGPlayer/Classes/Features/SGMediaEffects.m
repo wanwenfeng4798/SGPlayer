@@ -145,7 +145,7 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
 - (instancetype)init {
     if ((self = [super init])) {
         _filter = [[SGFilterConfiguration alloc] init]; _subtitles = @[]; _danmaku = @[]; _watermarks = @[];
-        _watermarksEnabled = YES; _subtitlesEnabled = YES; _danmakuEnabled = YES; _maximumDanmakuCount = 40; _textSize = 28; _overlayOpacity = 1;
+        _watermarksEnabled = YES; _subtitlesEnabled = YES; _danmakuEnabled = YES; _maximumDanmakuCount = 40; _textSize = 28; _textColorRGB=0xffffff; _textBackgroundColorRGB=0; _textBackgroundOpacity=.65; _overlayOpacity = 1;
         _subtitleVerticalPosition=.06;_secondarySubtitleVerticalPosition=.80;
         _subtitleFallbackFontURL = [[NSBundle bundleForClass:SGMediaEffects.class] URLForResource:@"NotoSansCJKsc-Regular" withExtension:@"otf"];
         _stickerRect = CGRectMake(0.05, 0.05, 0.2, 0.2);
@@ -160,7 +160,7 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
         copy.subtitleTrack=SGSnapshotTrack(self.subtitleTrack);copy.secondarySubtitleTrack=SGSnapshotTrack(self.secondarySubtitleTrack);copy.subtitles=SGSnapshotCues(self.subtitles);copy.subtitlesEnabled=self.subtitlesEnabled;
         copy.subtitleOffset=self.subtitleOffset;copy.secondarySubtitleOffset=self.secondarySubtitleOffset;copy.subtitleVerticalPosition=self.subtitleVerticalPosition;copy.secondarySubtitleVerticalPosition=self.secondarySubtitleVerticalPosition;copy.subtitleFallbackFontURL=self.subtitleFallbackFontURL;
         NSMutableArray *events=[NSMutableArray array];for(SGDanmakuItem *item in self.danmaku){SGDanmakuItem *event=[SGDanmakuItem new];event.start=item.start;event.duration=item.duration;event.mode=item.mode;event.text=item.text;event.fontSize=item.fontSize;event.rgbColor=item.rgbColor;[events addObject:event];}
-        copy.danmaku=events;copy.danmakuEnabled=self.danmakuEnabled;copy.maximumDanmakuCount=self.maximumDanmakuCount;copy.textSize=self.textSize;copy.overlayOpacity=self.overlayOpacity;
+        copy.danmaku=events;copy.danmakuEnabled=self.danmakuEnabled;copy.maximumDanmakuCount=self.maximumDanmakuCount;copy.textSize=self.textSize;copy.textColorRGB=self.textColorRGB;copy.textBackgroundEnabled=self.textBackgroundEnabled;copy.textBackgroundColorRGB=self.textBackgroundColorRGB;copy.textBackgroundOpacity=self.textBackgroundOpacity;copy.overlayOpacity=self.overlayOpacity;
         NSMutableArray *marks=[NSMutableArray array];for(SGWatermark *mark in self.watermarks){SGWatermark *item=[SGWatermark new];item.text=mark.text;item.image=mark.image;item.rect=mark.rect;item.opacity=mark.opacity;[marks addObject:item];}
         copy.watermarks=marks;copy.watermarksEnabled=self.watermarksEnabled;copy.sticker=self.sticker;copy.stickerRect=self.stickerRect;copy.stickerStart=self.stickerStart;return copy;
     }
@@ -168,31 +168,41 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
 - (void)flush { @synchronized (self) { if (_graph) avfilter_graph_free(&_graph); _source = NULL; _sink = NULL; self.graphKey = nil; self.lastError = nil; } }
 - (BOOL)active { return self.filter.active || (self.subtitlesEnabled && (self.subtitles.count||self.secondarySubtitleTrack.cues.count)) || (self.danmakuEnabled && self.danmaku.count) || (self.watermarksEnabled && self.watermarks.count) || self.sticker; }
 - (CIImage *)textImage:(NSString *)text size:(CGFloat)size width:(CGFloat)width {
+    return [self textImage:text size:size width:width color:self.textColorRGB];
+}
+- (CIImage *)textImage:(NSString *)text size:(CGFloat)size width:(CGFloat)width color:(NSUInteger)rgb {
     if (!text.length || text.length > 8192 || width <= 0) return nil;
-    size = MIN(96, MAX(8, size)); width = MIN(8192, ceil(width));
-    NSString *key = [NSString stringWithFormat:@"%@|%.1f|%.1f", text, size, width];
-    CIImage *cached = [self.textCache objectForKey:key]; if (cached) return cached;
-    CTFontRef font = CTFontCreateWithName(CFSTR("Helvetica"), size, NULL);
-    CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB(); CGFloat white[4] = {1, 1, 1, 1};
-    CGColorRef color = CGColorCreate(space, white);
-    NSDictionary *attributes = @{(__bridge NSString *)kCTFontAttributeName: (__bridge id)font, (__bridge NSString *)kCTForegroundColorAttributeName: (__bridge id)color};
-    NSAttributedString *string = [[NSAttributedString alloc] initWithString:text attributes:attributes];
-    CTFramesetterRef setter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)string);
-    CGSize dimensions = CTFramesetterSuggestFrameSizeWithConstraints(setter, CFRangeMake(0, 0), NULL, CGSizeMake(width - MIN(8, width / 2), 4096), NULL);
-    size_t height = MIN(4096, MAX(1, ceil(dimensions.height + 8)));
-    CGContextRef ctx = CGBitmapContextCreate(NULL, width, height, 8, (size_t)width * 4, space, kCGImageAlphaPremultipliedLast);
-    CIImage *image = nil;
-    if (ctx) {
-        CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.65); CGContextFillRect(ctx, CGRectMake(0, 0, width, height));
-        CGPathRef path = CGPathCreateWithRect(CGRectMake(4, 4, MAX(1, width - 8), height - 8), NULL);
-        CTFrameRef frame = CTFramesetterCreateFrame(setter, CFRangeMake(0, 0), path, NULL);
-        CTFrameDraw(frame, ctx);
-        CGImageRef cg = CGBitmapContextCreateImage(ctx); image = [CIImage imageWithCGImage:cg];
-        CGImageRelease(cg); CFRelease(frame); CGPathRelease(path); CGContextRelease(ctx);
+    size=MIN(512,MAX(1,size));width=MIN(8192,ceil(width));
+    NSString *key=[NSString stringWithFormat:@"%@|%.2f|%.1f|%lu|%d|%lu|%.3f",text,size,width,(unsigned long)rgb,self.textBackgroundEnabled,(unsigned long)self.textBackgroundColorRGB,self.textBackgroundOpacity];
+    CIImage *cached=[self.textCache objectForKey:key];if(cached)return cached;
+    CTFontRef font=CTFontCreateWithName(CFSTR("Helvetica"),size,NULL);
+    CGColorSpaceRef space=CGColorSpaceCreateDeviceRGB();
+    CGFloat components[4]={((rgb>>16)&255)/255.0,((rgb>>8)&255)/255.0,(rgb&255)/255.0,1};
+    CGColorRef color=CGColorCreate(space,components);
+    NSDictionary *attributes=@{(__bridge NSString *)kCTFontAttributeName:(__bridge id)font,(__bridge NSString *)kCTForegroundColorAttributeName:(__bridge id)color};
+    NSAttributedString *string=[[NSAttributedString alloc]initWithString:text attributes:attributes];
+    CTFramesetterRef setter=CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)string);
+    CGFloat pad=MAX(1,ceil(size*.2));
+    CGSize measured=CTFramesetterSuggestFrameSizeWithConstraints(setter,CFRangeMake(0,0),NULL,CGSizeMake(MAX(1,width-2*pad),4096),NULL);
+    size_t bitmapWidth=MAX(1,MIN(width,ceil(measured.width+2*pad))),height=MIN(4096,MAX(1,ceil(measured.height+2*pad)));
+    CGContextRef ctx=CGBitmapContextCreate(NULL,bitmapWidth,height,8,bitmapWidth*4,space,kCGImageAlphaPremultipliedLast);
+    CIImage *image=nil;
+    if(ctx){
+        CGContextSetShouldAntialias(ctx,YES);
+        if(self.textBackgroundEnabled){
+            NSUInteger bg=self.textBackgroundColorRGB;
+            CGContextSetRGBFillColor(ctx,((bg>>16)&255)/255.0,((bg>>8)&255)/255.0,(bg&255)/255.0,self.textBackgroundOpacity);
+            CGFloat radius=MIN(bitmapWidth,height)/2.0;
+            CGPathRef capsule=CGPathCreateWithRoundedRect(CGRectMake(0,0,bitmapWidth,height),radius,radius,NULL);
+            CGContextAddPath(ctx,capsule);CGContextFillPath(ctx);CGPathRelease(capsule);
+        }
+        CGPathRef path=CGPathCreateWithRect(CGRectMake(pad,pad,MAX(1,bitmapWidth-2*pad),MAX(1,height-2*pad)),NULL);
+        CTFrameRef frame=CTFramesetterCreateFrame(setter,CFRangeMake(0,0),path,NULL);CTFrameDraw(frame,ctx);
+        CGImageRef cg=CGBitmapContextCreateImage(ctx);image=[CIImage imageWithCGImage:cg];
+        CGImageRelease(cg);CFRelease(frame);CGPathRelease(path);CGContextRelease(ctx);
     }
-    CFRelease(setter); CGColorRelease(color); CGColorSpaceRelease(space); CFRelease(font);
-    if (image) [self.textCache setObject:image forKey:key cost:(NSUInteger)width * height * 4];
-    return image;
+    CFRelease(setter);CGColorRelease(color);CGColorSpaceRelease(space);CFRelease(font);
+    if(image)[self.textCache setObject:image forKey:key cost:bitmapWidth*height*4];return image;
 }
 - (CIImage *)place:(CIImage *)overlay rect:(CGRect)rect opacity:(CGFloat)opacity on:(CIImage *)background {
     if (!overlay || CGRectIsEmpty(rect) || !isfinite(opacity)) return background;
@@ -200,7 +210,7 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
     if (CGRectIsEmpty(extent)) return background;
     overlay = [overlay imageByApplyingTransform:CGAffineTransformMakeTranslation(-extent.origin.x, -extent.origin.y)];
     overlay = [overlay imageByApplyingTransform:CGAffineTransformMakeScale(rect.size.width / extent.size.width, rect.size.height / extent.size.height)];
-    overlay = [overlay imageByApplyingTransform:CGAffineTransformMakeTranslation(rect.origin.x, rect.origin.y)];
+    overlay = [[overlay imageByApplyingTransform:CGAffineTransformMakeTranslation(rect.origin.x, rect.origin.y)] imageByCroppingToRect:rect];
     overlay = [overlay imageByApplyingFilter:@"CIColorMatrix" withInputParameters:@{@"inputAVector": [CIVector vectorWithX:0 Y:0 Z:0 W:MIN(1, MAX(0, opacity))]}];
     return [overlay imageByCompositingOverImage:background];
 }
@@ -354,7 +364,7 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
         }
         SGFilterConfiguration *config = self.filter;
         self.lastError = [config validationError]; if (self.lastError) return nil;
-        if (!isfinite(self.textSize) || self.textSize < 8 || self.textSize > 96 || !isfinite(self.overlayOpacity) || self.overlayOpacity < 0 || self.overlayOpacity > 1 || !isfinite(self.subtitleOffset) || !isfinite(self.secondarySubtitleOffset) || !isfinite(self.subtitleVerticalPosition) || self.subtitleVerticalPosition<0 || self.subtitleVerticalPosition>1 || !isfinite(self.secondarySubtitleVerticalPosition) || self.secondarySubtitleVerticalPosition<0 || self.secondarySubtitleVerticalPosition>1) { self.lastError = SGEffectError(5,@"Invalid overlay size, opacity, position or offset"); return nil; }
+        if (self.textColorRGB>0xffffff || self.textBackgroundColorRGB>0xffffff || !isfinite(self.textBackgroundOpacity) || self.textBackgroundOpacity<0 || self.textBackgroundOpacity>1 || !isfinite(self.textSize) || self.textSize < 8 || self.textSize > 96 || !isfinite(self.overlayOpacity) || self.overlayOpacity < 0 || self.overlayOpacity > 1 || !isfinite(self.subtitleOffset) || !isfinite(self.secondarySubtitleOffset) || !isfinite(self.subtitleVerticalPosition) || self.subtitleVerticalPosition<0 || self.subtitleVerticalPosition>1 || !isfinite(self.secondarySubtitleVerticalPosition) || self.secondarySubtitleVerticalPosition<0 || self.secondarySubtitleVerticalPosition>1) { self.lastError = SGEffectError(5,@"Invalid overlay size, opacity, position or offset"); return nil; }
         CGRect bounds = source.extent;
         if (!isfinite(bounds.size.width) || !isfinite(bounds.size.height) || bounds.size.width < 1 || bounds.size.height < 1 || bounds.size.width > 8192 || bounds.size.height > 8192) { self.lastError = SGEffectError(4, @"Unsupported canvas dimensions"); return nil; }
         CIImage *image = [source imageByApplyingTransform:CGAffineTransformMakeTranslation(-bounds.origin.x, -bounds.origin.y)];
@@ -374,7 +384,7 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
         }
         double seconds = CMTIME_IS_NUMERIC(time) ? CMTimeGetSeconds(time) : 0;
         CGFloat w = bounds.size.width, h = bounds.size.height;
-        CGFloat fontSize = MIN(MAX(self.textSize, 8), 96), opacity = MIN(MAX(self.overlayOpacity, 0), 1);
+        CGFloat fontSize = MIN(MAX(self.textSize, 8), 96) * w / 720.0, opacity = MIN(MAX(self.overlayOpacity, 0), 1);
         if (self.subtitlesEnabled && self.subtitleTrack.ASSHeader.length) {
             image=[self renderASSOver:image atTime:seconds];
             if(!image)return nil;
@@ -389,7 +399,7 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
                     image = [self place:cue.bitmap rect:CGRectMake(r.origin.x*w, (1-r.origin.y-r.size.height)*h, r.size.width*w, r.size.height*h) opacity:opacity on:image];
                 } else if (!self.subtitleTrack.ASSHeader.length || !cue.ASS.length) {
                     CIImage *text = [self textImage:cue.text size:fontSize width:w * 0.9];
-                    image = [self place:text rect:CGRectMake(w*0.05, bottom, text.extent.size.width, text.extent.size.height) opacity:opacity on:image];
+                    image = [self place:text rect:CGRectMake((w-text.extent.size.width)/2, bottom, text.extent.size.width, text.extent.size.height) opacity:opacity on:image];
                     bottom += text.extent.size.height + 4;
                 }
             }
@@ -399,7 +409,7 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
             SGMediaEffects *secondary=self.secondaryRenderer;secondary.softwareRendering=self.softwareRendering;
             secondary.subtitleTrack=self.secondarySubtitleTrack;secondary.subtitles=self.secondarySubtitleTrack.cues;
             secondary.subtitleOffset=self.secondarySubtitleOffset;secondary.subtitleVerticalPosition=self.secondarySubtitleVerticalPosition;
-            secondary.textSize=self.textSize;secondary.overlayOpacity=self.overlayOpacity;secondary.subtitleFallbackFontURL=self.subtitleFallbackFontURL;
+            secondary.textSize=self.textSize;secondary.textColorRGB=self.textColorRGB;secondary.textBackgroundEnabled=self.textBackgroundEnabled;secondary.textBackgroundColorRGB=self.textBackgroundColorRGB;secondary.textBackgroundOpacity=self.textBackgroundOpacity;secondary.overlayOpacity=self.overlayOpacity;secondary.subtitleFallbackFontURL=self.subtitleFallbackFontURL;
             image=[secondary composeImage:image atTime:time];if(!image){self.lastError=secondary.lastError;return nil;}
         }else self.secondaryRenderer=nil;
         if (self.danmakuEnabled) {
@@ -424,13 +434,10 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
                 if (lane == NSNotFound) continue;
                 laneEnd[lane] = @(start + duration); // Stable assignments survive seeks and event expiry.
                 if (seconds >= start + duration || visible >= MIN(200,self.maximumDanmakuCount)) continue;
-                CGFloat itemSize = item.fontSize > 0 ? MIN(96,MAX(8,item.fontSize)) : fontSize;
+                CGFloat itemSize = item.fontSize > 0 ? MIN(96,MAX(8,item.fontSize))*w/720.0 : fontSize;
                 CGFloat textWidth = MIN(w * 1.5, MAX(itemSize, item.text.length * itemSize * 0.8));
-                CIImage *text = [self textImage:[item.text stringByReplacingOccurrencesOfString:@"\n" withString:@" "] size:itemSize width:textWidth];
-                if(item.rgbColor!=0xffffff)text=[text imageByApplyingFilter:@"CIColorMatrix" withInputParameters:@{
-                    @"inputRVector":[CIVector vectorWithX:((item.rgbColor>>16)&255)/255.0 Y:0 Z:0 W:0],
-                    @"inputGVector":[CIVector vectorWithX:0 Y:((item.rgbColor>>8)&255)/255.0 Z:0 W:0],
-                    @"inputBVector":[CIVector vectorWithX:0 Y:0 Z:(item.rgbColor&255)/255.0 W:0]}];
+                CIImage *text = [self textImage:[item.text stringByReplacingOccurrencesOfString:@"\n" withString:@" "] size:itemSize width:textWidth color:item.rgbColor];
+                textWidth=text.extent.size.width;
                 double phase=(seconds-start)/duration;
                 CGFloat x = item.mode == SGDanmakuModeScrolling ? w-(w+textWidth)*phase : item.mode==SGDanmakuModeReverse ? -textWidth+(w+textWidth)*phase : (w-textWidth)/2;
                 CGFloat y = h * 0.9 - (lane + 1) * (fontSize + 8);
@@ -439,8 +446,17 @@ static SGSubtitleTrack *SGSnapshotTrack(SGSubtitleTrack *source) {
         }
         for (SGWatermark *mark in (self.watermarksEnabled ? self.watermarks : @[])) {
             CGRect r = mark.rect;
-            CIImage *overlay = mark.image ?: [self textImage:mark.text size:fontSize width:MAX(1,r.size.width*w)];
-            image = [self place:overlay rect:CGRectMake(r.origin.x*w, (1-r.origin.y-r.size.height)*h, r.size.width*w, r.size.height*h) opacity:mark.opacity on:image];
+            CGRect target=CGRectMake(r.origin.x*w,(1-r.origin.y-r.size.height)*h,r.size.width*w,r.size.height*h);
+            CIImage *overlay=mark.image ?: [self textImage:mark.text size:MIN(fontSize,target.size.height*.7) width:MAX(1,target.size.width)];
+            if(overlay && !CGRectIsEmpty(overlay.extent) && !CGRectIsEmpty(target)) {
+                // Preserve aspect ratio. Render text at final pixel size instead
+                // of stretching a small glyph bitmap to the watermark rectangle.
+                CGFloat factor=MIN(target.size.width/overlay.extent.size.width,target.size.height/overlay.extent.size.height);
+                factor=MIN(1,factor); // Never enlarge a low-resolution watermark bitmap.
+                CGSize fitted=CGSizeMake(overlay.extent.size.width*factor,overlay.extent.size.height*factor);
+                CGRect rect=CGRectMake(target.origin.x,target.origin.y+(target.size.height-fitted.height)/2,fitted.width,fitted.height);
+                image=[self place:overlay rect:rect opacity:mark.opacity on:image];
+            }
         }
         CIImage *sticker = [self.sticker imageAtTime:seconds - self.stickerStart];
         CGRect r = self.stickerRect;

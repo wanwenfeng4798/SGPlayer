@@ -1,4 +1,5 @@
 #import "SGPlaybackControls.h"
+#import "SGPlayer.h"
 #import "SGPlaybackGestures.h"
 #import "SGTimelinePreview.h"
 #import <QuartzCore/QuartzCore.h>
@@ -67,6 +68,8 @@
 #endif
 #if SGPLATFORM_TARGET_OS_IPHONE
 @interface SGPlaybackControls () <UIDocumentPickerDelegate>
+#elif SGPLATFORM_TARGET_OS_MAC
+@interface SGPlaybackControls () <NSGestureRecognizerDelegate>
 #else
 @interface SGPlaybackControls ()
 #endif
@@ -91,6 +94,8 @@
 @property(nonatomic, weak) NSView *keyboardSurface;
 @property(nonatomic, strong) id keyboardMonitor;
 @property(nonatomic) float keyboardSavedVolume;
+@property(nonatomic, strong) NSPanGestureRecognizer *vrPan;
+@property(nonatomic) CGPoint startingVR;
 @property(nonatomic) BOOL keyboardActive;
 @property(nonatomic, strong) NSTrackingArea *keyboardTrackingArea;
 #endif
@@ -133,8 +138,8 @@
             @"retry", @"lock", @"pip", @"fullscreen", @"floating"
         ];
 #if !SGPLATFORM_TARGET_OS_TV
-        titles = [titles arrayByAddingObjectsFromArray:@[@"加载字幕",@"加载弹幕",@"弹幕开关",@"字幕开关",@"后台画中画",@"保留最后一帧",@"水印开关",@"加载预览 WebVTT",@"画面比例",@"镜像",@"循环",@"截图",@"纯播放",@"封面"]];
-        identifiers = [identifiers arrayByAddingObjectsFromArray:@[@"loadSubtitle",@"loadDanmaku",@"danmaku",@"subtitleVisibility",@"automaticPip",@"keepLastFrame",@"watermark",@"loadTimeline",@"scale",@"mirror",@"loop",@"screenshot",@"purePlay",@"cover"]];
+        titles = [titles arrayByAddingObjectsFromArray:@[@"加载字幕",@"加载弹幕",@"弹幕开关",@"字幕开关",@"后台画中画",@"保留最后一帧",@"水印开关",@"加载预览 WebVTT",@"画面比例",@"镜像",@"循环",@"截图",@"纯播放",@"封面",@"文字背景"]];
+        identifiers = [identifiers arrayByAddingObjectsFromArray:@[@"loadSubtitle",@"loadDanmaku",@"danmaku",@"subtitleVisibility",@"automaticPip",@"keepLastFrame",@"watermark",@"loadTimeline",@"scale",@"mirror",@"loop",@"screenshot",@"purePlay",@"cover",@"textBackground"]];
 #endif
         for (NSUInteger i = 0; i < titles.count; i++) {
 #if SGPLATFORM_TARGET_OS_MAC
@@ -310,7 +315,7 @@
 }
 #endif
 - (void)setControlsPresentedHidden:(BOOL)hidden {
-    hidden = hidden || !self.controlsEnabled;
+    hidden = self.controlsEnabled ? hidden : NO;
     if (self.hidden == hidden)
         return;
 #if SGPLATFORM_TARGET_OS_TV
@@ -376,8 +381,9 @@
 #if SGPLATFORM_TARGET_OS_IPHONE
     self.gestures.locked = !enabled || self.controlsLocked;
 #endif
-    if (!enabled) self.hidden = YES;
-    else [self revealControls];
+    self.hidden = NO;
+    [self refresh];
+    if (enabled) [self revealControls];
 }
 - (void)setKeepLastFrameWhenComplete:(BOOL)enabled {
     _keepLastFrameWhenComplete = enabled;
@@ -429,11 +435,13 @@
     panel.layer.backgroundColor = [NSColor colorWithWhite:0 alpha:.9].CGColor;
     self.volumeSlider = [NSSlider sliderWithValue:1 minValue:0 maxValue:1 target:self action:@selector(volumeChanged:)];
     [self.volumeSlider setContinuous:YES];
+    [self.volumeSlider setVertical:YES];
 #else
     UIView *panel = [UIView new]; panel.backgroundColor = [UIColor colorWithWhite:0 alpha:.9];
     UISlider *volume = [UISlider new]; volume.minimumValue = 0; volume.maximumValue = 1;
     volume.minimumTrackTintColor = [UIColor colorWithRed:1 green:.36 blue:.62 alpha:1];
     [volume addTarget:self action:@selector(volumeChanged:) forControlEvents:UIControlEventValueChanged];
+    volume.transform = CGAffineTransformMakeRotation(-M_PI_2);
     self.volumeSlider = volume;
 #endif
     panel.layer.cornerRadius = 8; panel.hidden = YES; self.volumePanel = panel;
@@ -485,12 +493,13 @@
     self.session.controller.volume = [(UISlider *)sender value];
 #endif
 }
-- (NSArray<NSNumber *> *)settingsActions { return @[@1,@2,@3,@4,@5,@6,@7,@8,@10,@12,@14,@15,@16,@17,@18,@19,@20,@21,@22,@23,@24,@25,@26,@27,@28]; }
+- (NSArray<NSNumber *> *)settingsActions { return @[@6,@7,@8,@17,@18,@23,@24,@25]; }
+- (NSArray<NSNumber *> *)moreSettingsActions { return @[@1,@2,@3,@4,@5,@10,@12,@14,@15,@16,@19,@20,@21,@22,@26,@27,@28,@29]; }
+
 #if SGPLATFORM_TARGET_OS_MAC
-- (void)showSettings:(id)sender {
-    [self revealControls];
+- (NSMenu *)settingsMenuForActions:(NSArray<NSNumber *> *)actions {
     NSMenu *menu = [NSMenu new];
-    for (NSNumber *index in [self settingsActions]) {
+    for (NSNumber *index in actions) {
         NSInteger i = index.integerValue;
         if (i == 5 && !self.showsKernelSelection) continue;
         NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[self settingsTitle:i] action:@selector(settingsSelected:) keyEquivalent:@""];
@@ -498,12 +507,21 @@
         [menu addItem:item];
     }
     menu.autoenablesItems = NO;
+    return menu;
+}
+- (void)showSettings:(id)sender {
+    [self revealControls];
+    NSMenu *menu = [self settingsMenuForActions:[self settingsActions]];
+    NSMenuItem *more=[[NSMenuItem alloc]initWithTitle:@"更多设置" action:nil keyEquivalent:@""];
+    more.submenu=[self settingsMenuForActions:[self moreSettingsActions]];
+    more.accessibilityIdentifier=@"session.moreSettings";
+    [menu addItem:more];
     [menu popUpMenuPositioningItem:nil atLocation:NSMakePoint(0,0) inView:sender];
 }
 - (void)settingsSelected:(NSMenuItem *)item { [self pressed:self.buttons[item.tag]]; }
 #endif
 - (NSString *)settingsTitle:(NSInteger)i {
-    NSDictionary *names = @{@1:@"后退 10 秒", @2:@"前进 10 秒", @3:@"上一集", @4:@"下一集", @5:@"播放内核", @6:@"切换音轨", @7:@"切换字幕", @8:@"切换清晰度", @10:@"重新加载", @12:@"画中画", @14:@"悬浮播放",@15:@"加载字幕文件",@16:@"加载弹幕 XML",@17:(self.session.controller.effects.danmakuEnabled?@"弹幕：开":@"弹幕：关"),@18:(self.session.controller.effects.subtitlesEnabled?@"字幕：开":@"字幕：关"),@19:(self.session.controller.automaticPictureInPictureEnabled?@"后台画中画：开":@"后台画中画：关"),@20:(self.keepLastFrameWhenComplete?@"保留最后一帧：开":@"保留最后一帧：关"),@21:(self.session.controller.effects.watermarksEnabled?@"水印：开":@"水印：关"),@22:@"加载预览 WebVTT",@23:@"切换画面比例",@24:(self.session.controller.effects.filter.horizontalFlip?@"镜像：开":@"镜像：关"),@25:(self.session.loopMode==SGPlaybackLoopModeNone?@"循环：关":self.session.loopMode==SGPlaybackLoopModeOne?@"单集循环":@"列表循环"),@26:@"截图",@27:@"纯播放",@28:(self.coverEnabled?@"封面：开":@"封面：关")};
+    NSDictionary *names = @{@1:@"后退 10 秒", @2:@"前进 10 秒", @3:@"上一集", @4:@"下一集", @5:@"播放内核", @6:@"切换音轨", @7:@"切换字幕", @8:@"切换清晰度", @10:@"重新加载", @12:@"画中画", @14:@"悬浮播放",@15:@"加载字幕文件",@16:@"加载弹幕 XML",@17:(self.session.controller.effects.danmakuEnabled?@"弹幕：开":@"弹幕：关"),@18:(self.session.controller.effects.subtitlesEnabled?@"字幕：开":@"字幕：关"),@19:(self.session.controller.automaticPictureInPictureEnabled?@"后台画中画：开":@"后台画中画：关"),@20:(self.keepLastFrameWhenComplete?@"保留最后一帧：开":@"保留最后一帧：关"),@21:(self.session.controller.effects.watermarksEnabled?@"水印：开":@"水印：关"),@22:@"加载预览 WebVTT",@23:@"切换画面比例",@24:(self.session.controller.effects.filter.horizontalFlip?@"镜像：开":@"镜像：关"),@25:(self.session.loopMode==SGPlaybackLoopModeNone?@"循环：关":self.session.loopMode==SGPlaybackLoopModeOne?@"单集循环":@"列表循环"),@26:@"截图",@27:@"纯播放",@28:(self.coverEnabled?@"封面：开":@"封面：关"),@29:(self.session.controller.effects.textBackgroundEnabled?@"文字背景：开":@"文字背景：关")};
     return names[@(i)] ?: @"";
 }
 - (void)skipAdvertisement:(id)sender { [self.session skipAdvertisement]; [self refresh]; }
@@ -546,13 +564,15 @@
     [self.buttons[9] setTintColor:UIColor.whiteColor];
     NSMutableArray *items = [NSMutableArray array];
     __weak typeof(self) weakSelf = self;
-    for (NSNumber *index in [self settingsActions]) {
+    NSMutableArray *moreItems=[NSMutableArray array];
+    for (NSNumber *index in [[self settingsActions] arrayByAddingObjectsFromArray:[self moreSettingsActions]]) {
         NSInteger i = index.integerValue;
         if (i == 5 && !self.showsKernelSelection) continue;
         UIAction *action = [UIAction actionWithTitle:[self settingsTitle:i] image:nil identifier:nil handler:^(UIAction *a) { [weakSelf pressed:weakSelf.buttons[i]]; }];
         if (![self.buttons[i] isEnabled]) action.attributes = UIMenuElementAttributesDisabled;
-        [items addObject:action];
+        if([[self settingsActions] containsObject:index]) [items addObject:action]; else [moreItems addObject:action];
     }
+    [items addObject:[UIMenu menuWithTitle:@"更多设置" image:nil identifier:@"session.moreSettings" options:0 children:moreItems]];
     [self.settingsButton setMenu:[UIMenu menuWithChildren:items]];
     [self.settingsButton setShowsMenuAsPrimaryAction:YES];
 #endif
@@ -565,6 +585,10 @@
     [self.buttons[13] setHidden:self.controlsLocked || !self.showsFullscreenControl];
     [self.buttons[11] setHidden:!self.showsLockControl && !self.controlsLocked];
     [self.durationLabel setHidden:self.controlsLocked]; self.toolbarBackground.hidden = self.controlsLocked;
+    if (!self.controlsEnabled) {
+        for (NSInteger i=0;i<self.buttons.count;i++) [self.buttons[i] setHidden:i!=0];
+        for(id view in @[self.status,self.progress,self.durationLabel,self.settingsButton,self.volumeButton,self.routePicker,self.volumePanel,self.toolbarBackground]) [view setHidden:YES];
+    }
     [self arrangeToolbar];
 }
 - (void)arrangeToolbar {
@@ -587,9 +611,9 @@
 #endif
     self.toolbarBackground.frame = CGRectMake(0,base,w,bar);
     CGFloat start = narrow ? 8 : hit+8, end = narrow ? w-64 : w-5*hit-64;
-    [self.status setFrame:CGRectMake(start,seekY,48,44)];
+    [self.status setFrame:CGRectMake(start,seekY+13,48,18)];
     [self.progress setFrame:CGRectMake(start+48,seekY,MAX(16,end-start-48),44)];
-    [self.durationLabel setFrame:CGRectMake(end,seekY,56,44)];
+    [self.durationLabel setFrame:CGRectMake(end,seekY+13,56,18)];
     CGFloat actionY;
 #if SGPLATFORM_TARGET_OS_MAC
     actionY = 2;
@@ -601,15 +625,21 @@
     for (NSInteger i=0;i<actions.count;i++) [actions[i] setFrame:CGRectMake(w-(5-i)*hit,actionY,hit,44)];
     [self.buttons[11] setFrame:CGRectMake(MAX(0,w-64),MAX(0,(h-44)/2),44,44)];
     self.routePicker.hidden = self.controlsLocked || self.session.controller.kernel != SGPlaybackKernelNative;
-    CGFloat panelWidth = MIN(160, MAX(44,w-16));
+    CGFloat panelHeight = MIN(152,MAX(64,h-bar-12));
 #if SGPLATFORM_TARGET_OS_MAC
     CGFloat panelY = bar+4;
 #else
-    CGFloat panelY = MAX(0,base-52);
+    CGFloat panelY = MAX(0,base-panelHeight-4);
 #endif
-    self.volumePanel.frame = CGRectMake(MAX(8,w-3*hit-panelWidth/2),panelY,panelWidth,48);
-    [self.volumeSlider setFrame:CGRectMake(8,2,panelWidth-16,44)];
-    if (self.controlsLocked) self.volumePanel.hidden = YES;
+    self.volumePanel.frame = CGRectMake(MIN(MAX(8,w-3*hit+(hit-48)/2),MAX(8,w-56)),panelY,48,panelHeight);
+#if SGPLATFORM_TARGET_OS_MAC
+    [self.volumeSlider setFrame:CGRectMake(8,8,32,panelHeight-16)];
+#else
+    UISlider *vertical=self.volumeSlider;
+    vertical.bounds=CGRectMake(0,0,panelHeight-16,32);
+    vertical.center=CGPointMake(24,panelHeight/2);
+#endif
+    if (self.controlsLocked || !self.controlsEnabled) self.volumePanel.hidden = YES;
 #if !SGPLATFORM_TARGET_OS_MAC
     for (id item in @[self.status,self.progress,self.durationLabel,self.buttons[0],self.buttons[9],self.buttons[11],self.buttons[13],self.settingsButton,self.volumeButton,self.routePicker,self.volumePanel]) {
         CGRect frame=[item frame]; frame.origin.x+=safe.left; frame.origin.y+=safe.top; [item setFrame:frame];
@@ -665,9 +695,11 @@
         [self.keyboardSurface removeTrackingArea:self.keyboardTrackingArea];
     self.keyboardTrackingArea = nil;
     self.keyboardActive = NO;
+    [self.vrPan.view removeGestureRecognizer:self.vrPan];self.vrPan=nil;
     self.keyboardSurface = view;
     if (!view)
         return;
+    self.vrPan=[[NSPanGestureRecognizer alloc]initWithTarget:self action:@selector(panVR:)];self.vrPan.delegate=self;[view addGestureRecognizer:self.vrPan];
     self.keyboardTrackingArea = [[NSTrackingArea alloc]
         initWithRect:NSZeroRect
              options:NSTrackingMouseMoved | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect
@@ -720,8 +752,28 @@
                                          return [self handleKeyEvent:event] ? nil : event;
                                      }];
 }
+- (BOOL)gestureRecognizer:(NSGestureRecognizer *)gesture shouldAttemptToRecognizeWithEvent:(NSEvent *)event {
+    if(gesture!=self.vrPan)return YES;
+    if(!self.controlsEnabled || self.controlsLocked || self.session.controller.kernel!=SGPlaybackKernelFFmpeg || self.session.controller.ffmpegPlayer.videoRenderer.displayMode==SGDisplayModePlane)return NO;
+    NSView *surface=self.keyboardSurface;
+    NSPoint point=[surface.superview convertPoint:event.locationInWindow fromView:nil];
+    for(NSView *hit=[surface hitTest:point];hit&&hit!=surface;hit=hit.superview) if([hit isKindOfClass:NSControl.class])return NO;
+    return YES;
+}
+- (void)panVR:(NSPanGestureRecognizer *)gesture {
+    SGVRViewport *viewport=self.session.controller.ffmpegPlayer.videoRenderer.viewport;
+    if(gesture.state==NSGestureRecognizerStateBegan)self.startingVR=CGPointMake(viewport.x,viewport.y);
+    if(gesture.state==NSGestureRecognizerStateBegan || gesture.state==NSGestureRecognizerStateChanged) {
+        NSPoint delta=[gesture translationInView:self.keyboardSurface];
+        viewport.x=self.startingVR.x-delta.x/MAX(1,self.keyboardSurface.bounds.size.height)*viewport.degress;
+        CGFloat sign=self.keyboardSurface.flipped?1:-1;
+        viewport.y=MIN(89,MAX(-89,self.startingVR.y+sign*delta.y/MAX(1,self.keyboardSurface.bounds.size.height)*viewport.degress));
+        [self revealControls];
+    }
+}
 - (BOOL)handleKeyEvent:(NSEvent *)event {
     if (!self.controlsEnabled) {
+        if(event.type==NSEventTypeKeyDown && [event.charactersIgnoringModifiers isEqual:@" "] && !(event.modifierFlags&(NSEventModifierFlagCommand|NSEventModifierFlagControl|NSEventModifierFlagOption))) { if(!event.isARepeat)[self pressed:self.buttons[0]]; return YES; }
         if (event.type==NSEventTypeKeyDown && event.keyCode==53 && self.dismissPresentation) { self.dismissPresentation(); return YES; }
         return NO;
     }
@@ -744,6 +796,12 @@
     }
     if (self.controlsLocked)
         return YES;
+    if(self.session.controller.kernel==SGPlaybackKernelFFmpeg && self.session.controller.ffmpegPlayer.videoRenderer.displayMode!=SGDisplayModePlane && event.keyCode>=123 && event.keyCode<=126) {
+        SGVRViewport *viewport=self.session.controller.ffmpegPlayer.videoRenderer.viewport;
+        if(event.keyCode==123)viewport.x-=5;else if(event.keyCode==124)viewport.x+=5;
+        else viewport.y=MIN(89,MAX(-89,viewport.y+(event.keyCode==126?5:-5)));
+        return YES;
+    }
     SGPlaybackController *controller = self.session.controller;
     if (space) {
         if (!event.isARepeat)
@@ -1005,6 +1063,7 @@
         self.keyboardActive=YES;[self.window makeFirstResponder:self];
 #endif
         self.controlsEnabled=NO;break;
+    case 29: controller.effects.textBackgroundEnabled=!controller.effects.textBackgroundEnabled; break;
     case 28: self.coverEnabled=!self.coverEnabled;break;
 #endif
     case 14:
@@ -1027,7 +1086,12 @@
 #endif
 - (void)refresh {
     [self.cover refresh];
-    if (!self.controlsEnabled) { self.hidden = YES; return; }
+    if (!self.controlsEnabled) {
+#if !SGPLATFORM_TARGET_OS_TV
+        self.hidden = NO; [self refreshToolbar];
+#endif
+        return;
+    }
 #if SGPLATFORM_TARGET_OS_MAC
     BOOL sliderTracking = ((NSSlider *)self.progress).cell.highlighted;
     if (sliderTracking ||

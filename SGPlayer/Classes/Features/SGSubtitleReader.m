@@ -123,7 +123,7 @@ static int SGSubtitleInterrupt(void *opaque) { return CFAbsoluteTimeGetCurrent()
     }
     for (SGSubtitleTrack *track in tracks) {
         AVCodecContext *decoder=decoders[track.index];
-        if(decoder->subtitle_header && decoder->subtitle_header_size>0)track.ASSHeader=[NSData dataWithBytes:decoder->subtitle_header length:decoder->subtitle_header_size];
+        if(decoder->codec_id==AV_CODEC_ID_ASS && decoder->subtitle_header && decoder->subtitle_header_size>0)track.ASSHeader=[NSData dataWithBytes:decoder->subtitle_header length:decoder->subtitle_header_size];
         else if(decoder->codec_id==AV_CODEC_ID_ASS && decoder->extradata_size>0)track.ASSHeader=[NSData dataWithBytes:decoder->extradata length:decoder->extradata_size];
         track.fonts=fonts;
     }

@@ -21,7 +21,7 @@ SGPlaybackControls *controls=[[SGPlaybackControls alloc]initWithSession:s];contr
 NSURL *url=[NSURL fileURLWithPath:[[[NSString stringWithUTF8String:__FILE__] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"fixtures/orientation.mp4"]];
 SGPlaybackRendition *r=[[SGPlaybackRendition alloc]initWithIdentifier:@"main" title:@"Main" URL:url];SGPlaybackItem *item=[[SGPlaybackItem alloc]initWithIdentifier:@"content" title:@"Content" renditions:@[r]];
 NSError *error=nil;NSCAssert([s loadItems:@[item] startIndex:0 autoPlay:YES error:&error],@"load failed %@",error);NSCAssert(spin(^BOOL{return s.state==SGPlaybackSessionStatePlaying&&CMTimeGetSeconds(c.currentTime)>.3;},20),@"no frames");
-controls.controlsEnabled=NO;spin(^BOOL{return NO;},.5);NSCAssert(controls.hidden,@"pure mode refresh restored controls");controls.controlsEnabled=YES;[controls revealControls];NSCAssert(!controls.hidden,@"pure mode cannot exit");
+controls.controlsEnabled=NO;spin(^BOOL{return NO;},.5);NSCAssert(!controls.hidden&&!find(controls,@"session.play").hidden&&find(controls,@"session.progress").hidden,@"pure mode must preserve only play/pause");controls.controlsEnabled=YES;[controls revealControls];NSCAssert(!controls.hidden,@"pure mode cannot exit");
 NSString *base=[NSTemporaryDirectory() stringByAppendingPathComponent:NSUUID.UUID.UUIDString];[[NSFileManager defaultManager]createDirectoryAtPath:base withIntermediateDirectories:YES attributes:nil error:nil];
 NSURL *xml=[NSURL fileURLWithPath:[base stringByAppendingPathComponent:@"test.xml"]];
 [@"<i><d p=\"0,1,25,16711680\">A &amp; B</d><d p=\"1,5,30,255\"><![CDATA[顶部]]></d><d p=\"2,4,25,65280\">Bottom</d><d p=\"3,6,25,16777215\">Reverse</d><d p=\"4,7,25,0\">Advanced unsupported</d></i>" writeToURL:xml atomically:YES encoding:NSUTF8StringEncoding error:nil];
@@ -43,7 +43,7 @@ NSCAssert([c.videoGravity isEqual:AVLayerVideoGravityResizeAspect],@"initial sca
 [(NSButton *)find(controls,@"session.mirror") performClick:nil];NSCAssert(c.effects.filter.horizontalFlip,@"mirror menu did not apply effect");[(NSButton *)find(controls,@"session.mirror") performClick:nil];
 [(NSButton *)find(controls,@"session.loop") performClick:nil];NSCAssert(s.loopMode==SGPlaybackLoopModeOne,@"loop menu did not apply policy");s.loopMode=SGPlaybackLoopModeNone;
 __block BOOL screenshot=NO;controls.screenshotCaptured=^(NSImage *image){screenshot=image!=nil;};[controls refresh];[(NSButton *)find(controls,@"session.screenshot") performClick:nil];NSCAssert(screenshot,@"screenshot menu callback missing");
-[(NSButton *)find(controls,@"session.purePlay") performClick:nil];NSCAssert(!controls.controlsEnabled&&controls.hidden,@"pure menu did not hide controls");controls.controlsEnabled=YES;[controls revealControls];
+[(NSButton *)find(controls,@"session.purePlay") performClick:nil];NSCAssert(!controls.controlsEnabled&&!controls.hidden&&find(controls,@"session.settings").hidden,@"pure menu must preserve play/pause");controls.controlsEnabled=YES;[controls revealControls];
 [(NSButton *)find(controls,@"session.keepLastFrame") performClick:nil];NSCAssert(controls.keepLastFrameWhenComplete,@"last-frame menu ignored");controls.keepLastFrameWhenComplete=NO;
 [controls setCoverImage:c.currentImage forView:surface];[(NSButton *)find(controls,@"session.cover") performClick:nil];NSCAssert(!controls.coverEnabled,@"cover menu ignored");[(NSButton *)find(controls,@"session.cover") performClick:nil];NSCAssert(controls.coverEnabled,@"cover menu cannot restore");
 puts("PASS native settings scale/mirror/loop/screenshot/pure/cover/last-frame actions");
@@ -58,7 +58,7 @@ NSCAssert(spin(^BOOL{return CMTimeGetSeconds(c.currentTime)>10;},10),@"Seek gest
 puts("PASS native seek mouse gesture commits once after tracking");
 __block BOOL dismissed=NO;controls.dismissPresentation=^{dismissed=YES;};controls.controlsEnabled=NO;
 NSEvent *escape=[NSEvent keyEventWithType:NSEventTypeKeyDown location:NSZeroPoint modifierFlags:0 timestamp:stamp windowNumber:w.windowNumber context:nil characters:@"\x1b" charactersIgnoringModifiers:@"\x1b" isARepeat:NO keyCode:53];
-NSCAssert([controls handleKeyEvent:escape]&&dismissed&&controls.hidden,@"Pure playback traps fullscreen Escape");controls.controlsEnabled=YES;[controls revealControls];
+NSCAssert([controls handleKeyEvent:escape]&&dismissed&&!controls.hidden,@"Pure playback traps fullscreen Escape");controls.controlsEnabled=YES;[controls revealControls];
 
 
 BOOL originalSubtitles=c.effects.subtitlesEnabled;c.effects.danmakuEnabled=YES;

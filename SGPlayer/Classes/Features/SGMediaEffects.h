@@ -59,7 +59,8 @@ typedef NS_ENUM(NSInteger, SGDanmakuMode) {
 @interface SGWatermark : NSObject
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, strong, nullable) CIImage *image;
-// Normalized top-left coordinates in the composed video canvas.
+// Normalized top-left bounding box in the composed video canvas.
+// Preserves aspect ratio and does not upscale beyond the original image pixels.
 @property (nonatomic) CGRect rect;
 @property (nonatomic) CGFloat opacity;
 @end
@@ -111,7 +112,12 @@ typedef NS_ENUM(NSInteger, SGDanmakuMode) {
 @property (atomic, copy) NSArray<SGDanmakuItem *> *danmaku;
 @property (atomic) BOOL danmakuEnabled;
 @property (atomic) NSUInteger maximumDanmakuCount;
+// Font size on a 720-pixel-wide reference canvas; scales with the video.
 @property (atomic) CGFloat textSize;
+@property (atomic) NSUInteger textColorRGB; // 0xRRGGBB, default white
+@property (atomic) BOOL textBackgroundEnabled; // NO; optional rounded capsule
+@property (atomic) NSUInteger textBackgroundColorRGB; // default black
+@property (atomic) CGFloat textBackgroundOpacity; // default .65
 @property (atomic) CGFloat overlayOpacity;
 @property (atomic, copy) NSArray<SGWatermark *> *watermarks;
 @property (atomic) BOOL watermarksEnabled; // YES; hiding preserves loaded watermark content.

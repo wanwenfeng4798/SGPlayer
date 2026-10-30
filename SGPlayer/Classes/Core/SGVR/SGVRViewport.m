@@ -13,7 +13,7 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        self.degress = 60;
+        self.degress = 90;
         self.x = 0;
         self.y = 0;
         self.flipX = NO;
