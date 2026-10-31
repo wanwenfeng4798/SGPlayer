@@ -49,19 +49,21 @@
 }
 @end
 @interface SGToolbarSliderCell : NSSliderCell
+@property(nonatomic,strong) NSColor *fillColor;
 @end
 @implementation SGToolbarSliderCell
 - (void)drawBarInside:(NSRect)rect flipped:(BOOL)flipped {
-    NSRect track=NSMakeRect(rect.origin.x,NSMidY(rect)-2,rect.size.width,4);
+    NSRect track=self.isVertical ? NSMakeRect(NSMidX(rect)-2,rect.origin.y,4,rect.size.height) : NSMakeRect(rect.origin.x,NSMidY(rect)-2,rect.size.width,4);
     [[NSColor colorWithWhite:1 alpha:.30] setFill];
     [[NSBezierPath bezierPathWithRoundedRect:track xRadius:2 yRadius:2] fill];
     double span=self.maxValue-self.minValue;
-    track.size.width *= span>0 ? MIN(1,MAX(0,(self.doubleValue-self.minValue)/span)) : 0;
-    [[NSColor colorWithRed:1 green:.36 blue:.62 alpha:1] setFill];
+    double fraction=span>0 ? MIN(1,MAX(0,(self.doubleValue-self.minValue)/span)) : 0;
+    if(self.isVertical){CGFloat full=track.size.height;track.size.height*=fraction;if(flipped)track.origin.y+=full-track.size.height;}else track.size.width*=fraction;
+    [(self.fillColor ?: [NSColor colorWithSRGBRed:.984 green:.447 blue:.6 alpha:1]) setFill];
     [[NSBezierPath bezierPathWithRoundedRect:track xRadius:2 yRadius:2] fill];
 }
 - (void)drawKnob:(NSRect)rect {
-    [[NSColor colorWithRed:1 green:.36 blue:.62 alpha:1] setFill];
+    [(self.fillColor ?: [NSColor colorWithSRGBRed:.984 green:.447 blue:.6 alpha:1]) setFill];
     [[NSBezierPath bezierPathWithOvalInRect:NSMakeRect(NSMidX(rect)-6,NSMidY(rect)-6,12,12)] fill];
 }
 @end
@@ -124,7 +126,7 @@
 - (instancetype)initWithSession:(SGPlaybackSession *)session {
     if ((self = [super initWithFrame:CGRectZero])) {
         _session = session;
-        _controlsEnabled = YES; _coverEnabled = YES;
+        _controlsEnabled = YES; _coverEnabled = YES; _progressColorARGB=0xFFFB7299; _volumeColorARGB=0xFFFB7299;
         _timelineImages = [NSCache new]; _timelineImages.totalCostLimit = 16*1024*1024;
         _timelineQueue = dispatch_queue_create("org.sgplayer.timeline",DISPATCH_QUEUE_SERIAL);
         _showsVolumeControl = _showsSettingsControl = _showsFullscreenControl = _showsLockControl = YES;
@@ -436,6 +438,8 @@
     self.volumeSlider = [NSSlider sliderWithValue:1 minValue:0 maxValue:1 target:self action:@selector(volumeChanged:)];
     [self.volumeSlider setContinuous:YES];
     [self.volumeSlider setVertical:YES];
+    [self.volumeSlider setCell:[SGToolbarSliderCell new]];[self.volumeSlider setVertical:YES];
+    [self.volumeSlider setMinValue:0];[self.volumeSlider setMaxValue:1];[self.volumeSlider setContinuous:YES];[self.volumeSlider setTarget:self];[self.volumeSlider setAction:@selector(volumeChanged:)];
 #else
     UIView *panel = [UIView new]; panel.backgroundColor = [UIColor colorWithWhite:0 alpha:.9];
     UISlider *volume = [UISlider new]; volume.minimumValue = 0; volume.maximumValue = 1;
@@ -521,11 +525,21 @@
 - (void)settingsSelected:(NSMenuItem *)item { [self pressed:self.buttons[item.tag]]; }
 #endif
 - (NSString *)settingsTitle:(NSInteger)i {
-    NSDictionary *names = @{@1:@"后退 10 秒", @2:@"前进 10 秒", @3:@"上一集", @4:@"下一集", @5:@"播放内核", @6:@"切换音轨", @7:@"切换字幕", @8:@"切换清晰度", @10:@"重新加载", @12:@"画中画", @14:@"悬浮播放",@15:@"加载字幕文件",@16:@"加载弹幕 XML",@17:(self.session.controller.effects.danmakuEnabled?@"弹幕：开":@"弹幕：关"),@18:(self.session.controller.effects.subtitlesEnabled?@"字幕：开":@"字幕：关"),@19:(self.session.controller.automaticPictureInPictureEnabled?@"后台画中画：开":@"后台画中画：关"),@20:(self.keepLastFrameWhenComplete?@"保留最后一帧：开":@"保留最后一帧：关"),@21:(self.session.controller.effects.watermarksEnabled?@"水印：开":@"水印：关"),@22:@"加载预览 WebVTT",@23:@"切换画面比例",@24:(self.session.controller.effects.filter.horizontalFlip?@"镜像：开":@"镜像：关"),@25:(self.session.loopMode==SGPlaybackLoopModeNone?@"循环：关":self.session.loopMode==SGPlaybackLoopModeOne?@"单集循环":@"列表循环"),@26:@"截图",@27:@"纯播放",@28:(self.coverEnabled?@"封面：开":@"封面：关"),@29:(self.session.controller.effects.textBackgroundEnabled?@"文字背景：开":@"文字背景：关")};
+    NSDictionary *names = @{@1:@"后退 10 秒", @2:@"前进 10 秒", @3:@"上一集", @4:@"下一集", @5:@"播放内核", @6:@"切换音轨", @7:@"切换字幕", @8:@"切换清晰度", @10:@"重新加载", @12:@"画中画", @14:@"悬浮播放",@15:@"加载字幕文件",@16:@"加载弹幕 XML",@17:(self.session.controller.effects.danmakuEnabled?@"弹幕：开":@"弹幕：关"),@18:(self.session.controller.effects.subtitlesEnabled?@"字幕：开":@"字幕：关"),@19:(self.session.controller.automaticPictureInPictureEnabled?@"后台画中画：开":@"后台画中画：关"),@20:(self.keepLastFrameWhenComplete?@"保留最后一帧：开":@"保留最后一帧：关"),@21:(!self.session.controller.effects.watermarks.count?@"水印：加载图片…":self.session.controller.effects.watermarksEnabled?@"水印：开":@"水印：关"),@22:@"加载预览 WebVTT",@23:@"切换画面比例",@24:(self.session.controller.effects.filter.horizontalFlip?@"镜像：开":@"镜像：关"),@25:(self.session.loopMode==SGPlaybackLoopModeNone?@"循环：关":self.session.loopMode==SGPlaybackLoopModeOne?@"单集循环":@"列表循环"),@26:@"截图",@27:@"纯播放",@28:(self.coverEnabled?@"封面：开":@"封面：关"),@29:(self.session.controller.effects.textBackgroundEnabled?@"文字背景：开":@"文字背景：关")};
     return names[@(i)] ?: @"";
 }
 - (void)skipAdvertisement:(id)sender { [self.session skipAdvertisement]; [self refresh]; }
 - (void)refreshToolbar {
+#if SGPLATFORM_TARGET_OS_MAC
+    NSColor *(^color)(NSUInteger)=^NSColor *(NSUInteger c){return [NSColor colorWithSRGBRed:((c>>16)&255)/255.0 green:((c>>8)&255)/255.0 blue:(c&255)/255.0 alpha:((c>>24)&255)/255.0];};
+    ((SGToolbarSliderCell *)[(NSSlider *)self.progress cell]).fillColor=color(self.progressColorARGB);
+    ((SGToolbarSliderCell *)[(NSSlider *)self.volumeSlider cell]).fillColor=color(self.volumeColorARGB);
+    [self.progress setNeedsDisplay:YES];[self.volumeSlider setNeedsDisplay:YES];
+#else
+    UIColor *(^color)(NSUInteger)=^UIColor *(NSUInteger c){return [UIColor colorWithRed:((c>>16)&255)/255.0 green:((c>>8)&255)/255.0 blue:(c&255)/255.0 alpha:((c>>24)&255)/255.0];};
+    [(UISlider *)self.progress setMinimumTrackTintColor:color(self.progressColorARGB)];[(UISlider *)self.progress setThumbTintColor:color(self.progressColorARGB)];
+    [(UISlider *)self.volumeSlider setMinimumTrackTintColor:color(self.volumeColorARGB)];[(UISlider *)self.volumeSlider setThumbTintColor:color(self.volumeColorARGB)];
+#endif
     if (!self.advertisementButton) {
 #if SGPLATFORM_TARGET_OS_MAC
         NSButton *button = [NSButton buttonWithTitle:@"广告" target:self action:@selector(skipAdvertisement:)];
@@ -912,6 +926,17 @@
 }
 #if !SGPLATFORM_TARGET_OS_TV
 - (void)loadSelectedSource:(NSURL *)URL kind:(NSInteger)kind {
+    if(kind==3){
+        BOOL scoped=[URL startAccessingSecurityScopedResource];
+        SGPLFImage *loaded=[[SGPLFImage alloc]initWithContentsOfFile:URL.path];
+#if SGPLATFORM_TARGET_OS_MAC
+        CGImageRef cg=[loaded CGImageForProposedRect:NULL context:nil hints:nil];
+#else
+        CGImageRef cg=loaded.CGImage;
+#endif
+        if(cg){SGWatermark *mark=[SGWatermark new];mark.image=[CIImage imageWithCGImage:cg];self.session.controller.effects.watermarks=@[mark];self.session.controller.effects.watermarksEnabled=YES;}
+        if(scoped)[URL stopAccessingSecurityScopedResource];[self refresh];return;
+    }
     if (kind != 2) { [self loadSource:URL danmaku:kind == 1]; return; }
     BOOL scoped = [URL startAccessingSecurityScopedResource];
     [self loadTimelineSpritesFromURL:URL completion:^(NSError *failure) { if(scoped)[URL stopAccessingSecurityScopedResource]; }];
@@ -938,7 +963,7 @@
 - (void)chooseSource:(NSInteger)kind {
     BOOL danmaku = kind == 1;
     NSOpenPanel *panel = [NSOpenPanel openPanel];panel.canChooseDirectories=NO;panel.allowsMultipleSelection=NO;
-    panel.allowedFileTypes=kind==2?@[@"vtt"]:danmaku?@[@"xml"]:@[@"vtt",@"srt",@"ass",@"ssa",@"sub",@"sup",@"mks"];
+    panel.allowedFileTypes=kind==3?@[@"png",@"jpg",@"jpeg",@"webp"]:kind==2?@[@"vtt"]:danmaku?@[@"xml"]:@[@"vtt",@"srt",@"ass",@"ssa",@"sub",@"sup",@"mks"];
     __weak typeof(self) weakSelf=self;
     [panel beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse response) { if (response == NSModalResponseOK && panel.URL) [weakSelf loadSelectedSource:panel.URL kind:kind]; }];
 }
@@ -951,7 +976,7 @@
 - (void)chooseSource:(NSInteger)kind {
     BOOL danmaku = kind == 1;
     self.pickingSourceKind = kind;
-    UIDocumentPickerViewController *picker=[[UIDocumentPickerViewController alloc]initForOpeningContentTypes:@[danmaku?UTTypeXML:UTTypeData] asCopy:YES];
+    UIDocumentPickerViewController *picker=[[UIDocumentPickerViewController alloc]initForOpeningContentTypes:@[kind==3?UTTypeImage:danmaku?UTTypeXML:UTTypeData] asCopy:YES];
     picker.allowsMultipleSelection=NO;picker.delegate=self;
     [[self sourcePresenter] presentViewController:picker animated:YES completion:nil];
 }
@@ -968,6 +993,7 @@
     SGPlaybackController *controller = self.session.controller;
     switch (action) {
     case 0:
+        if (self.session.state==SGPlaybackSessionStateEnded) { [self.session play]; break; }
         if (controller.playing)
             [self.session pause];
         else
@@ -980,10 +1006,10 @@
         [self seekBySeconds:10];
         break;
     case 3:
-        [self.session previous];
+        if([self.session previous])[self.session play];
         break;
     case 4:
-        [self.session next];
+        if([self.session next])[self.session play];
         break;
     case 5:
         if (!self.changingKernel) {
@@ -1052,7 +1078,7 @@
     case 18: controller.effects.subtitlesEnabled = !controller.effects.subtitlesEnabled; break;
     case 19: controller.automaticPictureInPictureEnabled = !controller.automaticPictureInPictureEnabled; break;
     case 20: self.keepLastFrameWhenComplete = !self.keepLastFrameWhenComplete; break;
-    case 21: controller.effects.watermarksEnabled = !controller.effects.watermarksEnabled; break;
+    case 21: if(!controller.effects.watermarks.count)[self chooseSource:3];else controller.effects.watermarksEnabled = !controller.effects.watermarksEnabled; break;
     case 22: [self chooseSource:2]; break;
     case 23: controller.videoGravity = [controller.videoGravity isEqual:AVLayerVideoGravityResizeAspect] ? AVLayerVideoGravityResizeAspectFill : [controller.videoGravity isEqual:AVLayerVideoGravityResizeAspectFill] ? AVLayerVideoGravityResize : AVLayerVideoGravityResizeAspect; break;
     case 24: { SGFilterConfiguration *filter=controller.effects.filter.copy;filter.horizontalFlip=!filter.horizontalFlip;controller.effects.filter=filter; break; }
@@ -1141,6 +1167,8 @@
     for (NSUInteger i = 0; i < self.buttons.count; i++)
         [self.buttons[i] setHidden:(self.controlsLocked && i != 11) || (i == 5 && !self.showsKernelSelection)];
     BOOL loading = self.session.state == SGPlaybackSessionStateLoading;
+    [self.buttons[3] setEnabled:!loading && self.session.selectedIndex>0 && self.session.selectedIndex<(NSInteger)self.session.items.count];
+    [self.buttons[4] setEnabled:!loading && self.session.items.count>1 && (self.session.selectedIndex+1<(NSInteger)self.session.items.count || self.session.loopMode==SGPlaybackLoopModeAll)];
     [self.buttons[1] setEnabled:!loading];
     [self.buttons[2] setEnabled:!loading];
     [self.buttons[5] setEnabled:!loading && !self.changingKernel];

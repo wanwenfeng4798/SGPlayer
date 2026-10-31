@@ -6,6 +6,8 @@ NS_ASSUME_NONNULL_BEGIN
 #else
 @interface SGPlaybackControls : UIView
 #endif
+@property(nonatomic) NSUInteger progressColorARGB;
+@property(nonatomic) NSUInteger volumeColorARGB;
 - (instancetype)initWithSession:(SGPlaybackSession *)session;
 @property(nonatomic, strong, readonly) SGPlaybackSession *session;
 @property(nonatomic) BOOL controlsLocked;

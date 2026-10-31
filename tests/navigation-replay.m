@@ -1,0 +1,16 @@
+#import <AppKit/AppKit.h>
+#import <SGPlayer/SGPlaybackControls.h>
+static BOOL spin(BOOL(^done)(void),double seconds){NSDate *end=[NSDate dateWithTimeIntervalSinceNow:seconds];while(!done()&&end.timeIntervalSinceNow>0)[NSRunLoop.mainRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.02]];return done();}
+static NSButton *button(NSView *view,NSString *name){for(NSView *v in view.subviews){if([v.accessibilityIdentifier isEqual:name])return (NSButton *)v;NSButton *b=button(v,name);if(b)return b;}return nil;}
+int main(){@autoreleasepool{[NSApplication sharedApplication];
+for(int kernel=0;kernel<2;kernel++){@autoreleasepool{
+NSWindow *w=[[NSWindow alloc]initWithContentRect:NSMakeRect(50,50,480,320)styleMask:NSWindowStyleMaskTitled backing:NSBackingStoreBuffered defer:NO];[w makeKeyAndOrderFront:nil];
+SGPlaybackController *c=[[SGPlaybackController alloc]initWithKernel:kernel view:w.contentView];SGPlaybackSession *s=[[SGPlaybackSession alloc]initWithController:c resumeStore:nil];s.kernelPolicy=kernel==SGPlaybackKernelNative?SGKernelSelectionPolicyPreferNative:SGKernelSelectionPolicyPreferFFmpeg;s.automaticAdvance=NO;
+NSURL *url=[NSURL fileURLWithPath:[[[NSString stringWithUTF8String:__FILE__]stringByDeletingLastPathComponent]stringByAppendingPathComponent:@"fixtures/orientation.mp4"]];SGPlaybackRendition *r=[[SGPlaybackRendition alloc]initWithIdentifier:@"main" title:@"main" URL:url];
+NSArray *items=@[[[SGPlaybackItem alloc]initWithIdentifier:@"one" title:@"one" renditions:@[r]],[[SGPlaybackItem alloc]initWithIdentifier:@"two" title:@"two" renditions:@[r]]];
+SGPlaybackControls *ui=[[SGPlaybackControls alloc]initWithSession:s];ui.frame=w.contentView.bounds;[w.contentView addSubview:ui];NSError *error=nil;NSCAssert([s loadItems:items startIndex:0 autoPlay:NO error:&error],@"Load failed");NSCAssert(spin(^BOOL{return s.state==SGPlaybackSessionStatePaused;},15),@"Not ready");[ui refresh];NSCAssert(!button(ui,@"session.previous").enabled,@"Previous at first item must be disabled");
+[button(ui,@"session.next")performClick:nil];NSCAssert(spin(^BOOL{return s.selectedIndex==1&&s.state==SGPlaybackSessionStatePlaying&&CMTimeGetSeconds(c.currentTime)>.2;},15),@"Menu next did not start next item");[ui refresh];NSCAssert(!button(ui,@"session.next").enabled,@"Next at last item must be disabled");
+[button(ui,@"session.previous")performClick:nil];NSCAssert(spin(^BOOL{return s.selectedIndex==0&&s.state==SGPlaybackSessionStatePlaying&&CMTimeGetSeconds(c.currentTime)>.2;},15),@"Menu previous did not start previous item");
+__block BOOL sought=NO;[c seekToTime:CMTimeSubtract(c.duration,CMTimeMake(3,10)) completion:^(BOOL success){sought=success;}];NSCAssert(spin(^BOOL{return sought;},10),@"End seek failed");[s play];NSCAssert(spin(^BOOL{return s.state==SGPlaybackSessionStateEnded;},10),@"Did not reach end");[ui refresh];[button(ui,@"session.play")performClick:nil];NSCAssert(spin(^BOOL{return s.state==SGPlaybackSessionStatePlaying&&CMTimeGetSeconds(c.currentTime)>.2&&CMTimeGetSeconds(c.currentTime)<3;},15),@"Play after EOF did not restart from zero");
+printf("PASS kernel %d: menu previous/next, bounds, and replay after actual EOF\n",kernel);[s close];[w orderOut:nil];}}
+}return 0;}

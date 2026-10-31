@@ -10,7 +10,7 @@ if not (frameworks / 'SGPlayer.framework').exists():
     raise SystemExit('Build the local Release SGPlayer macOS framework first.')
 sdk = subprocess.check_output(['xcrun', '--sdk', 'macosx', '--show-sdk-path'], text=True).strip()
 with tempfile.TemporaryDirectory(prefix='sg-policy-') as temp:
-    for name in ['playback-policy', 'presentation-layout', 'overlay-style', 'vr-render']:
+    for name in ['playback-policy', 'presentation-layout', 'overlay-style', 'vr-render', 'navigation-replay']:
         binary = str(Path(temp) / name)
         subprocess.run(['xcrun', 'clang', '-isysroot', sdk, '-fobjc-arc', '-framework', 'AppKit', '-framework', 'VideoToolbox',
                         '-F', str(frameworks), '-framework', 'SGPlayer', '-lz', '-lbz2', '-liconv', '-lc++',

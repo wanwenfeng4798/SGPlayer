@@ -369,8 +369,13 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
     self.looping = NO;
 }
 - (void)play {
-    if (!self.closed)
-        [self.controller play];
+    if(self.closed)return;
+    if(self.state==SGPlaybackSessionStateEnded && [self currentItem]) {
+        [self.firedAdvertisements removeAllIndexes];
+        [self openURL:[self currentItem].renditions[self.selectedRendition].URL position:0 chooseKernel:NO completion:^(BOOL success){if(success)[self play];}];
+        return;
+    }
+    [self.controller play];
 }
 - (void)pause {
     [self.controller pause];
@@ -575,8 +580,10 @@ static NSError *SGSessionError(NSInteger code, NSString *message) {
                              }];
         } else if (self.automaticAdvance && [self next])
             [self play];
-        else
+        else {
+            [self.controller pause];
             [self updateState:SGPlaybackSessionStateEnded];
+        }
         return;
     }
     if (!self.controller.playing) {

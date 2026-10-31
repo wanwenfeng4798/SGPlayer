@@ -28,6 +28,9 @@ int main(void) { @autoreleasepool {
         NSCAssert(find(controls,@"session.play").hidden && !find(controls,@"session.lock").hidden,@"Lock must hide toolbar and preserve unlock");
         controls.controlsLocked=NO;
     }
+    controls.progressColorARGB=0xff00ff00;controls.volumeColorARGB=0xff0000ff;[controls refresh];
+    NSColor *seekColor=[[(NSSlider *)find(controls,@"session.progress") cell]valueForKey:@"fillColor"];
+    NSCAssert(seekColor.greenComponent>.99&&seekColor.redComponent<.01,@"Progress color was not applied");
     [(NSButton *)find(controls,@"session.volume") performClick:nil];
     NSSlider *volume=(NSSlider *)find(controls,@"session.volume.slider");
     NSCAssert(!volume.isHiddenOrHasHiddenAncestor,@"Volume panel did not open");
@@ -38,6 +41,8 @@ int main(void) { @autoreleasepool {
     controls.controlsEnabled=NO;[controls refresh];
     NSCAssert(!controls.hidden&&!find(controls,@"session.play").hidden&&find(controls,@"session.settings").hidden,@"Pure mode lost play/pause");
     controls.controlsEnabled=YES;
+    NSColor *volumeColor=[volume.cell valueForKey:@"fillColor"];
+    NSCAssert(volumeColor.blueComponent>.99&&volumeColor.redComponent<.01,@"Volume color was not applied");
     volume.doubleValue=.25; [NSApp sendAction:volume.action to:volume.target from:volume];
     NSCAssert(fabs(player.volume-.25)<.01,@"Volume slider did not update native player");
     puts("PASS native toolbar widths 240/280/360/720/1280, lock/unlock, volume slider");

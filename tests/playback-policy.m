@@ -10,6 +10,7 @@ static NSView *find(NSView *v, NSString *identifier) { if ([v.accessibilityIdent
 - (void)seekToTime:(CMTime)time completion:(void (^)(BOOL))completion { self.seekCount++; [super seekToTime:time completion:completion]; }
 @end
 @interface SGPlaybackControls (PreviewTest)
+- (void)loadSelectedSource:(NSURL *)url kind:(NSInteger)kind;
 - (void)showTimelineFraction:(double)fraction;
 @end
 int main(){@autoreleasepool{
@@ -34,6 +35,10 @@ NSURL *vtt=[NSURL fileURLWithPath:[base stringByAppendingPathComponent:@"preview
 ready=NO;[controls loadTimelineSpritesFromURL:vtt completion:^(NSError *failure){NSCAssert(!failure,@"VTT source %@",failure);ready=YES;}];NSCAssert(spin(^BOOL{return ready;},10),@"preview source timeout");
 for(int region=0;region<2;region++){ready=NO;[controls timelineImageAtTime:CMTimeMake(region?15:5,10) completion:^(NSImage *image,NSError *failure){NSCAssert(image&&!failure,@"preview image %@",failure);NSBitmapImageRep *rep=[NSBitmapImageRep imageRepWithData:image.TIFFRepresentation];NSColor *color=[[rep colorAtX:16 y:16]colorUsingColorSpace:NSColorSpace.deviceRGBColorSpace];NSCAssert(region?color.blueComponent>.9&&color.redComponent<.1:color.redComponent>.9&&color.blueComponent<.1,@"wrong VTT crop");ready=YES;}];NSCAssert(spin(^BOOL{return ready;},10),@"preview request timeout");}
 [controls showTimelineFraction:.02];NSCAssert(spin(^BOOL{return find(controls,@"session.timelinePreview")&&!find(controls,@"session.timelinePreview").hidden;},10),@"scrub preview not visible");NSCAssert(NSContainsRect(controls.bounds,find(controls,@"session.timelinePreview").frame),@"preview clipped");
+[controls loadSelectedSource:[NSURL fileURLWithPath:[base stringByAppendingPathComponent:@"sprite.png"]] kind:3];
+NSCAssert(c.effects.watermarks.count==1&&c.effects.watermarksEnabled,@"Picker did not load watermark");
+[(NSButton *)find(controls,@"session.watermark") performClick:nil];NSCAssert(!c.effects.watermarksEnabled,@"Menu watermark disable failed");
+[(NSButton *)find(controls,@"session.watermark") performClick:nil];NSCAssert(c.effects.watermarksEnabled,@"Menu watermark enable failed");
 [[NSFileManager defaultManager]removeItemAtPath:base error:nil];
 puts("PASS XML modes/color/entities, native async XML loading, WebVTT relative sprite crops and visible scrub preview");
 NSCAssert([c.videoGravity isEqual:AVLayerVideoGravityResizeAspect],@"initial scaling");
