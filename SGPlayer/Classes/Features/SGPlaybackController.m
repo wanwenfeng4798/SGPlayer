@@ -38,6 +38,8 @@
 @property (nonatomic) NSUInteger danmakuGeneration;
 @property (nonatomic) BOOL automaticSavedVideoBackgroundPolicy;
 @property (nonatomic) BOOL closed;
+@property (nonatomic) BOOL automaticPiPRequested;
+@property (nonatomic) BOOL automaticPiPCancelled;
 @property (nonatomic) CGSize videoPresentationSize;
 #if SGPLATFORM_TARGET_OS_MAC
 @property(nonatomic, strong) NSPanel *pictureInPicturePanel;
@@ -71,10 +73,15 @@
 #if SGPLATFORM_TARGET_OS_MAC
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterAutomaticPictureInPicture:) name:NSApplicationDidResignActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterAutomaticPictureInPicture:) name:NSWindowWillMiniaturizeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterAutomaticPictureInPicture:) name:NSApplicationDidHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterAutomaticPictureInPicture:) name:NSWindowDidMiniaturizeNotification object:nil];
 #endif
 
 #if SGPLATFORM_TARGET_OS_IPHONE_OR_TV
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+#if SGPLATFORM_TARGET_OS_IPHONE
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(prepareAutomaticPictureInPicture:) name:UIApplicationWillResignActiveNotification object:nil];
+#endif
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
 #endif
         [self setupBackend];
@@ -133,6 +140,9 @@
         self.nativePlayer.automaticallyWaitsToMinimizeStalling = self.nativePlaybackPolicy.automaticallyWaitsToMinimizeStalling;
         self.nativePlayer.volume=self.volume;
         self.nativePlayer.allowsExternalPlayback=YES;
+#if SGPLATFORM_TARGET_OS_IPHONE
+        self.nativePlayer.audiovisualBackgroundPlaybackPolicy = self.automaticPictureInPictureEnabled ? AVPlayerAudiovisualBackgroundPlaybackPolicyContinuesIfPossible : AVPlayerAudiovisualBackgroundPlaybackPolicyAutomatic;
+#endif
     }
 }
 - (void)setVideoGravity:(AVLayerVideoGravity)gravity {
@@ -379,10 +389,7 @@
     self.effects.softwareRendering=YES;
     self.ffmpegPlayer.videoRenderer.backgroundOutputEnabled=YES;
 #if SGPLATFORM_TARGET_OS_IPHONE
-    if (self.automaticPictureInPictureEnabled && self.playing && !self.closed &&
-        !self.pictureInPictureActive && self.pictureInPictureController.pictureInPicturePossible) {
-        [self startPictureInPicture:nil];
-    }
+    [self prepareAutomaticPictureInPicture:notification];
 #endif
 }
 - (void)willEnterForeground:(NSNotification *)notification {
@@ -437,6 +444,7 @@
 - (void)setAutomaticPictureInPictureEnabled:(BOOL)enabled {
     BOOL changed = _automaticPictureInPictureEnabled != enabled;
     _automaticPictureInPictureEnabled = enabled;
+    self.automaticPiPCancelled=!enabled;
 #if SGPLATFORM_TARGET_OS_IPHONE_OR_TV
     if (changed && self.ffmpegPlayer) {
         if (enabled) { self.automaticSavedVideoBackgroundPolicy = self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack; self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack = NO; }
@@ -447,12 +455,28 @@
     self.pictureInPictureController.canStartPictureInPictureAutomaticallyFromInline = enabled;
     self.nativePlayer.audiovisualBackgroundPlaybackPolicy = enabled ? AVPlayerAudiovisualBackgroundPlaybackPolicyContinuesIfPossible : AVPlayerAudiovisualBackgroundPlaybackPolicyAutomatic;
 #endif
+    if (!enabled && (self.automaticPiPRequested || self.pictureInPictureActive)) { self.automaticPiPCancelled=YES; self.automaticPiPRequested=NO; [self stopPictureInPicture]; }
 }
+#if SGPLATFORM_TARGET_OS_IPHONE
+- (void)prepareAutomaticPictureInPicture:(NSNotification *)notification {
+    if (self.closed || !self.automaticPictureInPictureEnabled || !self.playing || self.pictureInPictureActive || self.automaticPiPRequested) return;
+    if (!self.pictureInPictureController.pictureInPicturePossible) return;
+    self.automaticPiPRequested=YES;
+    NSError *error=nil;
+    if (![self startPictureInPicture:&error]) { self.automaticPiPRequested=NO; if(self.pictureInPictureChanged)self.pictureInPictureChanged(NO,error); }
+}
+#endif
 #if SGPLATFORM_TARGET_OS_MAC
 - (void)enterAutomaticPictureInPicture:(NSNotification *)notification {
-    if (self.closed || !self.automaticPictureInPictureEnabled || !self.playing || self.pictureInPictureActive || !self.view.window.visible) return;
-    if ([notification.name isEqual:NSWindowWillMiniaturizeNotification] && notification.object != self.view.window) return;
-    [self startPictureInPicture:nil];
+    NSWindow *source=(self.pictureInPictureView ?: self.view).window;
+    if (self.closed || !self.automaticPictureInPictureEnabled || !self.playing || self.pictureInPictureActive || !source) return;
+    BOOL windowEvent=[notification.name isEqual:NSWindowWillMiniaturizeNotification] || [notification.name isEqual:NSWindowDidMiniaturizeNotification];
+    if (windowEvent && notification.object != source) return;
+    if (!source.visible && !source.miniaturized && ![notification.name isEqual:NSApplicationDidHideNotification]) return;
+    self.automaticPiPRequested=YES;
+    NSError *error=nil;
+    if (![self startPictureInPicture:&error]) { self.automaticPiPRequested=NO; if(self.pictureInPictureChanged)self.pictureInPictureChanged(NO,error); }
+
 }
 #endif
 #if SGPLATFORM_TARGET_OS_MAC
@@ -511,6 +535,7 @@
 - (void)windowWillClose:(NSNotification *)notification {
     if(notification.object!=self.pictureInPicturePanel)return;
     [self.pictureInPicturePresentation restore];self.pictureInPicturePresentation=nil;
+    self.automaticPiPRequested=NO;
     self.pictureInPicturePanel.delegate=nil;self.pictureInPicturePanel=nil;self.pictureInPictureSourceWindow=nil;
     if(self.pictureInPictureChanged)self.pictureInPictureChanged(NO,nil);
 }
@@ -523,6 +548,7 @@
 }
 #endif
 - (BOOL)startPictureInPicture:(NSError **)error {
+    self.automaticPiPCancelled=NO;
 #if SGPLATFORM_TARGET_OS_MAC
     return [self startPanelPictureInPicture:error];
 #else
@@ -537,6 +563,7 @@
 #endif
 }
 - (void)stopPictureInPicture {
+    self.automaticPiPRequested=NO;
 #if SGPLATFORM_TARGET_OS_MAC
     NSPanel *panel=self.pictureInPicturePanel;
     if(panel){[panel close];return;}
@@ -550,6 +577,7 @@
 - (void)pictureInPictureController:(AVPictureInPictureController *)controller didTransitionToRenderSize:(CMVideoDimensions)size {}
 - (void)pictureInPictureController:(AVPictureInPictureController *)controller skipByInterval:(CMTime)interval completionHandler:(void (^)(void))completion { CMTime target = CMTimeMaximum(kCMTimeZero,CMTimeAdd(self.currentTime,interval)); if (CMTIME_IS_NUMERIC(self.duration)) target = CMTimeMinimum(target,self.duration); [self seekToTime:target completion:^(BOOL success){completion();}]; }
 - (void)pictureInPictureControllerDidStartPictureInPicture:(AVPictureInPictureController *)controller {
+    if(self.automaticPiPCancelled || (self.automaticPiPRequested && !self.automaticPictureInPictureEnabled)){[self stopPictureInPicture];return;}
 #if SGPLATFORM_TARGET_OS_IPHONE_OR_TV
     self.previousVideoBackgroundPolicy=self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack;
     if (!self.automaticPictureInPictureEnabled) self.automaticSavedVideoBackgroundPolicy=self.previousVideoBackgroundPolicy;
@@ -557,10 +585,11 @@
 #endif
     if (self.pictureInPictureChanged) self.pictureInPictureChanged(YES,nil); }
 - (void)pictureInPictureControllerDidStopPictureInPicture:(AVPictureInPictureController *)controller {
+    self.automaticPiPRequested=NO;
 #if SGPLATFORM_TARGET_OS_IPHONE_OR_TV
     self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack=self.automaticPictureInPictureEnabled?NO:self.automaticSavedVideoBackgroundPolicy;
 #endif
     if (self.pictureInPictureChanged) self.pictureInPictureChanged(NO,nil); }
-- (void)pictureInPictureController:(AVPictureInPictureController *)controller failedToStartPictureInPictureWithError:(NSError *)error { if (self.pictureInPictureChanged) self.pictureInPictureChanged(NO,error); }
+- (void)pictureInPictureController:(AVPictureInPictureController *)controller failedToStartPictureInPictureWithError:(NSError *)error { self.automaticPiPRequested=NO; if (self.pictureInPictureChanged) self.pictureInPictureChanged(NO,error); }
 - (void)pictureInPictureController:(AVPictureInPictureController *)controller restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:(void (^)(BOOL))completion { if (self.restoreInterface) self.restoreInterface(completion); else completion(YES); }
 @end

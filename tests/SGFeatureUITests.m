@@ -329,6 +329,16 @@
     NSString *status=self.app.staticTexts[@"session.diagnostics"].label;NSTextCheckingResult *match=[regex firstMatchInString:status options:0 range:NSMakeRange(0,status.length)];
     XCTAssertNotNil(match);XCTAssertGreaterThan([[status substringWithRange:[match rangeAtIndex:1]]integerValue],0);
     [self attach:@"automatic-background-pip"];
+    [self.app.buttons[@"session.settings"] tap];
+    if ([more waitForExistenceWithTimeout:3]) [more tap];
+    XCUIElement *enabled=self.app.buttons[@"后台画中画：开"];
+    XCTAssertTrue([enabled waitForExistenceWithTimeout:5]);[enabled tap];
+    [[self.app coordinateWithNormalizedOffset:CGVectorMake(.5,.2)] tap];
+    [[XCUIDevice sharedDevice]pressButton:XCUIDeviceButtonHome];
+    [NSThread sleepForTimeInterval:3];[self.app activate];
+    [self waitForSession:@"PiP:off"];
+    [self waitForSession:@"AutoPiP:off"];
+    [self attach:@"automatic-background-pip-disabled"];
 }
 #endif
 - (void)testSessionControlsAndPresentation {

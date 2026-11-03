@@ -1,6 +1,10 @@
 #import <AppKit/AppKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <SGPlayer/SGPlaybackSession.h>
+#import <SGPlayer/SGPlaybackControls.h>
+@interface SGPlaybackControls (PiPTest)
+- (void)pressed:(id)sender;
+@end
 static BOOL spin(BOOL(^done)(void),double seconds) {
     NSDate *end=[NSDate dateWithTimeIntervalSinceNow:seconds];
     while(!done() && end.timeIntervalSinceNow>0) { @autoreleasepool {
@@ -62,7 +66,7 @@ NSView *surface=[[NSView alloc]initWithFrame:w.contentView.bounds];surface.autor
 BOOL ffmpeg=[NSProcessInfo.processInfo.environment[@"SG_PIP_KERNEL"] isEqual:@"ffmpeg"];
 printf("BACKEND %s MODE %s\n",ffmpeg?"ffmpeg":"native",logicOnly?"lifecycle (no visual acceptance)":"visual");
 SGPlaybackController *c=[[SGPlaybackController alloc]initWithKernel:ffmpeg?SGPlaybackKernelFFmpeg:SGPlaybackKernelNative view:surface];
-SGPlaybackSession *s=[[SGPlaybackSession alloc]initWithController:c resumeStore:nil];s.kernelPolicy=ffmpeg?SGKernelSelectionPolicyPreferFFmpeg:SGKernelSelectionPolicyPreferNative;
+SGPlaybackSession *s=[[SGPlaybackSession alloc]initWithController:c resumeStore:nil];s.loopMode=SGPlaybackLoopModeOne;s.kernelPolicy=ffmpeg?SGKernelSelectionPolicyPreferFFmpeg:SGKernelSelectionPolicyPreferNative;
 NSURL *url=[NSURL fileURLWithPath:[[[NSString stringWithUTF8String:__FILE__] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"fixtures/orientation.mp4"]];
 SGPlaybackRendition *r=[[SGPlaybackRendition alloc]initWithIdentifier:@"main" title:@"Main" URL:url];SGPlaybackItem *i=[[SGPlaybackItem alloc]initWithIdentifier:@"test" title:@"Test" renditions:@[r]];
 __block BOOL pipStopped=YES;CFAbsoluteTime startedAt=CFAbsoluteTimeGetCurrent();
@@ -86,6 +90,15 @@ NSWindow *panel=surface.window;NSSize resized=[(id<NSWindowDelegate>)c windowWil
 spin(^BOOL{return NO;},.2);NSCAssert(fabs(surface.bounds.size.width/surface.bounds.size.height-4.0/3)<.03,@"PiP resize lost the video aspect ratio");
 CheckPiPWindow(surface);[c stopPictureInPicture];NSCAssert(spin(^BOOL{return pipStopped&&!c.pictureInPictureActive;},10),@"PiP stop timed out");spin(^BOOL{return NO;},.5);NSCAssert(surface.superview==w.contentView && NSEqualRects(surface.frame,w.contentView.bounds),@"PiP failed to restore inline layout");}
 c.videoGravity=AVLayerVideoGravityResizeAspect;
-c.automaticPictureInPictureEnabled=YES;[w miniaturize:nil];NSCAssert(spin(^BOOL{return c.pictureInPictureActive;},10),@"Automatic PiP did not start on minimize");
-puts("PASS automatic macOS PiP on window minimization");[c stopPictureInPicture];[w deminiaturize:nil];[s close];[w orderOut:nil];
+SGPlaybackControls *controls=[[SGPlaybackControls alloc]initWithSession:s];NSButton *toggle=[NSButton new];toggle.tag=19;[controls pressed:toggle];NSCAssert(c.automaticPictureInPictureEnabled,@"Settings action did not enable automatic PiP");[w miniaturize:nil];NSCAssert(spin(^BOOL{return c.pictureInPictureActive;},10),@"Automatic PiP did not start on minimize");
+puts("PASS automatic macOS PiP on window minimization");
+[controls pressed:toggle];NSCAssert(!c.automaticPictureInPictureEnabled,@"Settings action did not disable automatic PiP");NSCAssert(!c.pictureInPictureActive,@"Disabling automatic PiP must restore the source");
+[w deminiaturize:nil];[w miniaturize:nil];spin(^BOOL{return NO;},.3);NSCAssert(!c.pictureInPictureActive,@"Disabled automatic PiP started on minimize");
+[w deminiaturize:nil];c.automaticPictureInPictureEnabled=YES;
+[NSNotificationCenter.defaultCenter postNotificationName:NSApplicationDidHideNotification object:NSApp];NSCAssert(c.pictureInPictureActive,@"Hide did not start automatic PiP");
+c.automaticPictureInPictureEnabled=NO;NSCAssert(!c.pictureInPictureActive,@"Hide PiP did not stop when disabled");
+[NSApp activateIgnoringOtherApps:YES];spin(^BOOL{return NSApp.active;},3);[controls pressed:toggle];
+[[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.finder"].firstObject activateWithOptions:NSApplicationActivateAllWindows];NSCAssert(spin(^BOOL{return c.pictureInPictureActive;},5),@"Settings-enabled PiP did not start on app deactivation");
+[controls pressed:toggle];NSCAssert(!c.pictureInPictureActive,@"Settings disable did not restore deactivated app");
+puts("PASS automatic macOS PiP settings/disable/re-enable/hide/deactivation");[s close];[w orderOut:nil];
 }return 0;}
