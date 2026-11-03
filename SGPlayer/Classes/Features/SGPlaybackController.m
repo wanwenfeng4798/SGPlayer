@@ -378,6 +378,12 @@
     self.background=YES;
     self.effects.softwareRendering=YES;
     self.ffmpegPlayer.videoRenderer.backgroundOutputEnabled=YES;
+#if SGPLATFORM_TARGET_OS_IPHONE
+    if (self.automaticPictureInPictureEnabled && self.playing && !self.closed &&
+        !self.pictureInPictureActive && self.pictureInPictureController.pictureInPicturePossible) {
+        [self startPictureInPicture:nil];
+    }
+#endif
 }
 - (void)willEnterForeground:(NSNotification *)notification {
     self.foregroundRevision++;
@@ -439,6 +445,7 @@
 #endif
 #if SGPLATFORM_TARGET_OS_IPHONE
     self.pictureInPictureController.canStartPictureInPictureAutomaticallyFromInline = enabled;
+    self.nativePlayer.audiovisualBackgroundPlaybackPolicy = enabled ? AVPlayerAudiovisualBackgroundPlaybackPolicyContinuesIfPossible : AVPlayerAudiovisualBackgroundPlaybackPolicyAutomatic;
 #endif
 }
 #if SGPLATFORM_TARGET_OS_MAC

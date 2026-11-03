@@ -23,7 +23,7 @@ macOS 画中画使用框架内的 AppKit 原生浮动面板，移动同一个视
 ## 依赖与要求
 
 - FFmpeg 9.0.2、Metal、AudioToolbox。
-- Xcode 27.1、Metal Toolchain、对应平台 SDK、Python 3、PATH 中的 `pkg-config`。
+- Xcode 27.2、Metal Toolchain、对应平台 SDK、Python 3、PATH 中的 `pkg-config`。
 - 字幕依赖固定为 libass 0.17.5、FreeType 2.14.3、HarfBuzz 14.4.0、FriBidi 1.0.16；Meson/Ninja 安装在本地构建虚拟环境。
 - 最低 iOS 15.0、tvOS 15.0、macOS 12.0；最低系统版本尚未完成实机验收。
 

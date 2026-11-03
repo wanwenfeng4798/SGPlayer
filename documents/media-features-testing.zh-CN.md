@@ -70,3 +70,7 @@ xcodebuild -workspace demo/demo.xcworkspace -scheme features-ui-tvos \
 Xcode 结果位于 `build/FeatureUI{Mac,Phone,TV}/Logs/Test/*.xcresult`；smoke JSON/图片位于 `build/RuntimeMac`、`build/runtime-macos`、`build/iPhoneDevice`、`build/RuntimeTV`；数据结果位于 `build/tests-asan/{formats,features}`。最终清单记录路径、结果及源码校验值。首次 FLV/ASF 失败、字体资源未进入应用包、Metal/CI 上下翻转及 Mac EOF 停滞保留为发现，不悄悄计为通过。
 
 本轮覆盖指定主机/设备/运行时的已列 demo 和代表性功能路径，不代表穷尽所有组合、最低支持系统、tvOS 真机 PiP、4K/HDR/DRM、任意 PGS/DVB、所有字体/GIF 方言、直播字幕、长时间功耗/内存稳定性及所有系统 PiP 控件交互。原生格式能力由 AVFoundation 决定。未用声学设备测量物理扬声器出声；音频检查证明的是解码/输出时钟路径。ASan 仅覆盖 SGPlayer/测试源码，不覆盖生产依赖二进制。
+
+## 2026-11-03 physical iPhone regression (Xcode 27.2)
+
+SGPlayer source fixes keep the settings menu identity stable, hold auto-hide during menu presentation, and enable the background PiP start path/AVPlayer continuation policy. Both testSessionMoreSettingsPersistsDuringPlayback and testSessionAutomaticBackgroundPictureInPicture passed, 0 failures. The first waits six seconds then toggles the visible cover action and checks its updated state; the second presses Home and verifies PiP active plus nonzero background frames. Result: build/MenuPiPDevice/Logs/Test/Test-features-ui-ios-2026.11.03_13-18-38-+0800.xcresult. This validates the selected fixture/default kernel on this iPhone, not all formats/kernels/devices. Local iOS/macOS packages were rebuilt; no tag was published.

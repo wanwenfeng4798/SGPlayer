@@ -184,7 +184,7 @@
         self.timer=[NSTimer scheduledTimerWithTimeInterval:.2 repeats:YES block:^(NSTimer *timer){
             SGFeatureDemo *demo=weakSelf;if(!demo)return;
             NSArray *states=@[@"Idle",@"Loading",@"Playing",@"Paused",@"Buffering",@"Ended",@"Failed"];
-            NSString *message=[NSString stringWithFormat:@"%@ %.1f / %.1fs %@",states[demo.session.state],CMTimeGetSeconds(demo.playback.currentTime),CMTimeGetSeconds(demo.playback.duration),demo.playback.kernel==SGPlaybackKernelNative?@"Native":@"FFmpeg"];
+            NSString *message=[NSString stringWithFormat:@"%@ %.1f / %.1fs %@ | PiP:%@ | BgFrames:%lu",states[demo.session.state],CMTimeGetSeconds(demo.playback.currentTime),CMTimeGetSeconds(demo.playback.duration),demo.playback.kernel==SGPlaybackKernelNative?@"Native":@"FFmpeg",demo.playback.pictureInPictureActive?@"on":@"off",(unsigned long)demo.playback.backgroundFrameCount];
 #if SGPLATFORM_TARGET_OS_MAC
             [demo.statusLabel setStringValue:message];
 #else

@@ -49,7 +49,7 @@ The oldest supported systems have not been tested on devices.
 
 The build uses the official FFmpeg 9.0.2 release archive with a pinned SHA-256.
 HTTPS/RTMPS use Apple SecureTransport; OpenSSL is not required.
-Xcode 27.1 (including the Metal Toolchain), its platform SDKs, Python 3, and `pkg-config` on PATH are required.
+Xcode 27.2 (including the Metal Toolchain), its platform SDKs, Python 3, and `pkg-config` on PATH are required.
 The build also pins libass 0.17.5, FreeType 2.14.3, HarfBuzz 14.4.0 and FriBidi 1.0.16;
 Meson/Ninja are installed in a local build virtual environment.
 The required Xcode version is pinned in `.xcode-version`.

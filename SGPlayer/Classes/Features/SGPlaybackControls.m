@@ -6,6 +6,21 @@
 #if SGPLATFORM_TARGET_OS_IPHONE
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #endif
+#if SGPLATFORM_TARGET_OS_IPHONE
+@interface SGPlaybackSettingsButton : UIButton
+@property(nonatomic, copy) void (^menuVisibilityChanged)(BOOL visible);
+@end
+@implementation SGPlaybackSettingsButton
+- (void)contextMenuInteraction:(UIContextMenuInteraction *)interaction willDisplayMenuForConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionAnimating>)animator {
+    [super contextMenuInteraction:interaction willDisplayMenuForConfiguration:configuration animator:animator];
+    if(self.menuVisibilityChanged)self.menuVisibilityChanged(YES);
+}
+- (void)contextMenuInteraction:(UIContextMenuInteraction *)interaction willEndForConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionAnimating>)animator {
+    [super contextMenuInteraction:interaction willEndForConfiguration:configuration animator:animator];
+    if(self.menuVisibilityChanged)self.menuVisibilityChanged(NO);
+}
+@end
+#endif
 #if SGPLATFORM_TARGET_OS_TV
 @interface SGPlaybackControls (RemoteInput)
 - (void)remotePlayPause;
@@ -91,6 +106,8 @@
 
 @property(nonatomic, strong) AVRoutePickerView *routePicker;
 @property(nonatomic, strong) NSTimer *timer;
+@property(nonatomic, copy) NSArray *settingsMenuSignature;
+@property(nonatomic) BOOL settingsMenuPresented;
 @property(nonatomic) BOOL changingKernel;
 #if SGPLATFORM_TARGET_OS_MAC
 @property(nonatomic, weak) NSView *keyboardSurface;
@@ -426,7 +443,13 @@
     background.userInteractionEnabled = NO;
     self.durationLabel = [UILabel new];
     [self.durationLabel setTextColor:UIColor.whiteColor];
-    self.settingsButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    SGPlaybackSettingsButton *settings = [[SGPlaybackSettingsButton alloc] initWithFrame:CGRectZero];
+    __weak typeof(self) weakSettingsOwner = self;
+    settings.menuVisibilityChanged = ^(BOOL visible) {
+        weakSettingsOwner.settingsMenuPresented = visible;
+        weakSettingsOwner.lastInteraction = CACurrentMediaTime();
+    };
+    self.settingsButton = settings;
     self.volumeButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.volumeButton addTarget:self action:@selector(toggleVolume:) forControlEvents:UIControlEventTouchUpInside];
     [self.progress setMinimumTrackTintColor:[UIColor colorWithRed:1 green:.36 blue:.62 alpha:1]];
@@ -579,15 +602,21 @@
     NSMutableArray *items = [NSMutableArray array];
     __weak typeof(self) weakSelf = self;
     NSMutableArray *moreItems=[NSMutableArray array];
+    NSMutableArray *signature=[NSMutableArray array];
     for (NSNumber *index in [[self settingsActions] arrayByAddingObjectsFromArray:[self moreSettingsActions]]) {
         NSInteger i = index.integerValue;
         if (i == 5 && !self.showsKernelSelection) continue;
         UIAction *action = [UIAction actionWithTitle:[self settingsTitle:i] image:nil identifier:nil handler:^(UIAction *a) { [weakSelf pressed:weakSelf.buttons[i]]; }];
+        [signature addObject:@[@(i),action.title,@([self.buttons[i] isEnabled])]];
         if (![self.buttons[i] isEnabled]) action.attributes = UIMenuElementAttributesDisabled;
         if([[self settingsActions] containsObject:index]) [items addObject:action]; else [moreItems addObject:action];
     }
     [items addObject:[UIMenu menuWithTitle:@"更多设置" image:nil identifier:@"session.moreSettings" options:0 children:moreItems]];
-    [self.settingsButton setMenu:[UIMenu menuWithChildren:items]];
+    // Keep menu identity stable during the playback refresh timer.
+    if (!self.settingsMenuPresented && ![self.settingsMenuSignature isEqual:signature]) {
+        [self.settingsButton setMenu:[UIMenu menuWithChildren:items]];
+        self.settingsMenuSignature = signature;
+    }
     [self.settingsButton setShowsMenuAsPrimaryAction:YES];
 #endif
     [self setToolbarSymbol:c.playing ? @"pause.fill" : @"play.fill" title:c.playing ? @"暂停" : @"播放" button:self.buttons[0]];
@@ -1124,7 +1153,7 @@
         (self.window && self.window == NSApp.keyWindow && self.keyboardActive && (NSEvent.pressedMouseButtons & 1)))
         self.lastInteraction = CACurrentMediaTime();
 #elif SGPLATFORM_TARGET_OS_IPHONE
-    if (((UISlider *)self.progress).tracking || self.gestures.interacting)
+    if (self.settingsMenuPresented || ((UISlider *)self.progress).tracking || self.gestures.interacting)
         self.lastInteraction = CACurrentMediaTime();
 #endif
     if (self.previousSessionState != self.session.state) {

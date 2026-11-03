@@ -294,6 +294,43 @@
     [self pressSession:@"lock"];[self waitForSession:@"Playing"];[self attach:@"automatic-hide-reveal-focus-paused-and-locked-preservation"];
 }
 #endif
+#if TARGET_OS_IOS && !TARGET_OS_TV
+- (void)testSessionMoreSettingsPersistsDuringPlayback {
+    [self.app terminate];
+    self.app.launchArguments=[self.app.launchArguments arrayByAddingObjectsFromArray:@[@"--sgplayer-session-controls",@"--sgplayer-no-resume",@"--sgplayer-auto-hide-controls"]];
+    [self.app launch];[self waitForSession:@"Playing"];
+    [self.app.buttons[@"session.settings"] tap];
+    XCUIElement *more=self.app.buttons[@"更多设置"];
+    XCTAssertTrue([more waitForExistenceWithTimeout:5]);[more tap];
+    XCUIElement *cover=self.app.buttons[@"封面：开"];
+    XCTAssertTrue([cover waitForExistenceWithTimeout:5]);
+    XCTAssertTrue(cover.hittable,@"Observe an initially visible menu action");
+    [NSThread sleepForTimeInterval:6];
+    XCTAssertTrue(cover.exists && cover.hittable,@"Menu must survive timer refresh and auto-hide");
+    [self attach:@"more-settings-survives-refresh"];
+    [cover tap];
+    [self.app.buttons[@"session.settings"] tap];
+    XCTAssertTrue([more waitForExistenceWithTimeout:5]);[more tap];
+    XCTAssertTrue([self.app.buttons[@"封面：关"] waitForExistenceWithTimeout:5]);
+}
+- (void)testSessionAutomaticBackgroundPictureInPicture {
+    [self.app terminate];
+    self.app.launchArguments=[self.app.launchArguments arrayByAddingObjectsFromArray:@[@"--sgplayer-session-controls",@"--sgplayer-no-resume"]];
+    [self.app launch];[self waitForSession:@"Playing"];
+    [self.app.buttons[@"session.settings"] tap];
+    XCUIElement *more=self.app.buttons[@"更多设置"];
+    XCTAssertTrue([more waitForExistenceWithTimeout:5]);[more tap];
+    XCUIElement *automatic=self.app.buttons[@"后台画中画：关"];
+    XCTAssertTrue([automatic waitForExistenceWithTimeout:5]);[automatic tap];
+    [[XCUIDevice sharedDevice]pressButton:XCUIDeviceButtonHome];
+    [NSThread sleepForTimeInterval:6];[self.app activate];
+    [self waitForSession:@"PiP:on"];
+    NSRegularExpression *regex=[NSRegularExpression regularExpressionWithPattern:@"BgFrames:([0-9]+)" options:0 error:nil];
+    NSString *status=self.app.staticTexts[@"session.diagnostics"].label;NSTextCheckingResult *match=[regex firstMatchInString:status options:0 range:NSMakeRange(0,status.length)];
+    XCTAssertNotNil(match);XCTAssertGreaterThan([[status substringWithRange:[match rangeAtIndex:1]]integerValue],0);
+    [self attach:@"automatic-background-pip"];
+}
+#endif
 - (void)testSessionControlsAndPresentation {
     [self.app terminate];self.app.launchArguments=[self.app.launchArguments arrayByAddingObjectsFromArray:@[@"--sgplayer-session-controls",@"--sgplayer-no-resume"]];[self.app launch];
     XCTAssertTrue([self.app.buttons[@"session.play"] waitForExistenceWithTimeout:30]);[self waitForSession:@"Playing"];
