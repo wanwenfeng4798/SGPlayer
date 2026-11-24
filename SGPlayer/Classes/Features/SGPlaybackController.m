@@ -45,6 +45,10 @@
 @property(nonatomic, strong) NSPanel *pictureInPicturePanel;
 @property(nonatomic, strong) SGPlaybackPresentation *pictureInPicturePresentation;
 @property(nonatomic, weak) NSWindow *pictureInPictureSourceWindow;
+// YES only while the floating panel was opened by an automatic trigger
+// (deactivate/minimize/hide); such a panel is returned to the host when it
+// comes back to the foreground. Manually opened panels stay until dismissed.
+@property(nonatomic) BOOL automaticPiPActive;
 #endif
 @property (nonatomic, strong) AVMediaSelectionGroup *nativeAudioGroup;
 @property (nonatomic, copy, readwrite) SGNativePlaybackPolicy *nativePlaybackPolicy;
@@ -75,6 +79,9 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterAutomaticPictureInPicture:) name:NSWindowWillMiniaturizeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterAutomaticPictureInPicture:) name:NSApplicationDidHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterAutomaticPictureInPicture:) name:NSWindowDidMiniaturizeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exitAutomaticPictureInPicture:) name:NSApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exitAutomaticPictureInPicture:) name:NSApplicationDidUnhideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exitAutomaticPictureInPicture:) name:NSWindowDidDeminiaturizeNotification object:nil];
 #endif
 
 #if SGPLATFORM_TARGET_OS_IPHONE_OR_TV
@@ -475,8 +482,23 @@
     if (!source.visible && !source.miniaturized && ![notification.name isEqual:NSApplicationDidHideNotification]) return;
     self.automaticPiPRequested=YES;
     NSError *error=nil;
-    if (![self startPictureInPicture:&error]) { self.automaticPiPRequested=NO; if(self.pictureInPictureChanged)self.pictureInPictureChanged(NO,error); }
-
+    if (![self startPictureInPicture:&error]) { self.automaticPiPRequested=NO; if(self.pictureInPictureChanged)self.pictureInPictureChanged(NO,error); return; }
+    self.automaticPiPActive=YES;
+}
+- (void)exitAutomaticPictureInPicture:(NSNotification *)notification {
+    if (self.closed || !self.pictureInPicturePanel || !self.automaticPiPActive) return;
+    NSWindow *source=self.pictureInPictureSourceWindow;
+    if ([notification.name isEqual:NSWindowDidDeminiaturizeNotification] && notification.object != source) return;
+    // Defer one turn so deminiaturize/unhide animations finish their layout first.
+    __weak typeof(self) weakSelf=self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        SGPlaybackController *self=weakSelf;
+        if (!self || self.closed || !self.pictureInPicturePanel || !self.automaticPiPActive) return;
+        NSWindow *window=self.pictureInPictureSourceWindow;
+        // Keep floating while the host is still invisible (e.g. still in the Dock).
+        if (!window || window.miniaturized || !window.visible) return;
+        [self stopPictureInPicture];
+    });
 }
 #endif
 #if SGPLATFORM_TARGET_OS_MAC
@@ -521,7 +543,7 @@
     __weak typeof(self) weakSelf=self;
     presentation.dismissalRequested=^{
         SGPlaybackController *self=weakSelf;if(!self)return;
-        void (^restore)(BOOL)=^(BOOL allowed){if(!allowed)return;NSWindow *window=weakSelf.pictureInPictureSourceWindow;[weakSelf stopPictureInPicture];[window deminiaturize:nil];[window makeKeyAndOrderFront:nil];[NSApp activateIgnoringOtherApps:YES];};
+        void (^restore)(BOOL)=^(BOOL allowed){if(!allowed)return;NSWindow *window=weakSelf.pictureInPictureSourceWindow;if(window.miniaturized)[window deminiaturize:nil];[weakSelf stopPictureInPicture];[window makeKeyAndOrderFront:nil];[NSApp activateIgnoringOtherApps:YES];};
         if(self.restoreInterface)self.restoreInterface(restore);else restore(YES);
     };
     if(![presentation showFullScreenInView:panel.contentView]) {
@@ -535,8 +557,12 @@
 - (void)windowWillClose:(NSNotification *)notification {
     if(notification.object!=self.pictureInPicturePanel)return;
     [self.pictureInPicturePresentation restore];self.pictureInPicturePresentation=nil;
-    self.automaticPiPRequested=NO;
+    self.automaticPiPRequested=NO;self.automaticPiPActive=NO;
     self.pictureInPicturePanel.delegate=nil;self.pictureInPicturePanel=nil;self.pictureInPictureSourceWindow=nil;
+    // The surface moved windows; relayout and re-drive the renderer so the
+    // inline view keeps presenting frames instead of looking stopped.
+    [self layoutDisplayLayer];
+    if(self.playing && !self.closed)[self play];
     if(self.pictureInPictureChanged)self.pictureInPictureChanged(NO,nil);
 }
 - (NSSize)windowWillResize:(NSWindow *)window toSize:(NSSize)size {
@@ -566,6 +592,7 @@
     self.automaticPiPRequested=NO;
 #if SGPLATFORM_TARGET_OS_MAC
     NSPanel *panel=self.pictureInPicturePanel;
+    self.automaticPiPActive=NO;
     if(panel){[panel close];return;}
 #endif
     [self.pictureInPictureController stopPictureInPicture];
@@ -583,11 +610,18 @@
     if (!self.automaticPictureInPictureEnabled) self.automaticSavedVideoBackgroundPolicy=self.previousVideoBackgroundPolicy;
     self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack=NO;
 #endif
+#if SGPLATFORM_TARGET_OS_IPHONE
+    // Manual PiP must also keep the native item decoding when the app is backgrounded.
+    self.nativePlayer.audiovisualBackgroundPlaybackPolicy=AVPlayerAudiovisualBackgroundPlaybackPolicyContinuesIfPossible;
+#endif
     if (self.pictureInPictureChanged) self.pictureInPictureChanged(YES,nil); }
 - (void)pictureInPictureControllerDidStopPictureInPicture:(AVPictureInPictureController *)controller {
     self.automaticPiPRequested=NO;
 #if SGPLATFORM_TARGET_OS_IPHONE_OR_TV
     self.ffmpegPlayer.pausesWhenEnteredBackgroundIfNoAudioTrack=self.automaticPictureInPictureEnabled?NO:self.automaticSavedVideoBackgroundPolicy;
+#endif
+#if SGPLATFORM_TARGET_OS_IPHONE
+    self.nativePlayer.audiovisualBackgroundPlaybackPolicy=self.automaticPictureInPictureEnabled?AVPlayerAudiovisualBackgroundPlaybackPolicyContinuesIfPossible:AVPlayerAudiovisualBackgroundPlaybackPolicyAutomatic;
 #endif
     if (self.pictureInPictureChanged) self.pictureInPictureChanged(NO,nil); }
 - (void)pictureInPictureController:(AVPictureInPictureController *)controller failedToStartPictureInPictureWithError:(NSError *)error { self.automaticPiPRequested=NO; if (self.pictureInPictureChanged) self.pictureInPictureChanged(NO,error); }
