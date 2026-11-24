@@ -100,5 +100,23 @@ c.automaticPictureInPictureEnabled=NO;NSCAssert(!c.pictureInPictureActive,@"Hide
 [NSApp activateIgnoringOtherApps:YES];spin(^BOOL{return NSApp.active;},3);[controls pressed:toggle];
 [[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.finder"].firstObject activateWithOptions:NSApplicationActivateAllWindows];NSCAssert(spin(^BOOL{return c.pictureInPictureActive;},5),@"Settings-enabled PiP did not start on app deactivation");
 [controls pressed:toggle];NSCAssert(!c.pictureInPictureActive,@"Settings disable did not restore deactivated app");
-puts("PASS automatic macOS PiP settings/disable/re-enable/hide/deactivation");[s close];[w orderOut:nil];
+puts("PASS automatic macOS PiP settings/disable/re-enable/hide/deactivation");
+BOOL (^advances)(double)=^BOOL(double seconds){CMTime start=c.currentTime;return spin(^BOOL{return CMTimeGetSeconds(CMTimeSubtract(c.currentTime,start))>seconds;},5);};
+BOOL (^restoredInline)(void)=^BOOL{return spin(^BOOL{return !c.pictureInPictureActive && surface.superview==w.contentView && NSEqualRects(surface.frame,w.contentView.bounds);},10);};
+[NSApp activateIgnoringOtherApps:YES];spin(^BOOL{return NSApp.active;},3);[controls pressed:toggle];NSCAssert(c.automaticPictureInPictureEnabled,@"Settings action did not re-enable automatic PiP");
+[w miniaturize:nil];NSCAssert(spin(^BOOL{return c.pictureInPictureActive;},10),@"Automatic PiP did not start on minimize");
+[w deminiaturize:nil];NSCAssert(restoredInline(),@"Deminiaturize did not return automatic PiP to the host window");
+NSCAssert(c.playing && advances(.5),@"Playback stopped after automatic PiP returned on deminiaturize");
+puts("PASS automatic macOS PiP returns to host and keeps playing on deminiaturize");
+[[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.finder"].firstObject activateWithOptions:NSApplicationActivateAllWindows];NSCAssert(spin(^BOOL{return c.pictureInPictureActive;},5),@"Automatic PiP did not start on app deactivation");
+NSCAssert(advances(.3),@"Playback stalled in automatic PiP");
+[NSApp activateIgnoringOtherApps:YES];NSCAssert(restoredInline(),@"Reactivation did not return automatic PiP to the host window");
+NSCAssert(c.playing && advances(.5),@"Playback stopped after automatic PiP returned on reactivation");
+puts("PASS automatic macOS PiP returns to host and keeps playing on reactivation");
+NSCAssert([c startPictureInPicture:&error],@"Manual PiP failed %@",error);NSCAssert(spin(^BOOL{return c.pictureInPictureActive;},5),@"Manual PiP did not activate");
+[NSNotificationCenter.defaultCenter postNotificationName:NSApplicationDidBecomeActiveNotification object:NSApp];spin(^BOOL{return NO;},.5);
+NSCAssert(c.pictureInPictureActive,@"Manual PiP must not be auto-restored on activation");
+[c stopPictureInPicture];NSCAssert(restoredInline(),@"Manual PiP stop did not restore inline layout");NSCAssert(advances(.5),@"Playback stopped after manual PiP stop");
+puts("PASS manual macOS PiP is not auto-restored and playback continues after stop");
+[s close];[w orderOut:nil];
 }return 0;}
